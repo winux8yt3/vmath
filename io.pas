@@ -51,7 +51,7 @@ begin
 		'pause'		:	Pause;
 		'run'		:	ReadFile(syntax[1]);
 		'exit'		:	exit;
-		'color'		:	color(Str2Int(syntax[1]),Str2Int(syntax[2]));		
+//		'color'		:	color(Str2Int(syntax[1]),Str2Int(syntax[2]));
 	else writeln(ErrorId0);
 	end;
 end;
