@@ -1,0 +1,7 @@
+*.lps
+*.ppu
+*.exe
+*.log
+*.bak*
+*.o
+*.dat
