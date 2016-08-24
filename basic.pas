@@ -25,6 +25,7 @@ begin
 			p:=pos(' ',s);
 		until (p=0)
 	else ClrSpace:=s;
+end;
 
 function Int2Str (v:Longint):String;
 var s: string;

@@ -11,10 +11,12 @@ type
 var
 	syntax: tSyntax;
 	syntaxNum:byte;
+	cmd:string;
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
 procedure ReadFile(FName:string);
+procedure Equation(s:string);
 
 procedure Pause;
 procedure Print;
@@ -43,6 +45,7 @@ procedure CmdProcess(s:string);
 begin
 	CmdSyntax(s);
 	s:=lowercase(s);
+	cmd:=s;
 	case syntax[0] of
 		'?','info'	:	Info;
 		'clear'		:	Clear;
@@ -52,10 +55,15 @@ begin
 		'run'		:	ReadFile(syntax[1]);
 		'exit'		:	exit;
 //		'color'		:	color(Str2Int(syntax[1]),Str2Int(syntax[2]));
-	else writeln(ErrorId0);
+	else Equation(s:string);
 	end;
 end;
+{
+procedure Equation(s:string);
+begin
 
+end;
+}
 procedure ReadFile(FName:string);
 var 
 	f:text;
