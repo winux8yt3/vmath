@@ -19,7 +19,6 @@ begin
     ProgramInfo:=ProgramName+' '+Version+' Ban Dung So '+VersionBuild+' '+VersionInfo+'.';
     DoneMsg:='Xong!';
     WelcomeMsg:='Chao mung ban den voi '+ProgramInfo;
-    LangLoadMsg:='Dang Chay Goi Ngon Ngu . . .';
 
     InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-xplorer';
     DateText:='Hom nay la: ';
@@ -38,7 +37,7 @@ begin
     ErrorId1:='Sai cau truc.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
-    write(DoneMsg);writeln;
+    ErrorId4:='Tran du lieu';
 end;
 
 procedure LangEn;
@@ -46,7 +45,6 @@ begin
     ProgramInfo:=ProgramName+' '+Version+' Build '+VersionBuild+' '+VersionInfo+'.';
     DoneMsg:='Done';    
     WelcomeMsg:='Welcome you to '+ProgramInfo;
-    LangLoadMsg:='Loading Language Pack . . .';
 
     InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-xplorer';
     DateText:='Today is: ';
@@ -65,7 +63,7 @@ begin
     ErrorId1:='Syntax Error.';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
-    write(DoneMsg);writeln;
+    ErrorId4:='Overflow';
 end;
 
 procedure ActiveLang(s:string);
@@ -78,7 +76,12 @@ end;
 
 initialization
 begin
-    write(LangLoadMsg);
+    write('Loading Language Pack | Dang Chay Goi Ngon Ngu');
+end;
+
+finalization
+begin
+    write(DoneMsg);writeln;
 end;
 
 end.
