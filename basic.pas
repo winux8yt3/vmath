@@ -15,6 +15,17 @@ procedure Color(txcolor,BgColor:byte);
     
 implementation
 
+function ClrSpace (s:string):string;
+var p:byte;
+begin
+	p:=pos(' ',s);
+	if p <> 0 then 
+		repeat
+			delete(s,p,1);
+			p:=pos(' ',s);
+		until (p=0)
+	else ClrSpace:=s;
+
 function Int2Str (v:Longint):String;
 var s: string;
 begin
