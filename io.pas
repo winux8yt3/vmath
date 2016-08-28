@@ -16,8 +16,8 @@ var
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
-procedure ReadFile(FName:string);
 procedure Equation(s:string);
+procedure ReadFile(FName:string);
 
 implementation
 
@@ -59,13 +59,13 @@ begin
 	cmd:=s;
 	case syntax[0] of
 		'?','info'	:	Info;
-		'help'		:	help;
+		'help'		:	Help;
 		'date'		:	Date;
+		'delay'		:	Delay(syntax[1];
 		'time'		:	Time;
 		'exit'		:	exit;
 		'clear'		:	clrscr;
 		'preans'	:	writeln(ans);
-		'precmd'	:	writeln(s);
 		'run'		:	ReadFile(syntax[1]);
 		'pause'		:	Msg('Press Enter To Continue . . .');
 		'print'		:	for i:=1 to syntaxNum do write(syntax[i],' ');
@@ -151,11 +151,6 @@ begin
 		until eof(f);
 		close(f);
 	end;
-end;
-
-initialization
-begin
-	Color(7,0);
 end;
 
 end.

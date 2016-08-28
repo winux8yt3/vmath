@@ -13,6 +13,7 @@ function Time():string;
 procedure Color(txcolor,BgColor:byte);
 procedure Help;
 procedure Msg(s:variant); 
+procedure Delay(t:longint)
 
 implementation
 
@@ -62,11 +63,15 @@ end;
 
 procedure Help;
 begin
-	writeln('? | clear | color | date | exit | info | help | pause | preans | precmd | print | run | time');
+	writeln('? | clear | color | date | delay | exit | info | help | pause | preans | precmd | print | run | time');
 	writeln('+ | - | * | / | % | : | ^');
-end.
+end;
 
 procedure Msg(s:variant);
 begin
 	write(s);readln;
 end;
+
+procedure
+
+end.

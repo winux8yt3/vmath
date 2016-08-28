@@ -33,15 +33,20 @@
 *Build 160828*
 
 - **Added** Math Functions *(This function is too big so I had jumped the Major number)*
-- **Fixed** 'Color'
+- **Added** `PreAns`
+- **Added** `Help`
+- **Added** `Delay`
+- **Added** `Exit`
+- **Fixed** `Run`
+- **Fixed** `Color`
 
 ### Version 0.5.1
 
 *Build 160821-2200*
 
-- **Added** 'Color'
-- **Added** 'Run'
-- **Fixed** 'Date' showing text in English
+- **Added** `Color`
+- **Added** `Run`
+- **Fixed** `Date` showing text in English
 - **Changed** build versioning
 - **Edited** the info
 
