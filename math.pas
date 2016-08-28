@@ -3,7 +3,7 @@ unit math;
 interface
 
 function Divide(x:longint;y:longint):Variant;
-function Power(x:longint;y:longint):int64;
+function Power(x:variant;y:longint):variant;
 
 implementation
 

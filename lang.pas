@@ -36,7 +36,6 @@ begin
     ErrorId1:='Sai cau truc hoac sai cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
-    ErrorId4:='Tran du lieu';
 end;
 
 procedure LangEn;
@@ -61,7 +60,6 @@ begin
     ErrorId1:='Syntax Error or Input Error.';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
-    ErrorId4:='Overflow';
 end;
 
 procedure ActiveLang(s:string);
