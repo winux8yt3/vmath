@@ -30,6 +30,13 @@ begin
 	end;
 end;
 
+procedure Print;
+begin
+	delete(s,1,5);
+	s:=trim(s);
+	writeln(s);
+end;
+
 procedure ClrSyntax;
 var i:word;
 begin
@@ -57,12 +64,14 @@ begin
 end;
 
 procedure CmdProcess(s:string);
+var 
+	n1,n2:longint;
+	err1,err2:word;
 begin
 	ClrSyntax;
 	s:=Trim(s);
 	s:=lowercase(s);
 	CmdSyntax(s);
-	cmd:=s;
 	case syntax[0] of
 		'?','info'	:	Info;
 		'help'		:	Help;
@@ -75,7 +84,11 @@ begin
 		'preans'	:	writeln(ans);
 		'run'		:	ReadFile(syntax[1]);
 		'pause'		:	Msg('Press Enter To Continue . . .');
-		'color'		:	color(Str2Int(syntax[1]),Str2Int(syntax[2]));
+		'color'		:	begin
+							n1:=Str2Int(syntax[1],err1);
+							n2:=Str2Int(syntax[2],err2);
+							if (err1 = 0) and (err2 = 0) then color(n1,n2);
+						end;
 	else Equation(s:string);
 	end;
 end;

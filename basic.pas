@@ -12,8 +12,7 @@ function Date():string;
 function Time():string;
 procedure Color(txcolor,BgColor:byte);
 procedure Help;
-procedure Msg(s:variant); 
-procedure Print;
+procedure Msg(s:variant);
 procedure Delay(t:word);
 
 implementation
@@ -25,8 +24,8 @@ begin
  	Int2Str:=s;
 end;
 
-function Str2Int (s:string):longint;
-var v,err:longint;
+function Str2Int (s:string;var err:word):longint;
+var v:longint;
 begin
  	val(s,v,err);
  	if err<>0 then write('<',s,'>:',ErrorId1)
@@ -78,11 +77,4 @@ begin
 	if t<=0 then delay(5000)
 		else delay(t);
 end;
-
-procedure Print;
-var i:word;
-begin
-	for i:=1 to syntaxNum do write(syntax[i],' ');
-end;
-
 end.
