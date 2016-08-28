@@ -8,24 +8,13 @@ uses
 function Int2Str (v:Longint):String;
 function Str2Int (s:string):longint;
 procedure Info;
-procedure Clear;
 function Date():string;
 function Time():string;
 procedure Color(txcolor,BgColor:byte);
-    
-implementation
+procedure Help;
+procedure Msg(s:variant); 
 
-function ClrSpace (s:string):string;
-var p:byte;
-begin
-	p:=pos(' ',s);
-	if p <> 0 then 
-		repeat
-			delete(s,p,1);
-			p:=pos(' ',s);
-		until (p=0)
-	else ClrSpace:=s;
-end;
+implementation
 
 function Int2Str (v:Longint):String;
 var s: string;
@@ -35,7 +24,7 @@ begin
 end;
 
 function Str2Int (s:string):longint;
-var v,err:longint;
+var v:longint;
 begin
  val(s,v,err);
  if err<>0 then write('<',s,'>:',ErrorId1)
@@ -44,14 +33,9 @@ end;
 
 procedure Info;
 begin
-    write(ProgramInfo);writeln;
-    write('(c) 2016 Nguyen Tuan Dung (Winux8yt3)');writeln;
-    write(InfoText);writeln;
-end;
-
-procedure Clear;
-begin
-	clrscr;	
+    writeln(ProgramInfo);
+    writeln(CopyrightInfo);
+    writeln(InfoText);
 end;
 
 function Date():string;
@@ -76,4 +60,13 @@ begin
 	TextBackground(BgColor);
 end;
 
+procedure Help;
+begin
+	writeln('? | clear | color | date | exit | info | help | pause | preans | precmd | print | run | time');
+	writeln('+ | - | * | / | % | : | ^');
 end.
+
+procedure Msg(s:variant);
+begin
+	write(s);readln;
+end;

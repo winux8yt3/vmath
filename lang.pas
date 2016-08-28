@@ -33,8 +33,7 @@ begin
     DayNum[5]:='Thu Sau';
     DayNum[6]:='Thu Bay';
 
-    ErrorId0:='Du lieu nhap khong la cau lenh hay bieu thuc.';
-    ErrorId1:='Sai cau truc.';
+    ErrorId1:='Sai cau truc hoac sai cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
     ErrorId4:='Tran du lieu';
@@ -59,8 +58,7 @@ begin
     DayNum[5]:='Friday';
     DayNum[6]:='Saturday';
 
-    ErrorId0:='Input Not A Command Or An Equation.';
-    ErrorId1:='Syntax Error.';
+    ErrorId1:='Syntax Error or Input Error.';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
     ErrorId4:='Overflow';
