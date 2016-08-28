@@ -31,6 +31,13 @@ begin
 	end;
 end;
 
+procedure ClrSyntax;
+var i:word;
+begin
+	for i:=0 to syntaxNum do syntax[syntaxNum]:='';
+	syntaxNum:=0;
+end;
+
 procedure CmdSyntax(s:string);
 var 
 	p:byte;  //Position of word
@@ -52,6 +59,7 @@ end;
 
 procedure CmdProcess(s:string);
 begin
+	ClrSyntax;
 	s:=Trim(s);
 	s:=lowercase(s);
 	CmdSyntax(s);
@@ -60,7 +68,7 @@ begin
 		'?','info'	:	Info;
 		'help'		:	Help;
 		'date'		:	Date;
-		'delay'		:	Delay(syntax[1];
+		'delay'		:	Delay(Str2Int(syntax[1]);
 		'time'		:	Time;
 		'exit'		:	exit;
 		'clear'		:	clrscr;

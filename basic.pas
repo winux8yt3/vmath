@@ -13,7 +13,7 @@ function Time():string;
 procedure Color(txcolor,BgColor:byte);
 procedure Help;
 procedure Msg(s:variant); 
-procedure Delay(t:longint);
+procedure Delay(t:word);
 
 implementation
 
@@ -72,7 +72,7 @@ begin
 	write(s);readln;
 end;
 
-procedure Delay(t:longint);
+procedure Delay(t:word);
 begin
 	if t<=0 then delay(5000)
 		else delay(t);
