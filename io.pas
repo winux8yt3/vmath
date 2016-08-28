@@ -11,7 +11,6 @@ type
 var
 	syntax: tSyntax;
 	syntaxNum:byte;
-	cmd:string;
 	ans:variant;
 
 procedure CmdSyntax(s:string);
@@ -68,7 +67,7 @@ begin
 		'?','info'	:	Info;
 		'help'		:	Help;
 		'date'		:	Date;
-		'delay'		:	Delay(Str2Int(syntax[1]);
+		'delay'		:	Delay(Str2Int(syntax[1]));
 		'time'		:	Time;
 		'exit'		:	exit;
 		'clear'		:	clrscr;
