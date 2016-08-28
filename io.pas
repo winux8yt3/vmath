@@ -71,10 +71,10 @@ begin
 		'time'		:	Time;
 		'exit'		:	exit;
 		'clear'		:	clrscr;
+		'print'		:	Print;
 		'preans'	:	writeln(ans);
 		'run'		:	ReadFile(syntax[1]);
 		'pause'		:	Msg('Press Enter To Continue . . .');
-		'print'		:	for i:=1 to syntaxNum do write(syntax[i],' ');
 		'color'		:	color(Str2Int(syntax[1]),Str2Int(syntax[2]));
 	else Equation(s:string);
 	end;
