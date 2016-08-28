@@ -21,7 +21,7 @@ procedure ReadFile(FName:string);
 
 implementation
 
-function ClrSpace (s:string):string;
+procedure ClrSpace (s:string);
 var p:byte;
 begin
 	p:=pos(' ',s);
@@ -29,7 +29,6 @@ begin
 		delete(s,p,1);
 		p:=pos(' ',s);
 	end;
-	else ClrSpace:=s;
 end;
 
 procedure CmdSyntax(s:string);

@@ -20,15 +20,15 @@ implementation
 function Int2Str (v:Longint):String;
 var s: string;
 begin
- Str(v,s);
- Int2Str:=s;
+ 	Str(v,s);
+ 	Int2Str:=s;
 end;
 
 function Str2Int (s:string):longint;
-var v:longint;
+var v,err:longint;
 begin
- val(s,v,err);
- if err<>0 then write('<',s,'>:',ErrorId1)
+ 	val(s,v,err);
+ 	if err<>0 then write('<',s,'>:',ErrorId1)
     else Str2Int:=v;
 end;
 
