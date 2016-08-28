@@ -107,10 +107,10 @@ begin
 		EquNumProcess(s,pos('%',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
-//	else if (pos('^',s)<>0) then begin
-//		EquNumProcess(s,pos('^',s),n1,n2);
-//		EquProcess:=n1+n2;
-//	end
+	else if (pos('^',s)<>0) then begin
+		EquNumProcess(s,pos('^',s),n1,n2);
+		EquProcess:=n1+n2;
+	end
 	else EquProcess:=Str2Int(s);
 end;
 // Loop back EquProcess function if there is a complex equation
