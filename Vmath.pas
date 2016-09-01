@@ -1,10 +1,9 @@
 program Vmath;
 
-uses sysutils,crt,math,io,lang,programStr,basic;
+uses sysutils,crt,io,lang,programStr,basic;
 
 var 
 	tmpString:string;
-
 
 procedure Welcome;
 	var 
@@ -23,18 +22,30 @@ procedure Welcome;
 			close(f);
 		end;
 		ReadFile('Welcome.dat');
-		write('Choose Your Language [Default is English]');writeln;
-		write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
-		write('(En | Vi) >> ');readln(tmpString);ActiveLang(tmpString);
 		writeln(WelcomeMsg);
+		{$I-}
+		assign(f,'start.vmath');
+		Reset(f);
+		{$I+}
+		if (IOResult=0) then 
+		repeat
+			readln(f,tmpString);
+			CmdProcess(tmpString);
+		until eof(f);
 	end;
 
 begin
+	write('Choose Your Language [Default is English]');writeln;
+	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
+	write('(En | Vi) >> ');readln(tmpString);
+	ActiveLang(tmpString);
 	clrscr;
 	Welcome;
 	repeat
 		writeln;
 		write(InputText,' >> ');readln(tmpString);
+		writeln;
+		write(OutputText,' >> ');
 		CmdProcess(tmpString);
 	until tmpString='exit';
 end.	

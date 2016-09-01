@@ -11,50 +11,147 @@ type
 var
 	syntax: tSyntax;
 	syntaxNum:byte;
+	ans:extended;
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
+procedure Equation(s:string);
+function EquProcess(s:string):extended;
 procedure ReadFile(FName:string);
-
-procedure Pause;
-procedure Print;
 
 implementation
 
+function ClrSpace (s:string):string;
+var p:byte;
+begin
+	p:=pos(' ',s);
+	while p <> 0 do begin
+		delete(s,p,1);
+		p:=pos(' ',s);
+	end;
+	ClrSpace:=s;
+end;
+
+procedure Print(s:string);
+begin
+	delete(s,1,5);
+	s:=trimleft(s);
+	writeln(s);
+end;
+
+procedure ClrSyntax;
+var i:word;
+begin
+	for i:=0 to syntaxNum do syntax[syntaxNum]:='';
+	syntaxNum:=0;
+end;
+
 procedure CmdSyntax(s:string);
 var 
-	p:byte;  //Position of word
+	p:byte;  //Position of blank space
 begin
+	s:=lowercase(s);
 	syntaxNum:=0;
-    s:=Trim(s);
 	p:=pos(' ',s);
-	if p=0 then syntax[0]:=s
-	else
-		repeat
-			syntax[syntaxNum]:=copy(s,1,p-1);
-			delete(s,1,p);
-			inc(syntaxNum);
-		until pos(' ',s)=0;
-	syntaxNum:=length(s);
-	syntax[p]:=copy(s,1,syntaxNum);
+	while p<>0 do begin
+		syntax[syntaxNum]:=copy(s,1,p-1);
+		delete(s,1,p-1);
+		inc(syntaxNum);
+		s:=Trim(s);
+		p:=pos(' ',s);
+	end;
+	syntax[syntaxNum]:=copy(s,1,length(s));
 end;
 
 procedure CmdProcess(s:string);
+var 
+	n1,n2:longint;
+	err:word;
 begin
+	n1:=0;n2:=0;
+	ClrSyntax;
+	s:=Trim(s);
 	CmdSyntax(s);
-	s:=lowercase(s);
 	case syntax[0] of
 		'?','info'	:	Info;
-		'clear'		:	Clear;
-		'date'		:	Date;
-		'time'		:	Time;
-		'pause'		:	Pause;
-		'run'		:	ReadFile(syntax[1]);
+		'help'		:	Help;
+		'date'		:	writeln(Date);
+		'time'		:	writeln(Time);
 		'exit'		:	exit;
-		'color'		:	color(Str2Int(syntax[1]),Str2Int(syntax[2]));		
-	else writeln(ErrorId0);
+		'clear'		:	clrscr;
+		'print'		:	Print(s);
+		'preans'	:	writeln(ans:0:2);
+		'run'		:	ReadFile(syntax[1]);
+		'pause'		:	Msg('Press Enter To Continue . . .');
+		'delay'		:	begin
+							n1:=Str2Int(syntax[1],err);
+							if (err = 0) and (n1>0) then delay(n1);
+						end;
+		'color'		:	begin
+							n1:=Str2Int(syntax[1],err);
+							if (err = 0) then begin
+								n2:=Str2Int(syntax[2],err);
+								if (err = 0) then color(n1,n2);
+							end;	 
+						end
+	else Equation(s);
 	end;
 end;
+
+procedure EquNumProcess(s:string;k:word; var n1,n2:extended);
+begin
+	n1:=EquProcess(copy(s,1,k-1));
+	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
+end;
+
+function EquProcess(s:string):extended;
+var 
+	n1,n2:extended;
+	err:word;
+begin
+	if (pos('+',s)<>0) then begin
+		EquNumProcess(s,pos('+',s),n1,n2);
+		EquProcess:=n1+n2;
+	end
+	else if (pos('-',s)<>0) then begin
+		EquNumProcess(s,pos('-',s),n1,n2);
+		EquProcess:=n1-n2;
+	end
+	else if (pos('*',s)<>0) then begin
+		EquNumProcess(s,pos('*',s),n1,n2);
+		EquProcess:=n1*n2;
+	end	
+	else if (pos('/',s)<>0) then begin
+		EquNumProcess(s,pos('/',s),n1,n2);
+		EquProcess:=n1/n2;
+	end	
+//	else if (pos(':',s)<>0) then begin
+//		EquNumProcess(s,pos(':',s),n1,n2);
+//		EquProcess:=n1 div n2;
+//	end
+//	else if (pos('%',s)<>0) then begin
+//		EquNumProcess(s,pos('%',s),n1,n2);
+//		EquProcess:=n1 mod n2;
+//	end
+//	else if (pos('^',s)<>0) then begin
+//		EquNumProcess(s,pos('^',s),n1,n2);
+//		EquProcess:=n1n2;
+//	end
+	else EquProcess:=Str2Int(s,err);
+end;
+// Loop back EquProcess function if there is a complex equation
+procedure Equation(s:string);
+begin
+	s:=ClrSpace(s);
+	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
+		{or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)}
+		then begin
+			ans:=EquProcess(s);
+			writeln(ans:0:2);
+		end
+	else writeln(ErrorId1);
+end;
+
 
 procedure ReadFile(FName:string);
 var 
@@ -67,33 +164,17 @@ begin
 	assign(f,FName);
 	Reset(f);
 	{$I+}
-	if IOResult<>0 then write(ErrorId3)
+	if (IOResult<>0) then writeln(ErrorId3)
 	else begin
 		k:=length(Fname)-pos('.',Fname);
 		extension:=copy(Fname,pos('.',Fname)+1,k);
 		repeat
 			readln(f,str);
-			if extension='vmath' then CmdProcess(str)
+			if (extension='vmath') then CmdProcess(str)
 				else writeln(str);
 		until eof(f);
 		close(f);
 	end;
-end;
-
-procedure Pause;
-begin
-	readln;
-end;
-
-procedure Print;
-var i:integer;
-begin
-	for i:=1 to syntaxNum do write(syntax[i],' ');
-end;
-
-initialization
-begin
-	Color(7,0);
 end;
 
 end.

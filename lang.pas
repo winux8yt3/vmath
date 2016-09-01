@@ -6,7 +6,7 @@ uses sysutils,programStr;
 
 var 
     ProgramInfo,WelcomeMsg,DoneMsg,LangLoadMsg:string;
-    DateText,TimeText,InputText,InfoText:string;
+    LoadText,DateText,TimeText,InputText,OutputText,InfoText:string;
     DayNum:array[0..6] of string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3:string;
 
@@ -16,15 +16,18 @@ implementation
 
 procedure LangVi;
 begin
+    write('Dang Tai Goi Ngon Ngu . . .');writeln;
+
     ProgramInfo:=ProgramName+' '+Version+' Ban Dung So '+VersionBuild+' '+VersionInfo+'.';
     DoneMsg:='Xong!';
     WelcomeMsg:='Chao mung ban den voi '+ProgramInfo;
-    LangLoadMsg:='Dang Chay Goi Ngon Ngu . . .';
 
+    LoadText:='Dang Tai...';
     InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-xplorer';
     DateText:='Hom nay la: ';
     TimeText:='Bay gio la: ';
     InputText:='Nhap';
+    OutputText:='Xuat';
     
     DayNum[0]:='Chu Nhat';
     DayNum[1]:='Thu Hai';
@@ -34,24 +37,25 @@ begin
     DayNum[5]:='Thu Sau';
     DayNum[6]:='Thu Bay';
 
-    ErrorId0:='Du lieu nhap khong la cau lenh hay bieu thuc.';
-    ErrorId1:='Sai cau truc.';
+    ErrorId1:='Sai cau truc hoac sai cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
-    write(DoneMsg);writeln;
 end;
 
 procedure LangEn;
 begin
+    write('Loading Language Pack . . .');writeln;
+
     ProgramInfo:=ProgramName+' '+Version+' Build '+VersionBuild+' '+VersionInfo+'.';
     DoneMsg:='Done';    
     WelcomeMsg:='Welcome you to '+ProgramInfo;
-    LangLoadMsg:='Loading Language Pack . . .';
 
+    LoadText:='Loading...';
     InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-xplorer';
     DateText:='Today is: ';
-    TimeText:='Now is:  ';
+    TimeText:='Now is: ';
     InputText:='Input';
+    OutputText:='Output';
 
     DayNum[0]:='Sunday';
     DayNum[1]:='Monday';
@@ -61,24 +65,23 @@ begin
     DayNum[5]:='Friday';
     DayNum[6]:='Saturday';
 
-    ErrorId0:='Input Not A Command Or An Equation.';
-    ErrorId1:='Syntax Error.';
+    ErrorId1:='Syntax Error or Input Error.';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
-    write(DoneMsg);writeln;
 end;
 
 procedure ActiveLang(s:string);
 begin
     case lowercase(s) of
         'vi'    :   LangVi;
-        'en'    :   LangEn;  
+        'en'    :   LangEn
+    else LangEn;
     end;
 end;
 
-initialization
+finalization
 begin
-    write(LangLoadMsg);
+    write(DoneMsg);writeln;
 end;
 
 end.

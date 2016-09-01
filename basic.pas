@@ -6,40 +6,37 @@ uses
     crt,dos,lang,programstr;
 
 function Int2Str (v:Longint):String;
-function Str2Int (s:string):longint;
+function Str2Int (s:string;var err:word):longint;
 procedure Info;
-procedure Clear;
 function Date():string;
 function Time():string;
 procedure Color(txcolor,BgColor:byte);
-    
+procedure Help;
+procedure Msg(s:string);
+
 implementation
 
 function Int2Str (v:Longint):String;
 var s: string;
 begin
- Str(v,s);
- Int2Str:=s;
+ 	Str(v,s);
+ 	Int2Str:=s;
 end;
 
-function Str2Int (s:string):longint;
-var v,err:longint;
+function Str2Int (s:string;var err:word):longint;
+var v:longint;
 begin
- val(s,v,err);
- if err<>0 then write('<',s,'>:',ErrorId1)
+	err:=0;
+ 	val(s,v,err);
+ 	if err<>0 then writeln('<',s,'>:',ErrorId1)
     else Str2Int:=v;
 end;
 
 procedure Info;
 begin
-    write(ProgramInfo);writeln;
-    write('(c) 2016 Nguyen Tuan Dung (Winux8yt3)');writeln;
-    write(InfoText);writeln;
-end;
-
-procedure Clear;
-begin
-	clrscr;	
+    writeln(ProgramInfo);
+    writeln(CopyrightInfo);
+    writeln(InfoText);
 end;
 
 function Date():string;
@@ -60,8 +57,33 @@ function Time():string;
 
 procedure Color(txcolor,BgColor:byte);
 begin
+	writeln(LoadText);
 	TextColor(txcolor);
 	TextBackground(BgColor);
+end;
+
+procedure Help;
+begin
+	writeln;
+	writeln('?,info     : About the Program'); 
+	writeln('clear      : Clear screen');
+	writeln('color      : Change text and background color');
+	writeln('date       : Print date');
+	writeln('delay      : Wait (milisecond)');
+	writeln('exit       : Exit');
+	writeln('help       : Instruction');
+	writeln('pause      : Pause the program');
+	writeln('preans     : Print last math answer');
+	writeln('print      : Print text');
+	writeln('run        : Print text from file or Run');
+	writeln('time       : Print time');
+	writeln;
+	writeln('EQUATION    + | - | * | /');
+end;
+
+procedure Msg(s:string);
+begin
+	write(s);readln;
 end;
 
 end.
