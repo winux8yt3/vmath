@@ -6,14 +6,13 @@ uses
     crt,dos,lang,programstr;
 
 function Int2Str (v:Longint):String;
-function Str2Int (s:string):longint;
+function Str2Int (s:string;var err:word):longint;
 procedure Info;
 function Date():string;
 function Time():string;
 procedure Color(txcolor,BgColor:byte);
 procedure Help;
 procedure Msg(s:variant);
-procedure Delay(t:word);
 
 implementation
 
@@ -72,9 +71,4 @@ begin
 	write(s);readln;
 end;
 
-procedure Delay(t:word);
-begin
-	if t<=0 then delay(5000)
-		else delay(t);
-end;
 end.

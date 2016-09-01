@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	sysutils,crt,dos,lang,basic;
+	sysutils,crt,dos,variants,lang,basic;
 
 type 
 	tSyntax = array[0..256]of string;
@@ -16,6 +16,7 @@ var
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
 procedure Equation(s:string);
+function EquProcess(s:string):variant;
 procedure ReadFile(FName:string);
 
 implementation
@@ -30,7 +31,7 @@ begin
 	end;
 end;
 
-procedure Print;
+procedure Print(s:string);
 begin
 	delete(s,1,5);
 	s:=trim(s);
@@ -66,8 +67,9 @@ end;
 procedure CmdProcess(s:string);
 var 
 	n1,n2:longint;
-	err1,err2:word;
+	err:word;
 begin
+	n1:=0;n2:=0;
 	ClrSyntax;
 	s:=Trim(s);
 	s:=lowercase(s);
@@ -76,31 +78,38 @@ begin
 		'?','info'	:	Info;
 		'help'		:	Help;
 		'date'		:	Date;
-		'delay'		:	Delay(Str2Int(syntax[1]));
 		'time'		:	Time;
 		'exit'		:	exit;
 		'clear'		:	clrscr;
-		'print'		:	Print;
+		'print'		:	Print(s);
 		'preans'	:	writeln(ans);
 		'run'		:	ReadFile(syntax[1]);
 		'pause'		:	Msg('Press Enter To Continue . . .');
-		'color'		:	begin
-							n1:=Str2Int(syntax[1],err1);
-							n2:=Str2Int(syntax[2],err2);
-							if (err1 = 0) and (err2 = 0) then color(n1,n2);
+		'delay'		:	begin
+							n1:=Str2Int(syntax[1],err);
+							if (err = 0) and (n1>0) then delay(n1);
 						end;
-	else Equation(s:string);
+		'color'		:	begin
+							n1:=Str2Int(syntax[1],err);
+							if (err = 0) then begin
+								n2:=Str2Int(syntax[2],err);
+								if (err = 0) then color(n1,n2);
+							end;	 
+						end;
+	else Equation(s);
 	end;
 end;
 
 procedure EquNumProcess(s:string;k:word; var n1,n2:variant);
 begin
 	n1:=EquProcess(copy(s,1,k-1));
-	n2:=EquProcess(copy(s,k+1,(length(s)-k-1));
+	n2:=EquProcess(copy(s,k+1,(length(s)-k-1)));
 end;
 
 function EquProcess(s:string):variant;
-var n1,n2:variant;
+var 
+	n1,n2:variant;
+	err:word;
 begin
 	if (pos('+',s)<>0) then begin
 		EquNumProcess(s,pos('+',s),n1,n2);
@@ -114,10 +123,6 @@ begin
 		EquNumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
-	else if (pos('/',s)<>0) then begin
-		EquNumProcess(s,pos('/',s),n1,n2);
-		EquProcess:=n1/n2; 
-	end
 	else if (pos(':',s)<>0) then begin
 		EquNumProcess(s,pos(':',s),n1,n2);
 		EquProcess:=n1 div n2;
@@ -130,12 +135,10 @@ begin
 		EquNumProcess(s,pos('^',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
-	else EquProcess:=Str2Int(s);
+	else EquProcess:=Str2Int(s,err);
 end;
 // Loop back EquProcess function if there is a complex equation
 procedure Equation(s:string);
-var
-	n1,n2,err: longint;
 begin
 	ClrSpace(s);
 	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
