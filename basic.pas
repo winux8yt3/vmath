@@ -62,8 +62,20 @@ end;
 
 procedure Help;
 begin
-	writeln('? | clear | color | date | delay | exit | info | help | pause | preans | precmd | print | run | time');
-	writeln('+ | - | * | / | % | : | ^');
+	writeln('?,help		: Help'); 
+	writeln('clear		: Clear Screen');
+	writeln('color		: Change Text And Background Color');
+	writeln('date		: Print Date');
+	writeln('delay		: Wait (milisecond)');
+	writeln('exit		: Exit');
+	writeln('info		: Info of program');
+	writeln('pause		: Pause the program');
+	writeln('preans		: Print last output');
+	writeln('print		: Print Text');
+	writeln('run		: Print Text from file or Run');
+	writeln('time		: Print Time');
+	writeln;
+	writeln('EQUATION	 + | - | * | % | : | ^');
 end;
 
 procedure Msg(s:variant);
