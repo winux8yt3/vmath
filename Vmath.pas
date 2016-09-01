@@ -29,9 +29,7 @@ procedure Welcome;
 begin
 	write('Choose Your Language [Default is English]');writeln;
 	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
-	repeat
-		write('(En | Vi) >> ');readln(tmpString);
-	until lowercase(tmpString)=en or lowercase(tmpString)=vi;
+	write('(En | Vi) >> ');readln(tmpString);
 	ActiveLang(tmpString);
 	clrscr;
 	Welcome;

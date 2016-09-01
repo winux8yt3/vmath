@@ -24,7 +24,7 @@
 - [Program](https://bit.ly/vmath-xplorer)
 - [Source Code](https://bit.ly/vmath-source)
 
-> Currently the project is compiled only for Windows. Program for other OS coming soon.
+> Currently the project is compiled only for Windows. For other OS please download [DOSBox](https://sourceforge.net/projects/dosbox/) or any DOS simulator.
 
 ## Changelog
 

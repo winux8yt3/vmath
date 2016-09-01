@@ -11,12 +11,12 @@ type
 var
 	syntax: tSyntax;
 	syntaxNum:byte;
-	ans:string;
+	ans:extended;
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
 procedure Equation(s:string);
-function EquProcess(s:string):longint;
+function EquProcess(s:string):extended;
 procedure ReadFile(FName:string);
 
 implementation
@@ -100,15 +100,15 @@ begin
 	end;
 end;
 
-procedure EquNumProcess(s:string;k:word; var n1,n2:longint);
+procedure EquNumProcess(s:string;k:word; var n1,n2:extended);
 begin
 	n1:=EquProcess(copy(s,1,k-1));
 	n2:=EquProcess(copy(s,k+1,(length(s)-k-1)));
 end;
 
-function EquProcess(s:string):longint;
+function EquProcess(s:string):extended;
 var 
-	n1,n2:longint;
+	n1,n2:extended;
 	err:word;
 begin
 	if (pos('+',s)<>0) then begin
@@ -123,14 +123,14 @@ begin
 		EquNumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
-//	else if (pos('/',s)<>0) then begin
-//		EquNumProcess(s,pos('*',s),n1,n2);
-//		EquProcess:=n1/n2;
-//	end	
-	else if (pos(':',s)<>0) then begin
-		EquNumProcess(s,pos(':',s),n1,n2);
-		EquProcess:=n1 div n2;
-	end
+	else if (pos('/',s)<>0) then begin
+		EquNumProcess(s,pos('*',s),n1,n2);
+		EquProcess:=n1/n2;
+	end	
+//	else if (pos(':',s)<>0) then begin
+//		EquNumProcess(s,pos(':',s),n1,n2);
+//		EquProcess:=n1 div n2;
+//	end
 	else if (pos('%',s)<>0) then begin
 		EquNumProcess(s,pos('%',s),n1,n2);
 		EquProcess:=n1+n2;
@@ -149,7 +149,7 @@ begin
 		or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)
 			then begin
 				ans:=EquProcess(s);
-				write(ans);
+				write(ans:0:2);
 			end
 	else write(ErrorId1);
 end;
