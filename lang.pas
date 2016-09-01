@@ -16,7 +16,7 @@ implementation
 
 procedure LangVi;
 begin
-    write('Dang Tai Goi Ngon Ngu . . .');
+    write('Dang Tai Goi Ngon Ngu . . .');ửiteln;
 
     ProgramInfo:=ProgramName+' '+Version+' Ban Dung So '+VersionBuild+' '+VersionInfo+'.';
     DoneMsg:='Xong!';
