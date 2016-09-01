@@ -48,11 +48,11 @@ begin
 	ActiveLang('en');
 	writeln(ProgramName,' ',VersionInfo,' Version ',Version,' Build ',VersionBuild);
 	writeln(CopyrightInfo);
-	if paramstr(1)='-e' then begin
+	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		for i:=2 to ParamCount do tmpString:=tmpString+paramstr(i);
 		write('[VMath] >> ');Equation(tmpString);
 	end else
-	if paramstr(1)='-r' then begin
+	if (paramstr(1)='-r') and (paramstr(2)<>'') then begin
 		write('[VMath] >> Processing . . .');
 		RunFile(paramstr(2),1);
 	end 
