@@ -27,7 +27,7 @@ procedure Welcome;
 		assign(f,'start.vmath');
 		Reset(f);
 		{$I+}
-		if (IOResult<>0) then 
+		if (IOResult=0) then 
 		repeat
 			readln(f,tmpString);
 			CmdProcess(tmpString);
