@@ -5,7 +5,6 @@ uses sysutils,crt,math,io,lang,programStr,basic;
 var 
 	tmpString:string;
 
-
 procedure Welcome;
 	var 
 		f:text;
