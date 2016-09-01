@@ -2,6 +2,7 @@
 
 #### VIETNAMESE
 **VMath** là phần mềm toán học miễn phí cho mọi người.
+Chỉ được phép sao lưu, tái phân phối lại phần mềm hay mã nguồn của phần mềm này cho mục đích phi thương mại.
 *Bao gồm các tính năng:*
 - Nhập xuất dữ liệu
 - Các hàm toán học
@@ -9,6 +10,7 @@
 
 #### ENGLISH
 **VMath** is a free math program for everyone.
+Redistribution and copying of this program and its source code is allowed only for non-commercial purposes.
 *Featuring:*
 - Input / Output Data
 - Math Functions
@@ -16,8 +18,8 @@
 
 ## Info
 
-**Programmer**: Nguyễn Tuấn Dũng *(Winux8yt3)*
-*Email*: ntd.112552@gmail.com
+- **Programmer**: Nguyễn Tuấn Dũng *(Winux8yt3)*
+- *Email*: ntd.112552@gmail.com
 
 ## Project Website
 

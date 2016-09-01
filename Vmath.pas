@@ -22,8 +22,8 @@ procedure Welcome;
 			close(f);
 		end;
 		ReadFile('Welcome.dat');
-		ReadFile('startup.vmath');
 		writeln(WelcomeMsg);
+		ReadFile('startup.vmath');
 	end;
 
 begin
