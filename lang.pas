@@ -6,7 +6,7 @@ uses sysutils,programStr;
 
 var 
     ProgramInfo,WelcomeMsg,DoneMsg,LangLoadMsg:string;
-    LoadText,DateText,TimeText,InputText,InfoText:string;
+    LoadText,DateText,TimeText,InputText,OutputText,InfoText:string;
     DayNum:array[0..6] of string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3:string;
 
