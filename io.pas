@@ -164,7 +164,7 @@ begin
 	assign(f,FName);
 	Reset(f);
 	{$I+}
-	if IOResult<>0 then write(ErrorId3)
+	if (IOResult<>0) then writeln(ErrorId3)
 	else begin
 		k:=length(Fname)-pos('.',Fname);
 		extension:=copy(Fname,pos('.',Fname)+1,k);

@@ -16,7 +16,7 @@ implementation
 
 procedure LangVi;
 begin
-    write('Dang Tai Goi Ngon Ngu . . .');ửiteln;
+    write('Dang Tai Goi Ngon Ngu . . .');writeln;
 
     ProgramInfo:=ProgramName+' '+Version+' Ban Dung So '+VersionBuild+' '+VersionInfo+'.';
     DoneMsg:='Xong!';
@@ -72,7 +72,7 @@ procedure ActiveLang(s:string);
 begin
     case lowercase(s) of
         'vi'    :   LangVi;
-        'en'    :   LangEn 
+        'en'    :   LangEn
     else LangEn;
     end;
 end;

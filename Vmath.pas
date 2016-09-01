@@ -23,7 +23,15 @@ procedure Welcome;
 		end;
 		ReadFile('Welcome.dat');
 		writeln(WelcomeMsg);
-		ReadFile('startup.vmath');
+		{$I-}
+		assign(f,'start.vmath');
+		Reset(f);
+		{$I+}
+		if (IOResult<>0) then 
+		repeat
+			readln(f,tmpString);
+			CmdProcess(tmpString);
+		until eof(f);
 	end;
 
 begin
