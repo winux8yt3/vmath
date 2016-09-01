@@ -26,8 +26,9 @@ end;
 function Str2Int (s:string;var err:word):longint;
 var v:longint;
 begin
+	err:=0;
  	val(s,v,err);
- 	if err<>0 then write('<',s,'>:',ErrorId1)
+ 	if err<>0 then writeln('<',s,'>:',ErrorId1)
     else Str2Int:=v;
 end;
 
@@ -56,26 +57,28 @@ function Time():string;
 
 procedure Color(txcolor,BgColor:byte);
 begin
+	writeln(LoadText);
 	TextColor(txcolor);
 	TextBackground(BgColor);
 end;
 
 procedure Help;
 begin
-	writeln('?,help		: Help'); 
-	writeln('clear		: Clear Screen');
-	writeln('color		: Change Text And Background Color');
-	writeln('date		: Print Date');
-	writeln('delay		: Wait (milisecond)');
-	writeln('exit		: Exit');
-	writeln('info		: Info of program');
-	writeln('pause		: Pause the program');
-	writeln('preans		: Print last output');
-	writeln('print		: Print Text');
-	writeln('run		: Print Text from file or Run');
-	writeln('time		: Print Time');
 	writeln;
-	writeln('EQUATION	 + | - | * | % | : | ^');
+	writeln('?,info     : About the Program'); 
+	writeln('clear      : Clear screen');
+	writeln('color      : Change text and background color');
+	writeln('date       : Print date');
+	writeln('delay      : Wait (milisecond)');
+	writeln('exit       : Exit');
+	writeln('help       : Instruction');
+	writeln('pause      : Pause the program');
+	writeln('preans     : Print last math answer');
+	writeln('print      : Print text');
+	writeln('run        : Print text from file or Run');
+	writeln('time       : Print time');
+	writeln;
+	writeln('EQUATION    + | - | * | /');
 end;
 
 procedure Msg(s:string);

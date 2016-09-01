@@ -22,6 +22,7 @@ procedure Welcome;
 			close(f);
 		end;
 		ReadFile('Welcome.dat');
+		ReadFile('startup.vmath');
 		writeln(WelcomeMsg);
 	end;
 
@@ -35,6 +36,8 @@ begin
 	repeat
 		writeln;
 		write(InputText,' >> ');readln(tmpString);
+		writeln;
+		write('Output >> ');
 		CmdProcess(tmpString);
 	until tmpString='exit';
 end.	

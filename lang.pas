@@ -6,7 +6,7 @@ uses sysutils,programStr;
 
 var 
     ProgramInfo,WelcomeMsg,DoneMsg,LangLoadMsg:string;
-    DateText,TimeText,InputText,InfoText:string;
+    LoadText,DateText,TimeText,InputText,InfoText:string;
     DayNum:array[0..6] of string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3:string;
 
@@ -22,6 +22,7 @@ begin
     DoneMsg:='Xong!';
     WelcomeMsg:='Chao mung ban den voi '+ProgramInfo;
 
+    LoadText:='Dang Tai...';
     InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-xplorer';
     DateText:='Hom nay la: ';
     TimeText:='Bay gio la: ';
@@ -48,9 +49,10 @@ begin
     DoneMsg:='Done';    
     WelcomeMsg:='Welcome you to '+ProgramInfo;
 
+    LoadText:='Loading...';
     InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-xplorer';
     DateText:='Today is: ';
-    TimeText:='Now is:  ';
+    TimeText:='Now is: ';
     InputText:='Input';
 
     DayNum[0]:='Sunday';
@@ -70,7 +72,8 @@ procedure ActiveLang(s:string);
 begin
     case lowercase(s) of
         'vi'    :   LangVi;
-        'en'    :   LangEn;  
+        'en'    :   LangEn 
+    else LangEn;
     end;
 end;
 

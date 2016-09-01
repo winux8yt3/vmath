@@ -21,7 +21,7 @@ procedure ReadFile(FName:string);
 
 implementation
 
-procedure ClrSpace (s:string);
+function ClrSpace (s:string):string;
 var p:byte;
 begin
 	p:=pos(' ',s);
@@ -29,12 +29,13 @@ begin
 		delete(s,p,1);
 		p:=pos(' ',s);
 	end;
+	ClrSpace:=s;
 end;
 
 procedure Print(s:string);
 begin
 	delete(s,1,5);
-	s:=trim(s);
+	s:=trimleft(s);
 	writeln(s);
 end;
 
@@ -47,21 +48,19 @@ end;
 
 procedure CmdSyntax(s:string);
 var 
-	p:byte;  //Position of word
+	p:byte;  //Position of blank space
 begin
+	s:=lowercase(s);
 	syntaxNum:=0;
 	p:=pos(' ',s);
-	if p = 0 then syntax[syntaxNum]:=s
-	else begin
-		repeat
-			syntax[syntaxNum]:=copy(s,1,p-1);
-			delete(s,1,p-1);
-			inc(syntaxNum);
-			s:=Trim(s);
-			p:=pos(' ',s);
-		until p = 0;
-		syntax[syntaxNum+1]:=copy(s,1,length(s));
+	while p<>0 do begin
+		syntax[syntaxNum]:=copy(s,1,p-1);
+		delete(s,1,p-1);
+		inc(syntaxNum);
+		s:=Trim(s);
+		p:=pos(' ',s);
 	end;
+	syntax[syntaxNum]:=copy(s,1,length(s));
 end;
 
 procedure CmdProcess(s:string);
@@ -72,17 +71,16 @@ begin
 	n1:=0;n2:=0;
 	ClrSyntax;
 	s:=Trim(s);
-	s:=lowercase(s);
 	CmdSyntax(s);
 	case syntax[0] of
 		'?','info'	:	Info;
 		'help'		:	Help;
-		'date'		:	Date;
-		'time'		:	Time;
+		'date'		:	writeln(Date);
+		'time'		:	writeln(Time);
 		'exit'		:	exit;
 		'clear'		:	clrscr;
 		'print'		:	Print(s);
-		'preans'	:	writeln(ans);
+		'preans'	:	writeln(ans:0:2);
 		'run'		:	ReadFile(syntax[1]);
 		'pause'		:	Msg('Press Enter To Continue . . .');
 		'delay'		:	begin
@@ -95,7 +93,7 @@ begin
 								n2:=Str2Int(syntax[2],err);
 								if (err = 0) then color(n1,n2);
 							end;	 
-						end;
+						end
 	else Equation(s);
 	end;
 end;
@@ -103,7 +101,7 @@ end;
 procedure EquNumProcess(s:string;k:word; var n1,n2:extended);
 begin
 	n1:=EquProcess(copy(s,1,k-1));
-	n2:=EquProcess(copy(s,k+1,(length(s)-k-1)));
+	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
 end;
 
 function EquProcess(s:string):extended;
@@ -124,34 +122,34 @@ begin
 		EquProcess:=n1*n2;
 	end	
 	else if (pos('/',s)<>0) then begin
-		EquNumProcess(s,pos('*',s),n1,n2);
+		EquNumProcess(s,pos('/',s),n1,n2);
 		EquProcess:=n1/n2;
 	end	
 //	else if (pos(':',s)<>0) then begin
 //		EquNumProcess(s,pos(':',s),n1,n2);
 //		EquProcess:=n1 div n2;
 //	end
-	else if (pos('%',s)<>0) then begin
-		EquNumProcess(s,pos('%',s),n1,n2);
-		EquProcess:=n1+n2;
-	end
-	else if (pos('^',s)<>0) then begin
-		EquNumProcess(s,pos('^',s),n1,n2);
-		EquProcess:=n1+n2;
-	end
+//	else if (pos('%',s)<>0) then begin
+//		EquNumProcess(s,pos('%',s),n1,n2);
+//		EquProcess:=n1 mod n2;
+//	end
+//	else if (pos('^',s)<>0) then begin
+//		EquNumProcess(s,pos('^',s),n1,n2);
+//		EquProcess:=n1n2;
+//	end
 	else EquProcess:=Str2Int(s,err);
 end;
 // Loop back EquProcess function if there is a complex equation
 procedure Equation(s:string);
 begin
-	ClrSpace(s);
+	s:=ClrSpace(s);
 	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
-		or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)
-			then begin
-				ans:=EquProcess(s);
-				write(ans:0:2);
-			end
-	else write(ErrorId1);
+		{or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)}
+		then begin
+			ans:=EquProcess(s);
+			writeln(ans:0:2);
+		end
+	else writeln(ErrorId1);
 end;
 
 
@@ -172,7 +170,7 @@ begin
 		extension:=copy(Fname,pos('.',Fname)+1,k);
 		repeat
 			readln(f,str);
-			if extension='vmath' then CmdProcess(str)
+			if (extension='vmath') then CmdProcess(str)
 				else writeln(str);
 		until eof(f);
 		close(f);
