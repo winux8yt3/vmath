@@ -100,15 +100,15 @@ begin
 	end;
 end;
 
-procedure EquNumProcess(s:string;k:word; var n1,n2:variant);
+procedure EquNumProcess(s:string;k:word; var n1,n2:longint);
 begin
 	n1:=EquProcess(copy(s,1,k-1));
 	n2:=EquProcess(copy(s,k+1,(length(s)-k-1)));
 end;
 
-function EquProcess(s:string):variant;
+function EquProcess(s:string):longint;
 var 
-	n1,n2:variant;
+	n1,n2:longint;
 	err:word;
 begin
 	if (pos('+',s)<>0) then begin
