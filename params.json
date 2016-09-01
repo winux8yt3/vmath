@@ -1,0 +1,6 @@
+{
+  "name": "VMath",
+  "tagline": "",
+  "body": "### VIETNAMESE\r\n**VMath** là phần mềm toán học miễn phí cho mọi người.\r\n*Bao gồm các tính năng:*\r\n- Nhập xuất dữ liệu\r\n- Các hàm toán học\r\n- 2 Ngôn Ngữ: Tiếng Việt & Tiếng Anh\r\n\r\n### ENGLISH\r\n**VMath** is a free math program for everyone.\r\n*Featuring:*\r\n- Input / Output Data\r\n- Math Functions\r\n- 2 Lauguages: Vietnamese & English\r\n\r\n## Project Website\r\n\r\n- [SourceForge](https://bit.ly/vmath-xplorer)\r\n\r\n> Currently the project is compiled only for Windows. For other OS please download [DOSBox](http://www.dosbox.com/download.php?main=1) or any DOS simulator.\r\n\r\n## Author\r\n\r\n- **Programmer**: Nguyễn Tuấn Dũng *(@Winux8yt3)*\r\n- *Email*: ntd.112552@gmail.com\r\n\r\n## License\r\n[MIT License](https://github.com/winux8yt3/vmath/blob/master/LICENSE) (c) Nguyễn Tuấn Dũng *(@Winux8yt3)*",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
