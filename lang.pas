@@ -18,7 +18,7 @@ procedure LangVi;
 begin
     write('Dang Tai Goi Ngon Ngu . . .');writeln;
 
-    ProgramInfo:=ProgramName+' '+Version+' Ban Dung So '+VersionBuild+' '+VersionInfo+'.';
+    ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Ban Dung So '+VersionBuild+'.';
     DoneMsg:='Xong!';
     WelcomeMsg:='Chao mung ban den voi '+ProgramInfo;
 
@@ -46,7 +46,7 @@ procedure LangEn;
 begin
     write('Loading Language Pack . . .');writeln;
 
-    ProgramInfo:=ProgramName+' '+Version+' Build '+VersionBuild+' '+VersionInfo+'.';
+    ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Build '+VersionBuild+'.';
     DoneMsg:='Done';    
     WelcomeMsg:='Welcome you to '+ProgramInfo;
 

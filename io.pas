@@ -18,6 +18,7 @@ procedure CmdProcess(s:string);
 procedure Equation(s:string);
 function EquProcess(s:string):extended;
 procedure ReadFile(FName:string);
+procedure RunFile(FName:string;w:byte);
 
 implementation
 
@@ -81,7 +82,8 @@ begin
 		'clear'		:	clrscr;
 		'print'		:	Print(s);
 		'preans'	:	writeln(ans:0:2);
-		'run'		:	ReadFile(syntax[1]);
+		'read'		:	ReadFile(syntax[1]);
+		'run'		:	RunFile(syntax[1],1);
 		'pause'		:	Msg('Press Enter To Continue . . .');
 		'delay'		:	begin
 							n1:=Str2Int(syntax[1],err);
@@ -97,6 +99,19 @@ begin
 	else Equation(s);
 	end;
 end;
+
+procedure Equation(s:string);
+begin
+	s:=ClrSpace(s);
+	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
+		{or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)}
+		then begin
+			ans:=EquProcess(s);
+			writeln(ans:0:2);
+		end
+	else writeln('<',s,'> : ',ErrorId1);
+end;
+
 
 procedure EquNumProcess(s:string;k:word; var n1,n2:extended);
 begin
@@ -139,42 +154,54 @@ begin
 //	end
 	else EquProcess:=Str2Int(s,err);
 end;
-// Loop back EquProcess function if there is a complex equation
-procedure Equation(s:string);
-begin
-	s:=ClrSpace(s);
-	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
-		{or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)}
-		then begin
-			ans:=EquProcess(s);
-			writeln(ans:0:2);
-		end
-	else writeln(ErrorId1);
-end;
+// Loop back EquProcess function if there is a complex Equation
 
+function ChkFile(FName:string):word;
+var f:text;
+begin
+	{$I-}
+		assign(f,FName);
+		Reset(f);
+	{$I+}
+	ChkFile:=IOResult;
+end;
 
 procedure ReadFile(FName:string);
 var 
 	f:text;
-	extension,str:string;
-	k:integer;
+	str:string;
 begin
-	FName:=Trim(FName);
 	{$I-}
-	assign(f,FName);
-	Reset(f);
+		assign(f,FName);
+		Reset(f);
 	{$I+}
-	if (IOResult<>0) then writeln(ErrorId3)
-	else begin
-		k:=length(Fname)-pos('.',Fname);
-		extension:=copy(Fname,pos('.',Fname)+1,k);
+	if IOResult = 0 then begin
 		repeat
 			readln(f,str);
-			if (extension='vmath') then CmdProcess(str)
-				else writeln(str);
+			writeln(str);
 		until eof(f);
 		close(f);
-	end;
+	end
+	else writeln('<',FName,'> : ',ErrorId3);
 end;
 
+procedure RunFile(FName:string;w:byte);
+var 
+	f:text;
+	str:string;
+begin
+	if pos('.',FName)=0 then FName:=FName+'.vmath';
+	{$I-}
+		assign(f,FName);
+		Reset(f);
+	{$I+}
+	if IOResult = 0 then begin
+		repeat
+			readln(f,str);
+			CmdProcess(str);
+		until eof(f);
+		close(f);
+	end
+	else if w = 1 then writeln('<',FName,'> : ',ErrorId3);
+end;
 end.
