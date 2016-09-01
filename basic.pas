@@ -28,7 +28,7 @@ var v:longint;
 begin
 	err:=0;
  	val(s,v,err);
- 	if err<>0 then writeln('<',s,'> : ',ErrorId1)
+ 	if err<>0 then writeln('<',s,'>:',ErrorId1)
     else Str2Int:=v;
 end;
 

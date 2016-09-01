@@ -149,8 +149,9 @@ begin
 			ans:=EquProcess(s);
 			writeln(ans:0:2);
 		end
-	else writeln('<',s,'> : ',ErrorId1);
+	else writeln(ErrorId1);
 end;
+
 
 procedure ReadFile(FName:string);
 var 
@@ -163,35 +164,17 @@ begin
 	assign(f,FName);
 	Reset(f);
 	{$I+}
-	if (IOResult = 0) then begin
+	if (IOResult<>0) then writeln(ErrorId3)
+	else begin
+		k:=length(Fname)-pos('.',Fname);
+		extension:=copy(Fname,pos('.',Fname)+1,k);
 		repeat
 			readln(f,str);
-			writeln(str);
+			if (extension='vmath') then CmdProcess(str)
+				else writeln(str);
 		until eof(f);
 		close(f);
-	end
-	else writeln(ErrorId3);
+	end;
 end;
 
-procedure RunFile(FName:string);
-var 
-	f:text;
-	extension,str:string;
-	k:integer;
-begin
-	FName:=Trim(FName);
-	if pos('.',FName)=0 then FName:=FName+'.vmath';
-	{$I-}
-	assign(f,FName);
-	Reset(f);
-	{$I+}
-	if (IOResult = 0) then begin
-		repeat
-			readln(f,str);
-			CmdProcess(str);
-		until eof(f);
-		close(f);
-	end
-	else writeln('<',FName,'> : ',ErrorId3);
-end;
 end.
