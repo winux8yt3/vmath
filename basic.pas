@@ -12,7 +12,7 @@ function Date():string;
 function Time():string;
 procedure Color(txcolor,BgColor:byte);
 procedure Help;
-procedure Msg(s:variant);
+procedure Msg(s:string);
 
 implementation
 
@@ -78,7 +78,7 @@ begin
 	writeln('EQUATION	 + | - | * | % | : | ^');
 end;
 
-procedure Msg(s:variant);
+procedure Msg(s:string);
 begin
 	write(s);readln;
 end;

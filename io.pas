@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	sysutils,crt,dos,variants,lang,basic;
+	sysutils,crt,dos,lang,basic;
 
 type 
 	tSyntax = array[0..256]of string;
@@ -11,12 +11,12 @@ type
 var
 	syntax: tSyntax;
 	syntaxNum:byte;
-	ans:variant;
+	ans:string;
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
 procedure Equation(s:string);
-function EquProcess(s:string):variant;
+function EquProcess(s:string):longint;
 procedure ReadFile(FName:string);
 
 implementation
