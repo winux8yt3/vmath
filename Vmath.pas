@@ -45,7 +45,7 @@ begin
 		writeln;
 		write(InputText,' >> ');readln(tmpString);
 		writeln;
-		write('Output >> ');
+		write(OutputText,' >> ');
 		CmdProcess(tmpString);
 	until tmpString='exit';
 end.	

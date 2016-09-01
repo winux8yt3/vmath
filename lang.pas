@@ -27,6 +27,7 @@ begin
     DateText:='Hom nay la: ';
     TimeText:='Bay gio la: ';
     InputText:='Nhap';
+    OutputText:='Xuat';
     
     DayNum[0]:='Chu Nhat';
     DayNum[1]:='Thu Hai';
@@ -54,6 +55,7 @@ begin
     DateText:='Today is: ';
     TimeText:='Now is: ';
     InputText:='Input';
+    OutputText:='Output';
 
     DayNum[0]:='Sunday';
     DayNum[1]:='Monday';
