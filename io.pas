@@ -12,6 +12,7 @@ var
 	syntax: tSyntax;
 	syntaxNum:byte;
 	ans:extended;
+	dec:word;
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
@@ -81,7 +82,8 @@ begin
 		'exit'		:	exit;
 		'clear'		:	clrscr;
 		'print'		:	Print(s);
-		'preans'	:	writeln(ans:0:2);
+		'dec'		:	Dec:=Str2Int(syntax[1]);
+		'preans'	:	writeln(ans:0:dec);
 		'read'		:	ReadFile(syntax[1]);
 		'run'		:	RunFile(syntax[1],1);
 		'pause'		:	Msg('Press Enter To Continue . . .');
@@ -107,7 +109,7 @@ begin
 		{or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)}
 		then begin
 			ans:=EquProcess(s);
-			writeln(ans:0:2);
+			writeln(ans:0:dec);
 		end
 	else writeln('<',s,'> : ',ErrorId1);
 end;

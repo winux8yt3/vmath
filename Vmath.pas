@@ -26,7 +26,7 @@ begin
 	writeln(WelcomeMsg);
 end;
 
-procedure ui;
+procedure console;
 begin
 	write('Choose Your Language [Default is English]');writeln;
 	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
@@ -35,6 +35,7 @@ begin
 	clrscr;
 	Welcome;
 	RunFile('start.vmath',0);
+	Dec:=2;
 	repeat
 		writeln;
 		write(InputText,' >> ');readln(tmpString);
@@ -56,5 +57,5 @@ begin
 		write('[VMath] >> Processing . . .');
 		RunFile(paramstr(2),1);
 	end 
-	else ui;
+	else console;
 end.	
