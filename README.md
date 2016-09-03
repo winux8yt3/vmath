@@ -32,7 +32,7 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ### Version 0.7.1 *Build 160903*
 
-- **Fixed** `-` and `\` Operator
+- **Fixed** `-` and `/` Operator
 
 ### Version 0.7 *Build 160901*
 
