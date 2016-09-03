@@ -26,15 +26,17 @@ Redistribution and copying of this program and its source code is allowed only f
 - [Program](https://bit.ly/vmath-xplorer)
 - [Source Code](https://bit.ly/vmath-source)
 
-> Currently the project is compiled only for Windows. For other OS please download [DOSBox](http://www.dosbox.com/download.php?main=1) or any DOS simulator.
+> Currently the project is compiled only for Windows. For other OS please download Wine.
 
 ## Changelog
 
-### Version 0.7
+### Version 0.7.1 *Build 160903*
 
-*Build 160901*
+- **Fixed** `-` and `/` Operator
 
-- **Added** Math Functions *(This function is too big so I had jumped the Major number)*
+### Version 0.7 *Build 160901*
+
+- **Added** Math Operators
 - **Added** `PreAns`
 - **Added** `Help`
 - **Added** `Delay`
@@ -42,9 +44,7 @@ Redistribution and copying of this program and its source code is allowed only f
 - **Fixed** `Run`
 - **Fixed** `Color`
 
-### Version 0.5.1
-
-*Build 160821-2200*
+### Version 0.5.1 *Build 160821-2200*
 
 - **Added** `Color`
 - **Added** `Run`
