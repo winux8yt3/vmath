@@ -17,6 +17,7 @@ end;
 
 procedure console;
 begin
+	clrscr;
 	write('Choose Your Language [Default is English]');writeln;
 	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
 	write('(En | Vi) >> ');readln(tmpString);

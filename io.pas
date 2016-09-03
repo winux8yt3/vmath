@@ -87,6 +87,7 @@ begin
 		'dec'		:	begin
 							n1:=Str2Int(syntax[1],err);
 							if (err = 0) and (n1>0) then dec:=n1;
+							writeln(DoneMsg);
 						end;
 		'delay'		:	begin
 							n1:=Str2Int(syntax[1],err);

@@ -78,7 +78,7 @@ begin
 	writeln('clear      : ',HelpTextClear);
 	writeln('color      : ',HelpTextColor);
 	writeln('date       : ',HelpTextDate);
-	writeln('dec		: ',HelpTextDec);
+	writeln('dec        : ',HelpTextDec);
 	writeln('exit       : ',HelpTextExit);
 	writeln('help       : ',HelpTextHelp);
 	writeln('pause      : ',HelpTextPause);
