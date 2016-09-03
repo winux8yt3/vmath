@@ -32,6 +32,14 @@ begin
     else Str2Int:=v;
 end;
 
+function PosLast (ch,s:string):word;
+var k:word;
+begin
+	PosLast:=0;k:=1;
+	for k:=1 to length(s) do
+		if ch=copy(s,k,length(ch)) then PosLast:=k;
+end;
+
 procedure Info;
 begin
     writeln(ProgramInfo);

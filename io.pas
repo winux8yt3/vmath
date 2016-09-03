@@ -131,7 +131,7 @@ begin
 		EquProcess:=n1+n2;
 	end
 	else if (pos('-',s)<>0) then begin
-		EquNumProcess(s,pos('-',s),n1,n2);
+		EquNumProcess(s,poslast('-',s),n1,n2);
 		EquProcess:=n1-n2;
 	end
 	else if (pos('*',s)<>0) then begin
@@ -139,7 +139,7 @@ begin
 		EquProcess:=n1*n2;
 	end	
 	else if (pos('/',s)<>0) then begin
-		EquNumProcess(s,pos('/',s),n1,n2);
+		EquNumProcess(s,poslast('/',s),n1,n2);
 		EquProcess:=n1/n2;
 	end	
 //	else if (pos(':',s)<>0) then begin
