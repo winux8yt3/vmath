@@ -7,6 +7,7 @@ uses
 
 function Int2Str (v:Longint):String;
 function Str2Int (s:string;var err:word):longint;
+function PosLast (ch,s:string):word;
 procedure Info;
 function Date():string;
 function Time():string;
@@ -30,6 +31,14 @@ begin
  	val(s,v,err);
  	if err<>0 then writeln('<',s,'>:',ErrorId1)
     else Str2Int:=v;
+end;
+
+function PosLast (ch,s:string):word;
+var k:word;
+begin
+	PosLast:=0;k:=1;
+	for k:=1 to length(s) do
+		if ch=copy(s,k,length(ch)) then PosLast:=k;
 end;
 
 procedure Info;
