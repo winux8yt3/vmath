@@ -4,25 +4,15 @@ uses sysutils,crt,io,lang,programStr,basic;
 
 var 
 	tmpString:string;
-	i:longint;
+	i,c:longint;
 
 procedure Welcome;
 var 
 	f:text;
 begin
-	{$I-}
-	assign(f,'Welcome.dat');
-	Reset(f);
-	{$I+}
-	if IOResult<>0 then begin
-		assign(f,'Welcome.dat');
-		rewrite(f);
-		writeln(f,'===========================================');
-		writeln(f,'               VMath Xplorer               ');
-		writeln(f,'===========================================');
-		close(f);
-	end;
-	ReadFile('Welcome.dat');
+	writeln('===========================================');
+	writeln('               VMath Xplorer               ');
+	writeln('===========================================');
 	writeln(WelcomeMsg);
 end;
 
@@ -50,7 +40,12 @@ begin
 	writeln(ProgramName,' ',VersionInfo,' Version ',Version,' Build ',VersionBuild);
 	writeln(CopyrightInfo);
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
-		for i:=2 to ParamCount do tmpString:=tmpString+paramstr(i);
+		c:=2;
+		if paramstr(2)='-d' then begin
+			dec:=paramstr(3);
+			c:=4;
+		end;
+		for i:=c to ParamCount do tmpString:=tmpString+paramstr(i);
 		write('[VMath] >> ');Equation(tmpString);
 	end else
 	if (paramstr(1)='-r') and (paramstr(2)<>'') then begin
