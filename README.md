@@ -36,7 +36,7 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ### Version 0.7 *Build 160901*
 
-- **Added** Math Operators 
+- **Added** Math Operators
 - **Added** `PreAns`
 - **Added** `Help`
 - **Added** `Delay`
