@@ -53,4 +53,4 @@ begin
 		RunFile(paramstr(2),1);
 	end 
 	else console;
-end.	
+end.
