@@ -26,7 +26,7 @@ Redistribution and copying of this program and its source code is allowed only f
 - [Program](https://bit.ly/vmath-xplorer)
 - [Source Code](https://bit.ly/vmath-source)
 
-> Currently the project is compiled only for Windows. For other OS please download [DOSBox](http://www.dosbox.com/download.php?main=1) or any DOS simulator.
+> Currently the project is compiled only for Windows. For other OS please download Wine.
 
 ## Changelog
 
