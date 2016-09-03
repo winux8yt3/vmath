@@ -18,7 +18,6 @@ procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
 procedure Equation(s:string);
 function EquProcess(s:string):extended;
-procedure ReadFile(FName:string);
 procedure RunFile(FName:string;w:byte);
 
 implementation
@@ -84,7 +83,6 @@ begin
 		'print'		:	Print(s);
 		'dec'		:	Dec:=Str2Int(syntax[1]);
 		'preans'	:	writeln(ans:0:dec);
-		'read'		:	ReadFile(syntax[1]);
 		'run'		:	RunFile(syntax[1],1);
 		'pause'		:	Msg('Press Enter To Continue . . .');
 		'delay'		:	begin
@@ -166,25 +164,6 @@ begin
 		Reset(f);
 	{$I+}
 	ChkFile:=IOResult;
-end;
-
-procedure ReadFile(FName:string);
-var 
-	f:text;
-	str:string;
-begin
-	{$I-}
-		assign(f,FName);
-		Reset(f);
-	{$I+}
-	if IOResult = 0 then begin
-		repeat
-			readln(f,str);
-			writeln(str);
-		until eof(f);
-		close(f);
-	end
-	else writeln('<',FName,'> : ',ErrorId3);
 end;
 
 procedure RunFile(FName:string;w:byte);
