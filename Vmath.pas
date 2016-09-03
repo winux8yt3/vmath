@@ -5,10 +5,9 @@ uses sysutils,crt,io,lang,programStr,basic;
 var 
 	tmpString:string;
 	i,c:longint;
+	err:word;
 
 procedure Welcome;
-var 
-	f:text;
 begin
 	writeln('===========================================');
 	writeln('               VMath Xplorer               ');
@@ -42,14 +41,14 @@ begin
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
 		if paramstr(2)='-d' then begin
-			dec:=paramstr(3);
+			dec:=Str2Int(paramstr(3),err);
 			c:=4;
 		end;
 		for i:=c to ParamCount do tmpString:=tmpString+paramstr(i);
 		write('[VMath] >> ');Equation(tmpString);
 	end else
 	if (paramstr(1)='-r') and (paramstr(2)<>'') then begin
-		write('[VMath] >> Processing . . .');
+		writeln('[VMath] >> Processing . . .');
 		RunFile(paramstr(2),1);
 	end 
 	else console;

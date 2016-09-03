@@ -81,10 +81,13 @@ begin
 		'exit'		:	exit;
 		'clear'		:	clrscr;
 		'print'		:	Print(s);
-		'dec'		:	Dec:=Str2Int(syntax[1]);
 		'preans'	:	writeln(ans:0:dec);
 		'run'		:	RunFile(syntax[1],1);
 		'pause'		:	Msg('Press Enter To Continue . . .');
+		'dec'		:	begin
+							n1:=Str2Int(syntax[1],err);
+							if (err = 0) and (n1>0) then dec:=n1;
+						end;
 		'delay'		:	begin
 							n1:=Str2Int(syntax[1],err);
 							if (err = 0) and (n1>0) then delay(n1);

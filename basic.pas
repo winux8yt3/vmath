@@ -7,6 +7,7 @@ uses
 
 function Int2Str (v:Longint):String;
 function Str2Int (s:string;var err:word):longint;
+function PosLast (ch,s:string):word;
 procedure Info;
 function Date():string;
 function Time():string;
@@ -77,7 +78,7 @@ begin
 	writeln('clear      : ',HelpTextClear);
 	writeln('color      : ',HelpTextColor);
 	writeln('date       : ',HelpTextDate);
-	writeln('delay      : ',HelpTextDelay);
+	writeln('dec		: ',HelpTextDec);
 	writeln('exit       : ',HelpTextExit);
 	writeln('help       : ',HelpTextHelp);
 	writeln('pause      : ',HelpTextPause);

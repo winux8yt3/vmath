@@ -8,7 +8,7 @@ var
     ProgramInfo,WelcomeMsg,DoneMsg,LangLoadMsg:string;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText:string;
     DayNum:array[0..6] of string;
-    HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDelay,HelpTextExit,HelpTextHelp:string;
+    HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit,HelpTextHelp:string;
     HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint,HelpTextRun,HelpTextTime:string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3:string;
 
@@ -22,7 +22,7 @@ begin
 
     ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Ban Dung So '+VersionBuild+'.';
     DoneMsg:='Xong!';
-    WelcomeMsg:='Chao mung ban den voi '+ProgramInfo;
+    WelcomeMsg:='Chao mung ban den voi '+ProgramInfo+' '+VersionInfo;
 
     LoadText:='Dang Tai...';
     InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-xplorer';
@@ -43,7 +43,7 @@ begin
     HelpTextClear:='Xoa man hinh';
     HelpTextColor:='Thay doi mau chu va phong nen';
     HelpTextDate:='In ra ngay';
-    HelpTextDelay:='Cho (mili giay)';
+    HelpTextDec:='Do dai phan thap phan trong ket qua toan hoc';
     HelpTextExit:='Thoat';
     HelpTextHelp:='Huong dan su dung';
     HelpTextPause:='Tam dung chuong trinh';
@@ -84,7 +84,7 @@ begin
     HelpTextClear:='Clear screen';
     HelpTextColor:='Change text and background color';
     HelpTextDate:='Print date';
-    HelpTextDelay:='Wait (milisecond)';
+    HelpTextDec:='Length of decimal number in math result';
     HelpTextExit:='Exit';
     HelpTextHelp:='Instruction';
     HelpTextPause:='Pause the program';
@@ -105,11 +105,6 @@ begin
         'en'    :   LangEn
     else LangEn;
     end;
-end;
-
-finalization
-begin
-    write(DoneMsg);writeln;
 end;
 
 end.
