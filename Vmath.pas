@@ -21,9 +21,10 @@ begin
 	write('Choose Your Language [Default is English]');writeln;
 	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
 	write('(En | Vi) >> ');readln(tmpString);
-	ActiveLang(tmpString);
 	clrscr;
 	Welcome;
+	ActiveLang(tmpString);
+	FunFact(0);
 	RunFile('start.vmath',0);
 	repeat
 		writeln;

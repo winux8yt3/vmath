@@ -14,6 +14,7 @@ function Time():string;
 procedure Color(txcolor,BgColor:byte);
 procedure Help;
 procedure Msg(s:string);
+procedure FunFact(r:byte);
 
 implementation
 
@@ -93,6 +94,18 @@ end;
 procedure Msg(s:string);
 begin
 	write(s);readln;
+end;
+
+procedure FunFact(r:byte);
+begin
+	while r=0 do r:=random(5);
+	write('Fact #',r,': ');
+	case r of
+		1	:writeln(Fact1);
+		2	:writeln(Fact2);
+		3	:writeln(Fact3);
+		4	:writeln(Fact4);
+	end;
 end;
 
 end.

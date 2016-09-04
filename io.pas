@@ -84,6 +84,7 @@ begin
 		'preans'	:	writeln(ans:0:dec);
 		'run'		:	RunFile(syntax[1],1);
 		'pause'		:	Msg('Press Enter To Continue . . .');
+		'funfact'	:	FunFact(0);
 		'dec'		:	begin
 							n1:=Str2Int(syntax[1],err);
 							if (err = 0) and (n1>0) then begin 

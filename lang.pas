@@ -10,6 +10,7 @@ var
     DayNum:array[0..6] of string;
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit,HelpTextHelp:string;
     HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint,HelpTextRun,HelpTextTime:string;
+    Fact1,Fact2,Fact3,Fact4:string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3:string;
 
 procedure ActiveLang(s:string);
@@ -52,6 +53,11 @@ begin
     HelpTextRun:='Chay File .vmath';
     HelpTextTime:='In ra thoi gian';
 
+    Fact1:='Ti le chieu dai va chieu rong cua to giay loai A la 1/sqrt(2)';
+    Fact2:='x^m <> y^n (x,y la so nguyen to; m,n la so tu nhien)';
+    Fact3:='| x,y <> 0 ; x=y |-> x^2=xy -> x^2-y^2=x^y-y^2 -> x+y=y -> 2y=y -> 2=1 ?';
+    Fact4:='| f(n) = n^2 + n + 41 | n < 40 | => f(n) la so nguyen to [by Euler]';
+
     ErrorId1:='Sai cau truc hoac sai cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
@@ -92,6 +98,11 @@ begin
     HelpTextPrint:='Print text';
     HelpTextRun:='Run .vmath File';
     HelpTextTime:='Print time';
+    
+    Fact1:=' Ration of length and width of type-A paper is 1/sqrt(2)';
+    Fact2:='x^m <> y^n (x,y is prime; m,n is natural number)';
+    Fact3:='| x,y <> 0 ; x=y |-> x^2=xy -> x^2-y^2=x^y-y^2 -> x+y=y -> 2y=y -> 2=1 ?';
+    Fact4:='| f(n) = n^2 + n + 41 ; n < 40 | => f(n) is prime [by Euler]';
 
     ErrorId1:='Syntax Error or Input Error.';
     ErrorId2:='Division By Zero.';
