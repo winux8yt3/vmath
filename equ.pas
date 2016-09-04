@@ -11,21 +11,21 @@ var
 
 procedure Equation(s:string);
 function EquProcess(s:string):extended;
-function bool(s:string):boolean;
+function Bool(s:string):boolean;
 procedure cqe2(a,b,c:extended);
 
 implementation
 
 procedure Equation(s:string);
 begin
-	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
-	    or (pos('^',s)<>0) then
+    if (pos('=',s)<>0) or (pos('<',s)<>0) or (pos('>',s)<>0) then
+        writeln(bool(ClrSpace(s)))
+    else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
+	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
 		   	ans:=EquProcess(ClrSpace(s));
 		   	writeln(ans:dec);
 		end
-	else if (pos('=',s)<>0) or (pos('<',s)<>0) or (pos('>',s)<>0) then
-        writeln(bool(ClrSpace(s)))
     else writeln(EReport(s,ErrorId1));
 end;
 
@@ -65,7 +65,7 @@ begin
 end;
 // Loop back EquProcess function if there is a complex Equation
 
-function bool(s:string):boolean;
+function Bool(s:string):boolean;
 var n1,n2:extended;
 begin
     bool := False;
