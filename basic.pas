@@ -6,7 +6,7 @@ uses
     crt,dos,lang,programstr;
 
 function ClrSpace (s:string):string;
-function Num2Str (v:Longint):String;
+function Num2Str (v:extended;d:byte):String;
 function Str2Num (s:string):longint;
 function ChkS2N (s:string):byte;
 function PosLast (ch,s:string):word;
@@ -32,30 +32,23 @@ begin
 	ClrSpace:=s;
 end;
 
-
-function Num2Str (v:Longint):String;
-var s: string;
+function Num2Str (v:extended;d:byte):String;
 begin
- 	Str(v,s);
- 	Num2Str:=s;
+ 	Str(v:0:d,Num2Str);
 end;
 
 function Str2Num (s:string):longint;
 var 
-	v:longint;
 	err:byte;
 begin
- 	val(s,v,err);
-    Str2Num:=v;
+ 	val(s,Str2Num,err);
 end;
 
 function ChkS2N (s:string):byte;
 var 
 	v:longint;
-	err:byte;
 begin
-	val(s,v,err);
-	ChkS2N:=err;
+	val(s,v,ChkS2N);
 end;
 
 function PosLast (ch,s:string):word;
@@ -78,7 +71,7 @@ function Date():string;
 		Year,Month,Day,Num : word;
 	begin
 		GetDate(Year,Month,Day,Num);
-		Date:=DateText+DayNum[Num]+', '+Num2Str(Day)+'/'+Num2Str(Month)+'/'+Num2Str(Year)+'.';
+		Date:=DateText+DayNum[Num]+', '+Num2Str(Day,0)+'/'+Num2Str(Month,0)+'/'+Num2Str(Year,0)+'.';
 	end;
 	
 function Time():string;
@@ -86,7 +79,7 @@ function Time():string;
 		Hr,Min,Sec,Milisec : word;
 	begin
 		GetTime(Hr,Min,Sec,Milisec);
-        Time:=TimeText+Num2Str(Hr)+':'+Num2Str(Min)+':'+Num2Str(Sec)+'.'+Num2Str(Milisec);
+        Time:=TimeText+Num2Str(Hr,0)+':'+Num2Str(Min,0)+':'+Num2Str(Sec,0)+'.'+Num2Str(Milisec,0);
 	end;
 
 procedure Color(txcolor,BgColor:byte);
@@ -124,16 +117,16 @@ end;
 function FunFact(r:byte):string;
 begin
 	while r=0 do r:=random(5);
-	write('Fact #',r,': ');
+	Funfact:='Fact #'+Num2Str(r,0)+': ';
 	case r of
-		1	:FunFact:=Fact1;
-		2	:FunFact:=Fact2;
-		3	:FunFact:=Fact3;
-		4	:FunFact:=Fact4;
+		1	:FunFact:=FunFact+Fact1;
+		2	:FunFact:=FunFact+Fact2;
+		3	:FunFact:=FunFact+Fact3;
+		4	:FunFact:=FunFact+Fact4;
 	end;
 end;
 
-function EReport(str,err:string):string;
+function EReport(str:string;err:string):string;
 begin
 	EReport:='<'+str+'>:'+err;
 end;

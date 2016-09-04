@@ -23,7 +23,7 @@ begin
 	clrscr;
 	Welcome;
 	ActiveLang(tmpString);
-	FunFact(0);
+	write(FunFact(0));
 	RunFile('start.vmath',0);
 	repeat
 		writeln;

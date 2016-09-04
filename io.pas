@@ -55,34 +55,32 @@ begin
 	s:=Trim(s);
 	CmdSyntax(s);
 	case syntax[0] of
-		'?','info'	:	Info;
-		'help'		:	Help;
-		'date'		:	writeln(Date);
-		'time'		:	writeln(Time);
-		'clear'		:	clrscr;
-		'print'		:	Print(s);
-		'preans'	:	writeln(ans:0:dec);
-		'run'		:	RunFile(syntax[1],1);
-		'pause'		:	Msg('Press Enter To Continue . . .');
-		'funfact'	:	FunFact(0);
-		'exit'		:	begin
-							write('Thanks for participating VMath BETA Program');
-							delay(5000);
-							exit;
-						end
-	else if ChkS2N(syntax[1])=0 then
-		case syntax[0] of
-			'delay'			:delay(Str2Num(syntax[1]));
-			'color'			:if (ChkS2N(syntax[2])=0) then
+		'?','info'		:	Info;
+		'help'			:	Help;
+		'date'			:	writeln(Date);
+		'time'			:	writeln(Time);
+		'clear'			:	clrscr;
+		'print'			:	Print(s);
+		'preans'		:	writeln(ans:0:dec);
+		'run'			:	RunFile(syntax[1],1);
+		'pause'			:	Msg('Press Enter To Continue . . .');
+		'funfact'		:	writeln(FunFact(0));
+		'delay'			:if ChkS2N(syntax[1])=0 then
+							 delay(Str2Num(syntax[1]));
+		'color'			:if (ChkS2N(syntax[1])=0) and (ChkS2N(syntax[2])=0) then
 								color(Str2Num(syntax[1]),Str2Num(syntax[2]));
-			'ptb2','cqe2'	:if (ChkS2N(syntax[2])=0) and (ChkS2N(syntax[3])=0) then
+		'ptb2','cqe2'	:if (ChkS2N(syntax[1])=0) and (ChkS2N(syntax[2])=0) and (ChkS2N(syntax[3])=0) then
 								cqe2(Str2Num(syntax[1]),Str2Num(syntax[2]),Str2Num(syntax[3]));
 			'dec'			:begin
 								dec:=Str2Num(syntax[1]);
 								writeln('Dec=',dec);
-							end
-		else Equation(s);
-		end;
+							end;
+		'exit'			:	begin
+								write('Thanks for participating VMath BETA Program');
+								delay(1500);
+								exit;
+							end;
+	else Equation(s);
 	end;
 end;
 
