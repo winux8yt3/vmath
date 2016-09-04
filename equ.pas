@@ -24,7 +24,7 @@ begin
 	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
 		   	ans:=EquProcess(ClrSpace(s));
-		   	writeln(ans:dec);
+		   	writeln(ans:0:dec);
 		end
     else writeln(EReport(s,ErrorId1));
 end;
