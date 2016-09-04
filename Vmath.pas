@@ -25,7 +25,6 @@ begin
 	clrscr;
 	Welcome;
 	RunFile('start.vmath',0);
-	Dec:=2;
 	repeat
 		writeln;
 		write(InputText,' >> ');readln(tmpString);

@@ -12,7 +12,7 @@ var
 	syntax: tSyntax;
 	syntaxNum:byte;
 	ans:extended;
-	dec:word;
+	dec:word = 2;
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
