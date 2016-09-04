@@ -1,5 +1,4 @@
-![VMath](/logo.png)
-# VMath Beta
+![VMath](/logo.png) VMath Beta
 
 #### VIETNAMESE
 **VMath** là phần mềm toán học miễn phí cho mọi người.
