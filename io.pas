@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	sysutils,crt,dos,lang,basic;
+	sysutils,crt,dos,lang,basic,equ;
 
 type 
 	tSyntax = array[0..256]of string;
@@ -11,27 +11,14 @@ type
 var
 	syntax: tSyntax;
 	syntaxNum:byte;
-	ans:extended;
-	dec:word = 2;
+	
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
-procedure Equation(s:string);
-function EquProcess(s:string):extended;
 procedure RunFile(FName:string;w:byte);
 
 implementation
 
-function ClrSpace (s:string):string;
-var p:byte;
-begin
-	p:=pos(' ',s);
-	while p <> 0 do begin
-		delete(s,p,1);
-		p:=pos(' ',s);
-	end;
-	ClrSpace:=s;
-end;
 
 procedure Print(s:string);
 begin
@@ -106,62 +93,6 @@ begin
 	else Equation(s);
 	end;
 end;
-
-procedure Equation(s:string);
-begin
-	s:=ClrSpace(s);
-	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
-		{or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)}
-		then begin
-			ans:=EquProcess(s);
-			writeln(ans:0:dec);
-		end
-	else writeln('<',s,'> : ',ErrorId1);
-end;
-
-
-procedure EquNumProcess(s:string;k:word; var n1,n2:extended);
-begin
-	n1:=EquProcess(copy(s,1,k-1));
-	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
-end;
-
-function EquProcess(s:string):extended;
-var 
-	n1,n2:extended;
-	err:word;
-begin
-	if (pos('+',s)<>0) then begin
-		EquNumProcess(s,pos('+',s),n1,n2);
-		EquProcess:=n1+n2;
-	end
-	else if (pos('-',s)<>0) then begin
-		EquNumProcess(s,poslast('-',s),n1,n2);
-		EquProcess:=n1-n2;
-	end
-	else if (pos('*',s)<>0) then begin
-		EquNumProcess(s,pos('*',s),n1,n2);
-		EquProcess:=n1*n2;
-	end	
-	else if (pos('/',s)<>0) then begin
-		EquNumProcess(s,poslast('/',s),n1,n2);
-		EquProcess:=n1/n2;
-	end	
-//	else if (pos(':',s)<>0) then begin
-//		EquNumProcess(s,pos(':',s),n1,n2);
-//		EquProcess:=n1 div n2;
-//	end
-//	else if (pos('%',s)<>0) then begin
-//		EquNumProcess(s,pos('%',s),n1,n2);
-//		EquProcess:=n1 mod n2;
-//	end
-//	else if (pos('^',s)<>0) then begin
-//		EquNumProcess(s,pos('^',s),n1,n2);
-//		EquProcess:=n1n2;
-//	end
-	else EquProcess:=Str2Int(s,err);
-end;
-// Loop back EquProcess function if there is a complex Equation
 
 function ChkFile(FName:string):word;
 var f:text;

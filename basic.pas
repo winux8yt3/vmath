@@ -5,6 +5,7 @@ interface
 uses
     crt,dos,lang,programstr;
 
+function ClrSpace (s:string):string;
 function Int2Str (v:Longint):String;
 function Str2Int (s:string;var err:word):longint;
 function PosLast (ch,s:string):word;
@@ -17,6 +18,18 @@ procedure Msg(s:string);
 procedure FunFact(r:byte);
 
 implementation
+
+function ClrSpace (s:string):string;
+var p:byte;
+begin
+	p:=pos(' ',s);
+	while p <> 0 do begin
+		delete(s,p,1);
+		p:=pos(' ',s);
+	end;
+	ClrSpace:=s;
+end;
+
 
 function Int2Str (v:Longint):String;
 var s: string;
