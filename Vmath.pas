@@ -5,7 +5,6 @@ uses sysutils,crt,io,lang,programStr,basic,equ;
 var 
 	tmpString:string;
 	i,c:longint;
-	err:word;
 
 procedure Welcome;
 begin
@@ -41,8 +40,9 @@ begin
 	writeln(CopyrightInfo);
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
-		if paramstr(2)='-d' then begin
-			dec:=Str2Int(paramstr(3),err);
+		if (paramstr(2)='-d') and (chkS2N(paramstr(2))=0) then
+		begin
+			dec:=Str2Num(paramstr(3));
 			c:=4;
 		end;
 		for i:=c to ParamCount do tmpString:=tmpString+paramstr(i);

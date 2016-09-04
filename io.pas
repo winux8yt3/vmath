@@ -11,14 +11,12 @@ type
 var
 	syntax: tSyntax;
 	syntaxNum:byte;
-	
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
 procedure RunFile(FName:string;w:byte);
 
 implementation
-
 
 procedure Print(s:string);
 begin
@@ -52,11 +50,7 @@ begin
 end;
 
 procedure CmdProcess(s:string);
-var 
-	n1,n2:longint;
-	err:word;
 begin
-	n1:=0;n2:=0;
 	ClrSyntax;
 	s:=Trim(s);
 	CmdSyntax(s);
@@ -65,32 +59,30 @@ begin
 		'help'		:	Help;
 		'date'		:	writeln(Date);
 		'time'		:	writeln(Time);
-		'exit'		:	exit;
 		'clear'		:	clrscr;
 		'print'		:	Print(s);
 		'preans'	:	writeln(ans:0:dec);
 		'run'		:	RunFile(syntax[1],1);
 		'pause'		:	Msg('Press Enter To Continue . . .');
 		'funfact'	:	FunFact(0);
-		'dec'		:	begin
-							n1:=Str2Int(syntax[1],err);
-							if (err = 0) and (n1>0) then begin 
-								dec:=n1;
-								writeln(DoneMsg);
-							end;
-						end;
-		'delay'		:	begin
-							n1:=Str2Int(syntax[1],err);
-							if (err = 0) and (n1>0) then delay(n1);
-						end;
-		'color'		:	begin
-							n1:=Str2Int(syntax[1],err);
-							if (err = 0) then begin
-								n2:=Str2Int(syntax[2],err);
-								if (err = 0) then color(n1,n2);
-							end;	 
+		'exit'		:	begin
+							write('Thanks for participating VMath BETA Program');
+							delay(5000);
+							exit;
 						end
-	else Equation(s);
+	else if ChkS2N(syntax[1])=0 then
+		case syntax[0] of
+			'delay'			:delay(Str2Num(syntax[1]));
+			'color'			:if (ChkS2N(syntax[2])=0) then
+								color(Str2Num(syntax[1]),Str2Num(syntax[2]));
+			'ptb2','cqe2'	:if (ChkS2N(syntax[2])=0) and (ChkS2N(syntax[3])=0) then
+								cqe2(Str2Num(syntax[1]),Str2Num(syntax[2]),Str2Num(syntax[3]));
+			'dec'			:begin
+								dec:=Str2Num(syntax[1]);
+								writeln('Dec=',dec);
+							end
+		else Equation(s);
+		end;
 	end;
 end;
 
@@ -121,6 +113,6 @@ begin
 		until eof(f);
 		close(f);
 	end
-	else if w = 1 then writeln('<',FName,'> : ',ErrorId3);
+	else if w = 1 then writeln(EReport(FName,ErrorId3));
 end;
 end.
