@@ -24,12 +24,15 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ## Project Website
 
-- [Program](https://bit.ly/vmath-xplorer)
-- [Source Code](https://bit.ly/vmath-source)
+- [Main Website](https:/winux8yt3.github.io/vmath)
+- [SourceForge](https://bit.ly/vmath-xplorer)
+- [Github](https://bit.ly/vmath-source)
 
 > Currently the project is compiled only for Windows. For other OS please download Wine.
 
 ## Changelog
+
+### Version 0.8 *Build 160914*
 
 ### Version 0.7.1 *Build 160903*
 
@@ -54,4 +57,4 @@ Redistribution and copying of this program and its source code is allowed only f
 - **Edited** the info
 
 ## License
-[MIT License](https://github.com/winux8yt3/vmath/blob/master/LICENSE) (c) Nguyễn Tuấn Dũng *(Winux8yt3)*
+[MIT License](/LICENSE) (c) Nguyễn Tuấn Dũng *(Winux8yt3)*
