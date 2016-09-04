@@ -24,7 +24,7 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ## Project Website
 
-- [Main Website](https:/winux8yt3.github.io/vmath)
+- [Main Website](https://winux8yt3.github.io/vmath)
 - [SourceForge](https://bit.ly/vmath-xplorer)
 - [Github](https://bit.ly/vmath-source)
 
