@@ -5,7 +5,7 @@ interface
 uses sysutils,programStr;
 
 var 
-    ProgramInfo,WelcomeMsg,DoneMsg,LangLoadMsg:string;
+    ProgramInfo,WelcomeMsg,DoneMsg,LangLoadMsg,TkMsg:string;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText:string;
     DayNum:array[0..6] of string;
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:string;
@@ -26,6 +26,7 @@ begin
     ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Ban Dung So '+VersionBuild+'.';
     DoneMsg:='Xong!';
     WelcomeMsg:='Chao mung ban den voi '+ProgramInfo+' '+VersionInfo;
+    TkMsg:='Cam on ban da tham gia thu nghiem Chung Trinh VMath BETA';
 
     LoadText:='Dang Tai...';
     InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-xplorer';
@@ -77,6 +78,7 @@ begin
     ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Build '+VersionBuild+'.';
     DoneMsg:='Done';    
     WelcomeMsg:='Welcome you to '+ProgramInfo;
+    TkMsg:='Thanks for participating VMath BETA Program';
 
     LoadText:='Loading...';
     InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-xplorer';

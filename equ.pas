@@ -11,6 +11,7 @@ var
 
 procedure Equation(s:string);
 function EquProcess(s:string):extended;
+function bool(s:string):boolean;
 procedure cqe2(a,b,c:extended);
 
 implementation
@@ -18,16 +19,18 @@ implementation
 procedure Equation(s:string);
 begin
 	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
-		or (pos('^',s)<>0)
-		then begin
-			ans:=EquProcess(ClrSpace(s));
-			writeln(ans:0:dec);
+	    or (pos('^',s)<>0) then
+		begin
+		   	ans:=EquProcess(ClrSpace(s));
+		   	writeln(ans:dec);
 		end
-	else writeln(EReport(s,ErrorId1))
+	else if (pos('=',s)<>0) or (pos('<',s)<>0) or (pos('>',s)<>0) then
+        writeln(bool(ClrSpace(s)))
+    else writeln(EReport(s,ErrorId1));
 end;
 
 
-procedure EquNumProcess(s:string;k:word; var n1,n2:extended);
+procedure NumProcess(s:string;k:word; var n1,n2:extended);
 begin
 	n1:=EquProcess(copy(s,1,k-1));
 	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
@@ -38,29 +41,47 @@ var
 	n1,n2:extended;
 begin
 	if (pos('+',s)<>0) then begin
-		EquNumProcess(s,pos('+',s),n1,n2);
+		NumProcess(s,pos('+',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
 	else if (pos('-',s)<>0) then begin
-		EquNumProcess(s,poslast('-',s),n1,n2);
+		NumProcess(s,poslast('-',s),n1,n2);
 		EquProcess:=n1-n2;
 	end
 	else if (pos('*',s)<>0) then begin
-		EquNumProcess(s,pos('*',s),n1,n2);
+		NumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
 	else if (pos('/',s)<>0) then begin
-		EquNumProcess(s,poslast('/',s),n1,n2);
+		NumProcess(s,poslast('/',s),n1,n2);
 		EquProcess:=n1/n2;
 	end	
 	else if (pos('^',s)<>0) then begin
-		EquNumProcess(s,pos('^',s),n1,n2);
+		NumProcess(s,pos('^',s),n1,n2);
 		EquProcess:=Power(n1,n2);
 	end
-	else if (ChkS2N(s)=0) and (s<>'') then EquProcess:=Str2Num(s)
+	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
             else writeln(EReport(s,ErrorId1));
 end;
 // Loop back EquProcess function if there is a complex Equation
+
+function bool(s:string):boolean;
+var n1,n2:extended;
+begin
+    bool := False;
+    if (pos('=',s)<>0) then begin
+        NumProcess(s,pos('=',s),n1,n2);
+        if n1=n2 then bool:=True;
+    end
+    else if (pos('<',s)<>0) then begin
+        NumProcess(s,pos('<',s),n1,n2);
+        if n1<n2 then bool:=True;
+    end
+    else if (pos('>',s)<>0) then begin
+        NumProcess(s,pos('>',s),n1,n2);
+        if n1>n2 then bool:=True;
+    end
+end;
 
 procedure cqe2(a,b,c:extended);
 var 

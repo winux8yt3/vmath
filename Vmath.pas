@@ -40,9 +40,9 @@ begin
 	writeln(CopyrightInfo);
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
-		if (paramstr(2)='-d') and (chkS2N(paramstr(2))=0) then
+		if (paramstr(2)='-d') and (Str2Num(paramstr(2)).check=True) then
 		begin
-			dec:=Str2Num(paramstr(3));
+			dec:=Str2Int(paramstr(3));
 			c:=4;
 		end;
 		for i:=c to ParamCount do tmpString:=tmpString+paramstr(i);

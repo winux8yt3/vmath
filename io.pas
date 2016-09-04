@@ -65,18 +65,19 @@ begin
 		'run'			:	RunFile(syntax[1],1);
 		'pause'			:	Msg('Press Enter To Continue . . .');
 		'funfact'		:	writeln(FunFact(0));
-		'delay'			:if ChkS2N(syntax[1])=0 then
-							 delay(Str2Num(syntax[1]));
-		'color'			:if (ChkS2N(syntax[1])=0) and (ChkS2N(syntax[2])=0) then
-								color(Str2Num(syntax[1]),Str2Num(syntax[2]));
-		'ptb2','cqe2'	:if (ChkS2N(syntax[1])=0) and (ChkS2N(syntax[2])=0) and (ChkS2N(syntax[3])=0) then
-								cqe2(Str2Num(syntax[1]),Str2Num(syntax[2]),Str2Num(syntax[3]));
-			'dec'			:begin
-								dec:=Str2Num(syntax[1]);
+		'delay'			:if Str2Num(syntax[1]).check=True then
+							 delay(Str2Int(syntax[1]));
+		'color'			:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) then
+								color(Str2Int(syntax[1]),Str2Int(syntax[2]));
+		'dec'			:begin
+								dec:=Str2Int(syntax[1]);
 								writeln('Dec=',dec);
 							end;
+		'ptb2','cqe2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) 
+						and (Str2Num(syntax[3]).check=True) then 
+							cqe2(Str2Num(syntax[1]).value,Str2Num(syntax[2]).value,Str2Num(syntax[3]).value);
 		'exit'			:	begin
-								write('Thanks for participating VMath BETA Program');
+								write(TkMsg);
 								delay(1500);
 								exit;
 							end;

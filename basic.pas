@@ -5,10 +5,16 @@ interface
 uses
     crt,dos,lang,programstr;
 
+type 
+	TStr2Num = record
+		Check:boolean;
+		Value:extended;
+	end;
+
 function ClrSpace (s:string):string;
 function Num2Str (v:extended;d:byte):String;
-function Str2Num (s:string):longint;
-function ChkS2N (s:string):byte;
+function Str2Num (s:string):TStr2Num;
+function Str2Int (s:string):longint;
 function PosLast (ch,s:string):word;
 procedure Info;
 function Date():string;
@@ -37,18 +43,18 @@ begin
  	Str(v:0:d,Num2Str);
 end;
 
-function Str2Num (s:string):longint;
-var 
-	err:byte;
+function Str2Num(s:string):TStr2Num;
+var err:byte;
 begin
- 	val(s,Str2Num,err);
+	Str2Num.Check:=False;
+ 	val(s,Str2Num.value,err);
+	if err=0 then Str2Num.Check:=True;
 end;
 
-function ChkS2N (s:string):byte;
-var 
-	v:longint;
+function Str2Int (s:string):longint;
+var err:byte;
 begin
-	val(s,v,ChkS2N);
+ 	val(s,Str2Int,err);
 end;
 
 function PosLast (ch,s:string):word;
