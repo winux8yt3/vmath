@@ -102,8 +102,9 @@ var
 	i,k,n:longword;
 	c,count,check:word;
 begin
+	check:=0;
 	for k:=2 to num do begin
-		n:=num;c:=0;count:=0;check:=0;
+		n:=num;c:=0;count:=0;
 		for i:=1 to k do
 			if k mod i = 0 then inc(c);
 		if c=2 then
@@ -117,7 +118,7 @@ begin
 					else write('*');
 				write(k);
 			end
-		else 
+		else if count > 1 then
 			begin
 				if check=0 then inc(check)
 					else write('*');	
