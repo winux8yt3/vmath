@@ -100,28 +100,28 @@ end;
 procedure fact(num:Longword);
 var 
 	i,k,n:longword;
-	c,count,check:word = 0;
+	c,count,check:word;
 begin
 	for k:=2 to num do begin
-		n:=num;
+		n:=num;c:=0;count:0;check:=0;
 		for i:=1 to k do
 			if k mod i = 0 then inc(c);
 		if c=2 then
 			while n mod k = 0 do begin
-				n:=n/k;
+				n:=n div k;
 				inc(count);
 			end;
 		if count = 1 then
 			begin
-				if check=0 then inc(check);
-				else write('*');
+				if check=0 then inc(check)
+					else write('*');
 				write(k);
 			end
 		else 
 			begin
-				write(k,'^',count);
-				if check=0 then inc(check);
+				if check=0 then inc(check)
 					else write('*');	
+				write(k,'^',count);
 			end;
 	end;
 	writeln;
