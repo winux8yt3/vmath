@@ -61,6 +61,7 @@ begin
 		'time'			:	writeln(Time);
 		'clear'			:	clrscr;
 		'print'			:	Print(s);
+		'cat'			:	Cat(s);
 		'preans'		:	writeln(ans:0:dec);
 		'run'			:	RunFile(syntax[1],1);
 		'pause'			:	Msg('Press Enter To Continue . . .');

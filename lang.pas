@@ -10,7 +10,7 @@ var
     DayNum:array[0..6] of string;
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:string;
     HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:string;
-    HelpTextRun,HelpTextTime,HelpTextcqe2:string;
+    HelpTextRun,HelpTextTime,HelpTextcqe2,HelpTextCat:string;
     Fact1,Fact2,Fact3,Fact4:string;
     cqe0Text,cqe1Text,cqe2Text:string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3:string;
@@ -26,7 +26,7 @@ begin
     ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Ban Dung So '+VersionBuild+'.';
     DoneMsg:='Xong!';
     WelcomeMsg:='Chao mung ban den voi '+ProgramInfo+' '+VersionInfo;
-    TkMsg:='Cam on ban da tham gia thu nghiem Chung Trinh VMath BETA';
+    TkMsg:='Cam on ban da tham gia chuong trinh thu nghiem VMath BETA';
 
     LoadText:='Dang Tai...';
     InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-xplorer';
@@ -56,6 +56,7 @@ begin
     HelpTextRun:='Chay File .vmath';
     HelpTextTime:='In ra thoi gian';
     HelpTextcqe2:='Tinh phuong trinh bac 2';
+    HelpTextCat:='Noi 2 File Text';
 
     Fact1:='Ti le chieu dai va chieu rong cua to giay loai A la 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y la so nguyen to; m,n la so tu nhien) [Euler]';
@@ -108,6 +109,7 @@ begin
     HelpTextRun:='Run .vmath File';
     HelpTextTime:='Print time';
     HelpTextcqe2:='Calculate quadratic equation';
+    HelpTextCat:='Concatnate 2 Text File';
 
     Fact1:=' Ration of length and width of type-A paper is 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y is prime; m,n is natural number) [Euler]';
