@@ -57,19 +57,21 @@ begin
 	case syntax[0] of
 		'?','info'		:	Info;
 		'help'			:	Help;
-		'date'			:	writeln(Date);
-		'time'			:	writeln(Time);
-		'clear'			:	clrscr;
+		'date','ngay'	:	writeln(Date);
+		'time','gio'	:	writeln(Time);
+		'clear','xoa'	:	clrscr;
 		'print'			:	Print(s);
 		'cat'			:	Cat(s);
 		'preans'		:	writeln(ans:0:dec);
-		'run'			:	RunFile(syntax[1],1);
+		'run','chay'	:	RunFile(syntax[1],1);
 		'pause'			:	Msg('Press Enter To Continue . . .');
 		'funfact'		:	writeln(FunFact(0));
 		'delay'			:if Str2Num(syntax[1]).check=True then
 							 delay(Str2Int(syntax[1]));
-		'color'			:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) then
-								color(Str2Int(syntax[1]),Str2Int(syntax[2]));
+		'factor'		:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+							then fact(Str2Num(syntax[1]).value);
+		'color'			:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
+							then color(Str2Int(syntax[1]),Str2Int(syntax[2]));
 		'dec'			:begin
 								dec:=Str2Int(syntax[1]);
 								writeln('Dec=',dec);

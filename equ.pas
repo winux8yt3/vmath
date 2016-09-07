@@ -13,6 +13,7 @@ procedure Equation(s:string);
 function EquProcess(s:string):extended;
 function Bool(s:string):boolean;
 procedure cqe2(a,b,c:extended);
+procedure fact(num:Longword);
 
 implementation
 
@@ -96,4 +97,34 @@ begin
     else writeln(EReport('',ErrorId1));
 end;
     
+procedure fact(num:Longword);
+var 
+	i,k,n:longword;
+	c,count,check:word = 0;
+begin
+	for k:=2 to num do begin
+		n:=num;
+		for i:=1 to k do
+			if k mod i = 0 then inc(c);
+		if c=2 then
+			while n mod k = 0 do begin
+				n:=n/k;
+				inc(count);
+			end;
+		if count = 1 then
+			begin
+				if check=0 then inc(check);
+				else write('*');
+				write(k);
+			end
+		else 
+			begin
+				write(k,'^',count);
+				if check=0 then inc(check);
+					else write('*');	
+			end;
+	end;
+	writeln;
+end;
+
 end.
