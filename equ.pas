@@ -103,7 +103,7 @@ var
 	c,count,check:word;
 begin
 	for k:=2 to num do begin
-		n:=num;c:=0;count:0;check:=0;
+		n:=num;c:=0;count:=0;check:=0;
 		for i:=1 to k do
 			if k mod i = 0 then inc(c);
 		if c=2 then

@@ -69,7 +69,7 @@ begin
 		'delay'			:if Str2Num(syntax[1]).check=True then
 							 delay(Str2Int(syntax[1]));
 		'factor'		:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
-							then fact(Str2Num(syntax[1]).value);
+							then fact(Str2Int(syntax[1]));
 		'color'			:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
 							then color(Str2Int(syntax[1]),Str2Int(syntax[2]));
 		'dec'			:begin
