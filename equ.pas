@@ -2,11 +2,9 @@ unit equ;
     
 interface
 
-uses basic,math,lang;
+uses basic,math,lang,programStr;
 
 var 
-    dec:word = 2;
-    ans:extended;
     err:word;
 
 procedure Equation(s:string);
@@ -99,29 +97,29 @@ end;
     
 procedure fact(num:Longword);
 var 
-	i,k,n:longword;
+	i,k:longword;
 	c,count,check:word;
 begin
 	check:=0;
 	for k:=2 to num do begin
-		n:=num;c:=0;count:=0;
+		c:=0;count:=0;
 		for i:=1 to k do
 			if k mod i = 0 then inc(c);
 		if c=2 then
-			while n mod k = 0 do begin
-				n:=n div k;
+			while num mod k = 0 do begin
+				num:=num div k;
 				inc(count);
 			end;
 		if count = 1 then
 			begin
 				if check=0 then inc(check)
-					else write('*');
+					else write(' * ');
 				write(k);
 			end
 		else if count > 1 then
 			begin
 				if check=0 then inc(check)
-					else write('*');	
+					else write(' * ');	
 				write(k,'^',count);
 			end;
 	end;

@@ -9,6 +9,11 @@ const
     VersionBuild: string = '160909';
     VersionInfo: string = 'Beta';
 
+var 
+    precmd:string;
+    ans:extended;
+    dec:word = 2;
+
 implementation
 
 end.

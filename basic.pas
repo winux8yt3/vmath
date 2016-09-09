@@ -27,7 +27,6 @@ procedure Color(txcolor,BgColor:byte);
 procedure Help;
 procedure Msg(s:string);
 function FunFact(r:byte):string;
-procedure Cat(s:string);
 function EReport(str,err:string):string;
 
 implementation
@@ -61,7 +60,7 @@ var err:byte;
 begin
 	Str2Int.Check:=False;
  	val(s,Str2Int.value,err);
-	if err=0 then Str2Int.Check=True;
+	if err=0 then Str2Int.Check:=True;
 end;
 
 function PosLast (ch,s:string):word;
@@ -105,8 +104,7 @@ end;
 procedure Help;
 begin
 	writeln;
-	writeln('?,info     : ',HelpTextInfo); 
-	writeln('Cat		: ',HelpTextCat);
+	writeln('?,info     : ',HelpTextInfo);
 	writeln('clear      : ',HelpTextClear);
 	writeln('color      : ',HelpTextColor);
 	writeln('date       : ',HelpTextDate);

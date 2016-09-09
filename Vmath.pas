@@ -6,14 +6,6 @@ var
 	tmpString:string;
 	i,c:longint;
 
-procedure Welcome;
-begin
-	writeln('===========================================');
-	writeln('               VMath Xplorer               ');
-	writeln('===========================================');
-	writeln(WelcomeMsg);
-end;
-
 procedure console;
 begin
 	clrscr;
@@ -21,8 +13,11 @@ begin
 	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
 	write('(En | Vi) >> ');readln(tmpString);
 	clrscr;
-	Welcome;
+	writeln('===========================================');
+	writeln('               VMath Xplorer               ');
+	writeln('===========================================');
 	ActiveLang(tmpString);
+	writeln(WelcomeMsg);
 	write(FunFact(0));
 	RunFile('start.vmath',0);
 	repeat
@@ -36,13 +31,13 @@ end;
 
 begin
 	ActiveLang('en');
-	writeln(ProgramName,' ',VersionInfo,' Version ',Version,' Build ',VersionBuild);
+	writeln(ProgramInfo);
 	writeln(CopyrightInfo);
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
 		if (paramstr(2)='-d') and (Str2Num(paramstr(2)).check=True) then
 		begin
-			dec:=Str2Int(paramstr(3));
+			dec:=Str2Int(paramstr(3)).value;
 			c:=4;
 		end;
 		for i:=c to ParamCount do tmpString:=tmpString+paramstr(i);
