@@ -5,7 +5,7 @@ interface
 uses sysutils,programStr;
 
 var 
-    ProgramInfo,WelcomeMsg,DoneMsg,LangLoadMsg,TkMsg:string;
+    ProgramInfo,WelcomeMsg,DoneMsg,TkMsg:string;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText:string;
     DayNum:array[0..6] of string;
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:string;
@@ -114,7 +114,7 @@ begin
     Fact1:=' Ration of length and width of type-A paper is 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y is prime; m,n is natural number) [Euler]';
     Fact3:='| x,y <> 0 ; x=y |-> x^2=xy -> x^2-y^2=x^y-y^2 -> x+y=y -> 2y=y -> 2=1 ?';
-    Fact4:='| f(n) = n^2 + n + 41 ; n < 40 | => f(n) is prime [by Euler]';
+    Fact4:='| f(n) = n^2 + n + 41 ; n < 40 | => f(n) is prime [Euler]';
 
     cqe0Text:='No Solution';
     cqe1Text:='1 Solution: ';

@@ -10,11 +10,15 @@ type
 		Check:boolean;
 		Value:extended;
 	end;
+	TStr2Int = record
+		Check:boolean;
+		Value:longint;
+	end;
 
 function ClrSpace (s:string):string;
 function Num2Str (v:extended;d:byte):String;
 function Str2Num (s:string):TStr2Num;
-function Str2Int (s:string):longint;
+function Str2Int (s:string):TStr2Int;
 function PosLast (ch,s:string):word;
 procedure Info;
 function Date():string;
@@ -52,10 +56,12 @@ begin
 	if err=0 then Str2Num.Check:=True;
 end;
 
-function Str2Int (s:string):longint;
+function Str2Int (s:string):TStr2Int;
 var err:byte;
 begin
- 	val(s,Str2Int,err);
+	Str2Int.Check:=False;
+ 	val(s,Str2Int.value,err);
+	if err=0 then Str2Int.Check=True;
 end;
 
 function PosLast (ch,s:string):word;
@@ -132,52 +138,6 @@ begin
 		3	:FunFact:=FunFact+Fact3;
 		4	:FunFact:=FunFact+Fact4;
 	end;
-end;
-
-procedure Cat(s:string);
-var
-	k:word;
-	err1,err2:cardinal;
-	f1,f2:text;
-	str,FName1,FName2:string;
-begin
-	delete(s,1,3);
-	s:=ClrSpace(s);
-	if (pos('<<',s)<>0) or (pos('>>',s)<>0) then begin
-		if (pos('<<',s)<>0) then
-		begin 
-			k:=pos('<<',s);
-			FName1:=copy(s,k+2,(length(s)-k-1));
-			FName2:=copy(s,1,k-1);
-		end
-		else if (pos('>>',s)<>0) then 
-			begin 
-				k:=pos('>>',s);
-				FName1:=copy(s,1,k-1);
-				FName2:=copy(s,k+2,(length(s)-k-1));
-			end;
-		{$I-}
-		assign(f2,FName2);
-		rewrite(f2);
-		{$I+}
-		err2:=IOResult;close(f2);
-		{$I-}
-		assign(f1,FName1);
-		Reset(f1);
-		{$I+}
-		err1:=IOResult;close(f1);
-		if (err1=0) and (err2=0) then
-			while not eof(f1) do begin
-				Reset(f1);
-				readln(f1,str);
-				close(f1);
-				append(f2);
-				writeln(f2,str);
-				close(f2);
-			end
-		else writeln(EReport(FName1+','+FName2,ErrorId3))
-	end
-	else writeln(EReport('',ErrorId1));
 end;
 
 function EReport(str:string;err:string):string;

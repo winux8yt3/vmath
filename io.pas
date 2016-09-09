@@ -61,16 +61,15 @@ begin
 		'time','gio'	:	writeln(Time);
 		'clear','xoa'	:	clrscr;
 		'print'			:	Print(s);
-		'cat'			:	Cat(s);
 		'preans'		:	writeln(ans:0:dec);
 		'run','chay'	:	RunFile(syntax[1],1);
 		'pause'			:	Msg('Press Enter To Continue . . .');
 		'funfact'		:	writeln(FunFact(0));
-		'delay'			:if Str2Num(syntax[1]).check=True then
+		'delay'			:if Str2Int(syntax[1]).check=True then
 							 delay(Str2Int(syntax[1]));
-		'factor'		:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+		'factor'		:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
 							then fact(Str2Int(syntax[1]));
-		'color'			:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
+		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
 							then color(Str2Int(syntax[1]),Str2Int(syntax[2]));
 		'dec'			:begin
 								dec:=Str2Int(syntax[1]);
