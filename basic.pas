@@ -135,6 +135,8 @@ begin
 		2	:FunFact:=FunFact+Fact2;
 		3	:FunFact:=FunFact+Fact3;
 		4	:FunFact:=FunFact+Fact4;
+		5	:FunFact:=FunFact+Fact5;
+		6	:FunFact:=FunFact+Fact6;
 	end;
 end;
 
