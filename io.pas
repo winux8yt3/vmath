@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	sysutils,crt,dos,lang,basic,equ,programStr;
+	sysutils,crt,dos,lang,basic,equ,programStr,f;
 
 type 
 	tSyntax = array[0..256]of string;
@@ -106,16 +106,6 @@ begin
 	end;
 end;
 
-function ChkFile(FName:string):word;
-var f:text;
-begin
-	{$I-}
-		assign(f,FName);
-		Reset(f);
-	{$I+}
-	ChkFile:=IOResult;
-end;
-
 procedure RunFile(FName:string;w:byte);
 var 
 	f:text;
@@ -135,4 +125,5 @@ begin
 	end
 	else if w = 1 then writeln(EReport(FName,ErrorId3));
 end;
+
 end.

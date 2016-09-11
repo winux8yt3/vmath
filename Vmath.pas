@@ -1,6 +1,6 @@
 program Vmath;
 
-uses sysutils,crt,io,lang,programStr,basic,equ;
+uses sysutils,crt,io,lang,programStr,basic,equ,f;
 
 var 
 	tmpString:string;

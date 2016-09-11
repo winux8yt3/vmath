@@ -68,7 +68,15 @@ function Bool(s:string):boolean;
 var n1,n2:extended;
 begin
     bool := False;
-    if (pos('=',s)<>0) then begin
+	if (pos('|',s)<>0) then begin
+        NumProcess(s,pos('|',s),n1,n2);
+        if (bool(Num2Str(n1,1))=True) or (bool(Num2Str(n2,1))=True) then bool:=True;
+    end
+	else if (pos('&',s)<>0) then begin
+        NumProcess(s,pos('&',s),n1,n2);
+        if (bool(Num2Str(n1,1))=True) and (bool(Num2Str(n2,1))=True) then bool:=True;
+    end
+    else if (pos('=',s)<>0) then begin
         NumProcess(s,pos('=',s),n1,n2);
         if n1=n2 then bool:=True;
     end
