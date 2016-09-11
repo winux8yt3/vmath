@@ -128,7 +128,8 @@ end;
 
 function FunFact(r:byte):string;
 begin
-	while r=0 do r:=random(5);
+	randomize;
+	while r=0 do r:=random(7);
 	Funfact:='Fact #'+Num2Str(r,0)+': ';
 	case r of
 		1	:FunFact:=FunFact+Fact1;

@@ -9,6 +9,7 @@ var
 
 procedure Equation(s:string);
 function EquProcess(s:string):extended;
+//function VarProcess(s:shortstring);
 function Bool(s:string):boolean;
 procedure cqe2(a,b,c:extended);
 procedure fact(num:Longword);
@@ -28,11 +29,16 @@ begin
     else writeln(EReport(s,ErrorId1));
 end;
 
-
 procedure NumProcess(s:string;k:word; var n1,n2:extended);
 begin
 	n1:=EquProcess(copy(s,1,k-1));
 	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
+end;
+
+procedure BoolProcess(s:string;k:word; var n1,n2:boolean);
+begin
+	n1:=Bool(copy(s,1,k-1));
+	n2:=Bool(copy(s,k+1,(length(s)-k)));
 end;
 
 function EquProcess(s:string):extended;
@@ -60,22 +66,24 @@ begin
 		EquProcess:=Power(n1,n2);
 	end
 	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
-            else writeln(EReport(s,ErrorId1));
+            else {VarProcess} ;
 end;
 // Loop back EquProcess function if there is a complex Equation
 
 function Bool(s:string):boolean;
-var n1,n2:extended;
+var 
+	n1,n2:extended;
+	b1,b2:boolean;
 begin
     bool := False;
 	if (pos('|',s)<>0) then begin
-        NumProcess(s,pos('|',s),n1,n2);
-        if (bool(Num2Str(n1,1))=True) or (bool(Num2Str(n2,1))=True) then bool:=True;
-    end
+		BoolProcess(s,pos('|',s),b1,b2);
+        if (b1=True) or (b2=True) then bool:=True;
+	end
 	else if (pos('&',s)<>0) then begin
-        NumProcess(s,pos('&',s),n1,n2);
-        if (bool(Num2Str(n1,1))=True) and (bool(Num2Str(n2,1))=True) then bool:=True;
-    end
+		BoolProcess(s,pos('&',s),b1,b2);
+        if (b1=True) and (b2=True) then bool:=True;
+	end
     else if (pos('=',s)<>0) then begin
         NumProcess(s,pos('=',s),n1,n2);
         if n1=n2 then bool:=True;
@@ -89,7 +97,15 @@ begin
         if n1>n2 then bool:=True;
     end
 end;
-
+{
+function VarProcess(s:shortstring);
+begin
+	case s of
+		
+	else writeln(EReport(s,ErrorId1))
+	end;
+end;
+}
 procedure cqe2(a,b,c:extended);
 var 
     delta:extended;
