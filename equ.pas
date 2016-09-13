@@ -2,7 +2,11 @@ unit equ;
     
 interface
 
-uses basic,math,lang,programStr;
+uses 
+	basic,math,lang,programStr;
+
+type
+	tNum = array[1..256]of longword;
 
 var 
     err:word;
@@ -12,7 +16,9 @@ function EquProcess(s:string):extended;
 //function VarProcess(s:shortstring);
 function Bool(s:string):boolean;
 procedure cqe2(a,b,c:extended);
-procedure fact(num:Longword);
+function fact(num:Longword):string;
+function NumInCheck(t:tStr;endNum:word):boolean;
+function gcd(t:tNum;n:word):longword;
 
 implementation
 
@@ -119,12 +125,12 @@ begin
     else writeln(EReport('',ErrorId1));
 end;
     
-procedure fact(num:Longword);
+function fact(num:Longword):string;
 var 
 	i,k:longword;
 	c,count,check:word;
 begin
-	check:=0;
+	check:=0;fact:='';
 	for k:=2 to num do begin
 		c:=0;count:=0;
 		for i:=1 to k do
@@ -137,17 +143,42 @@ begin
 		if count = 1 then
 			begin
 				if check=0 then inc(check)
-					else write(' * ');
-				write(k);
+					else Fact:=Fact+' * ';
+				Fact:=Fact+Num2Str(k,0);
 			end
 		else if count > 1 then
 			begin
 				if check=0 then inc(check)
-					else write(' * ');	
-				write(k,'^',count);
+					else Fact:=Fact+' * ';
+				Fact:=Fact+Num2Str(k,0)+'^'+Num2Str(count,0);
 			end;
 	end;
-	writeln;
+end;
+
+function NumInCheck(t:tStr;endNum:word):boolean;
+var i:word;
+begin
+	NumInCheck:=true;
+	for i:=1 to endNum do if (Str2Int(t[i]).check=false)
+		or (Str2Int(t[i]).value<=0) then NumInCheck:=false;
+	if NumInCheck=False then writeln(EReport('',ErrorId4));
+end;
+
+function gcd(t:tNum;n:word):longword;
+var 
+	i,k:longword;
+	c,j:word;
+begin
+	k:=t[1];
+	for i:=2 to n do
+		if t[i]<k then k:=t[i];
+	gcd:=1;
+	for i:=2 to k do begin
+		c:=0;
+		for j:=1 to n do
+			if t[j] mod i = 0 then inc(c);
+		if c=n then gcd:=i;
+	end;
 end;
 
 end.

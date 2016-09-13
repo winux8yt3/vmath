@@ -5,11 +5,10 @@ interface
 uses
 	sysutils,crt,dos,lang,basic,equ,programStr,f;
 
-type 
-	tSyntax = array[0..256]of string;
-
 var
-	syntax: tSyntax;
+	Num:tNum;
+	i:word;
+	syntax: tStr;
 	syntaxNum:byte;
 
 procedure ReadCmd(s:string);
@@ -91,14 +90,21 @@ begin
 		'funfact'		:	writeln(FunFact(0));
 		'delay'			:if Str2Int(syntax[1]).check=True then
 							 delay(Str2Int(syntax[1]).value);
+		'gcd','ucln'	:if NumInCheck(syntax,syntaxNum)=true then begin
+							for i:=1 to syntaxNum do
+								Num[i]:=Str2Int(syntax[i]).value;
+							writeln(gcd(Num,syntaxNum));
+						end;
 		'factor'		:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
-							then fact(Str2Int(syntax[1]).value);
+							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
 		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
-							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value);
+							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
+								else writeln(EReport('',ErrorId4));
 		'dec'			:if (Str2Int(syntax[1]).check=True) then begin
 								dec:=Str2Int(syntax[1]).value;
 								writeln('Dec=',dec);
-							end;
+							end
+						else writeln(EReport('',ErrorId4));
 		'ptb2','cqe2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) 
 						and (Str2Num(syntax[3]).check=True) then 
 							cqe2(Str2Num(syntax[1]).value,Str2Num(syntax[2]).value,Str2Num(syntax[3]).value);

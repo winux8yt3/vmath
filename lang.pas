@@ -13,7 +13,7 @@ var
     HelpTextRun,HelpTextTime,HelpTextcqe2:string;
     Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:string;
     cqe0Text,cqe1Text,cqe2Text:string;
-    ErrorId0,ErrorId1,ErrorId2,ErrorId3:string;
+    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4:string;
 
 procedure ActiveLang(s:string);
 
@@ -73,6 +73,7 @@ begin
     ErrorId1:='Sai cau truc hoac sai cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
+    ErrorId4:='Cho So Tu Nhien, nhan so thuc.'
 end;
 
 procedure LangEn;
@@ -114,7 +115,7 @@ begin
     HelpTextTime:='Print time';
     HelpTextcqe2:='Calculate quadratic equation';
     
-    Fact1:=' Ration of length and width of type-A paper is 1/sqrt(2)';
+    Fact1:='Ratio of length and width of type-A paper is 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y is prime; m,n is natural number) [Euler]';
     Fact3:='| x,y <> 0 ; x=y |-> x^2=xy -> x^2-y^2=x^y-y^2 -> x+y=y -> 2y=y -> 2=1 ?';
     Fact4:='| f(n) = n^2 + n + 41 ; n < 40 | => f(n) is prime [Euler]';
@@ -128,6 +129,7 @@ begin
     ErrorId1:='Syntax Error or Input Error.';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
+    ErrorId4:='Expecting Natural Number, Got Real Number.'
 end;
 
 procedure ActiveLang(s:string);
