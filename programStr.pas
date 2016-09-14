@@ -10,7 +10,6 @@ const
     VersionInfo: string = 'Beta';
 
 var 
-    precmd:string;
     ans:extended;
     dec:word = 2;
 

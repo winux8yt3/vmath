@@ -8,7 +8,6 @@ var
 
 procedure console;
 begin
-	window(1,1,80,50);
 	clrscr;
 	write('Choose Your Language [Default is English]');writeln;
 	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
