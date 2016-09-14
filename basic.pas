@@ -111,11 +111,15 @@ begin
 	writeln('date       : ',HelpTextDate);
 	writeln('dec        : ',HelpTextDec);
 	writeln('exit       : ',HelpTextExit);
+	writeln('fact,ptnt  : ',HelpTextFact);
+	writeln('funfact    : ',HelpTextFunFact);
+	writeln('gcd,ucln   : ',HelpTextGcd);
+	writeln('lcm,bcnn   : ',HelpTextLcm);
 	writeln('help       : ',HelpTextHelp);
 	writeln('pause      : ',HelpTextPause);
 	writeln('preans     : ',HelpTextPreans);
 	writeln('print      : ',HelpTextPrint);
-	writeln('ptb2,cqe2  : ',HelpTextcqe2);
+	writeln('ptb2,eqn2  : ',HelpTexteqn2);
 	writeln('run        : ',HelpTextRun);
 	writeln('time       : ',HelpTextTime);
 	writeln;

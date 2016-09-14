@@ -10,9 +10,10 @@ var
     DayNum:array[0..6] of string;
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:string;
     HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:string;
-    HelpTextRun,HelpTextTime,HelpTextcqe2:string;
+    HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:string;
+    HelpTextFact,HelpTextFunFact:string;
     Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:string;
-    cqe0Text,cqe1Text,cqe2Text:string;
+    eqn0Text,eqn1Text,eqn2Text:string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4:string;
 
 procedure ActiveLang(s:string);
@@ -57,18 +58,22 @@ begin
     HelpTextPrint:='In dong chu';
     HelpTextRun:='Chay File .vmath';
     HelpTextTime:='In ra thoi gian';
-    HelpTextcqe2:='Tinh phuong trinh bac 2';
+    HelpTexteqn2:='Tinh phuong trinh bac 2';
+    HelpTextGcd:='Uoc chung lon nhat';
+    HelpTextLcm:='Boi chung nho nhat';
+    HelpTextFact:='Phan tich thanh cac thua so nguyen to';
+    HelpTextFunFact:='Thong tin thuc te vui';
 
     Fact1:='Ti le chieu dai va chieu rong cua to giay loai A la 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y la so nguyen to; m,n la so tu nhien) [Euler]';
-    Fact3:='| x,y <> 0 ; x=y |-> x^2=xy -> x^2-y^2=x^y-y^2 -> x+y=y -> 2y=y -> 2=1 ?';
+    Fact3:='a/9 = 0.(a) | ab/99 = 0.(ab)';
     Fact4:='| f(n) = n^2 + n + 41 | n < 40 | => f(n) la so nguyen to [Euler]';
     Fact5:='So 2 la so nguyen to chan duy nhat';
     Fact6:='So nguyen to lon nhat tinh toi ngay 7/1/2016 la 2^74,207,281-1';
 
-    cqe0Text:='Khong co nghiem';
-    cqe1Text:='1 nghiem: ';
-    cqe2Text:='2 nghiem: ';
+    eqn0Text:='Khong co nghiem';
+    eqn1Text:='1 nghiem: ';
+    eqn2Text:='2 nghiem: ';
 
     ErrorId1:='Sai cau truc hoac sai cau lenh.';
     ErrorId2:='Phep chia cho 0.';
@@ -105,7 +110,7 @@ begin
     HelpTextClear:='Clear screen';
     HelpTextColor:='Change text and background color';
     HelpTextDate:='Print date';
-    HelpTextDec:='Length of decimal number in math result';
+    HelpTextDec:='Number of decimal place in math result';
     HelpTextExit:='Exit';
     HelpTextHelp:='Instruction';
     HelpTextPause:='Pause the program';
@@ -113,18 +118,22 @@ begin
     HelpTextPrint:='Print text';
     HelpTextRun:='Run .vmath File';
     HelpTextTime:='Print time';
-    HelpTextcqe2:='Calculate quadratic equation';
-    
+    HelpTexteqn2:='Calculate quadratic equation';
+    HelpTextGcd:='Greatest common divisor';
+    HelpTextLcm:='Least common multiple';
+    HelpTextFact:='Factorization to Prime';
+    HelpTextFunFact:='Fun fact';
+
     Fact1:='Ratio of length and width of type-A paper is 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y is prime; m,n is natural number) [Euler]';
-    Fact3:='| x,y <> 0 ; x=y |-> x^2=xy -> x^2-y^2=x^y-y^2 -> x+y=y -> 2y=y -> 2=1 ?';
+    Fact3:='a/9 = 0.(a) | ab/99 = 0.(ab)';
     Fact4:='| f(n) = n^2 + n + 41 ; n < 40 | => f(n) is prime [Euler]';
     Fact5:='The only even prime number is 2.';
     Fact6:='Largest prime number until 7/1/2016 is 2^74,207,281-1';
 
-    cqe0Text:='No Solution';
-    cqe1Text:='1 Solution: ';
-    cqe2Text:='2 Solutions: ';
+    eqn0Text:='No Solution';
+    eqn1Text:='1 Solution: ';
+    eqn2Text:='2 Solutions: ';
 
     ErrorId1:='Syntax Error or Input Error.';
     ErrorId2:='Division By Zero.';

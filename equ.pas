@@ -15,10 +15,11 @@ procedure Equation(s:string);
 function EquProcess(s:string):extended;
 //function VarProcess(s:shortstring);
 function Bool(s:string):boolean;
-procedure cqe2(a,b,c:extended);
+procedure eqn2(a,b,c:extended);
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
 function gcd(t:tNum;n:word):longword;
+function lcm(t:tNum;n:word):longword;
 
 implementation
 
@@ -112,15 +113,15 @@ begin
 	end;
 end;
 }
-procedure cqe2(a,b,c:extended);
+procedure eqn2(a,b,c:extended);
 var 
     delta:extended;
 begin
     if a<>0 then begin
 	    delta:=(b*b-4*a*c);
-	    if delta<0 then writeln(cqe0Text)
-    	else if delta>0 then writeln(cqe2Text,'x1= ',((-b+delta)/(2*a)):0:dec,' | x2= ',((-b-delta)/(2*a)):0:dec)
-        else writeln(cqe1Text,(-b/(2*a)):0:dec);
+	    if delta<0 then writeln(eqn0Text)
+    	else if delta>0 then writeln(eqn2Text,'x1= ',((-b+delta)/(2*a)):0:dec,' | x2= ',((-b-delta)/(2*a)):0:dec)
+        else writeln(eqn1Text,(-b/(2*a)):0:dec);
     end
     else writeln(EReport('',ErrorId1));
 end;
@@ -130,9 +131,9 @@ var
 	i,k:longword;
 	c,count,check:word;
 begin
-	check:=0;fact:='';
-	for k:=2 to num do begin
-		c:=0;count:=0;
+	check:=0;fact:='';k:=1;
+	while k<=num do begin
+		c:=0;count:=0;inc(k);
 		for i:=1 to k do
 			if k mod i = 0 then inc(c);
 		if c=2 then
@@ -178,6 +179,24 @@ begin
 		for j:=1 to n do
 			if t[j] mod i = 0 then inc(c);
 		if c=n then gcd:=i;
+	end;
+end;
+
+function lcm(t:tNum;n:word):longword;
+var 
+	i,k:longword;
+	c,j:word;
+begin
+	lcm:=t[1];k:=t[1];
+	for i:=2 to n do begin
+		if lcm mod t[i] <> 0 then lcm:=lcm*t[i];
+		if t[i]>k then k:=t[i];
+	end;
+	for i:=lcm-1 downto k do begin
+		c:=0;
+		for j:=1 to n do
+			if i mod t[j] = 0 then inc(c);
+		if c=n then lcm:=i;
 	end;
 end;
 

@@ -11,7 +11,6 @@ var
 	syntax: tStr;
 	syntaxNum:byte;
 
-procedure ReadCmd(s:string);
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
 procedure RunFile(FName:string;w:byte);
@@ -30,21 +29,6 @@ begin
 	write(TkMsg);
 	delay(1500);
 	exit;
-end;
-
-procedure ReadCmd(s:string);
-var ch,q:char;
-begin
-	while readkey<>#13 do begin
-		ch:=readkey;
-		case ch of
-			#27	:begin
-					write(#13#10,ExitText);readln(q);
-					if lowercase(q)='y' then ExitProc;
-				end;
-		else write(ch);
-		end;			
-	end;
 end;
 
 procedure ClrSyntax;
@@ -79,13 +63,13 @@ begin
 	case lowercase(syntax[0]) of
 		'?','info'		:	Info;
 		'help'			:	Help;
-		'date','ngay'	:	writeln(Date);
-		'time','gio'	:	writeln(Time);
-		'clear','xoa'	:	clrscr;
+		'date'			:	writeln(Date);
+		'time'			:	writeln(Time);
+		'clear'			:	clrscr;
 		'print'			:	Print(s);
 		'exit'			:	ExitProc;
 		'preans'		:	writeln(ans:0:dec);
-		'run','chay'	:	RunFile(syntax[1],1);
+		'run'			:	RunFile(syntax[1],1);
 		'pause'			:	Msg('Press Enter To Continue . . .');
 		'funfact'		:	writeln(FunFact(0));
 		'delay'			:if Str2Int(syntax[1]).check=True then
@@ -95,7 +79,12 @@ begin
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(gcd(Num,syntaxNum));
 						end;
-		'factor'		:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+		'lcm','bcnn'	:if NumInCheck(syntax,syntaxNum)=true then begin
+							for i:=1 to syntaxNum do
+								Num[i]:=Str2Int(syntax[i]).value;
+							writeln(lcm(Num,syntaxNum));
+						end;				
+		'fact','ptnt'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
 							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
 		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
 							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
@@ -105,9 +94,10 @@ begin
 								writeln('Dec=',dec);
 							end
 						else writeln(EReport('',ErrorId4));
-		'ptb2','cqe2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) 
-						and (Str2Num(syntax[3]).check=True) then 
-							cqe2(Str2Num(syntax[1]).value,Str2Num(syntax[2]).value,Str2Num(syntax[3]).value);
+		'ptb2','eqn2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) 
+							and (Str2Num(syntax[3]).check=True) then 
+							eqn2(Str2Num(syntax[1]).value,Str2Num(syntax[2]).value,Str2Num(syntax[3]).value)
+						else writeln(EReport('',ErrorId1))
 	else Equation(s);
 	end;
 end;
