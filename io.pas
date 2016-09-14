@@ -3,40 +3,32 @@ unit io;
 interface
 
 uses
-	sysutils,crt,dos,lang,basic;
-
-type 
-	tSyntax = array[0..256]of string;
+	sysutils,crt,dos,lang,basic,equ,programStr,f;
 
 var
-	syntax: tSyntax;
+	Num:tNum;
+	i:word;
+	syntax: tStr;
 	syntaxNum:byte;
-	ans:extended;
 
 procedure CmdSyntax(s:string);
 procedure CmdProcess(s:string);
-procedure Equation(s:string);
-function EquProcess(s:string):extended;
-procedure ReadFile(FName:string);
+procedure RunFile(FName:string;w:byte);
 
 implementation
-
-function ClrSpace (s:string):string;
-var p:byte;
-begin
-	p:=pos(' ',s);
-	while p <> 0 do begin
-		delete(s,p,1);
-		p:=pos(' ',s);
-	end;
-	ClrSpace:=s;
-end;
 
 procedure Print(s:string);
 begin
 	delete(s,1,5);
 	s:=trimleft(s);
 	writeln(s);
+end;
+
+procedure ExitProc;
+begin
+	write(TkMsg);
+	delay(1500);
+	exit;
 end;
 
 procedure ClrSyntax;
@@ -64,117 +56,70 @@ begin
 end;
 
 procedure CmdProcess(s:string);
-var 
-	n1,n2:longint;
-	err:word;
 begin
-	n1:=0;n2:=0;
 	ClrSyntax;
 	s:=Trim(s);
 	CmdSyntax(s);
-	case syntax[0] of
-		'?','info'	:	Info;
-		'help'		:	Help;
-		'date'		:	writeln(Date);
-		'time'		:	writeln(Time);
-		'exit'		:	exit;
-		'clear'		:	clrscr;
-		'print'		:	Print(s);
-		'preans'	:	writeln(ans:0:2);
-		'run'		:	ReadFile(syntax[1]);
-		'pause'		:	Msg('Press Enter To Continue . . .');
-		'delay'		:	begin
-							n1:=Str2Int(syntax[1],err);
-							if (err = 0) and (n1>0) then delay(n1);
+	case lowercase(syntax[0]) of
+		'?','info'		:	Info;
+		'help'			:	Help;
+		'date'			:	writeln(Date);
+		'time'			:	writeln(Time);
+		'clear'			:	clrscr;
+		'print'			:	Print(s);
+		'exit'			:	ExitProc;
+		'preans'		:	writeln(ans:0:dec);
+		'run'			:	RunFile(syntax[1],1);
+		'pause'			:	Msg('Press Enter To Continue . . .');
+		'funfact'		:	writeln(FunFact(0));
+		'delay'			:if Str2Int(syntax[1]).check=True then
+							 delay(Str2Int(syntax[1]).value);
+		'gcd','ucln'	:if NumInCheck(syntax,syntaxNum)=true then begin
+							for i:=1 to syntaxNum do
+								Num[i]:=Str2Int(syntax[i]).value;
+							writeln(gcd(Num,syntaxNum));
 						end;
-		'color'		:	begin
-							n1:=Str2Int(syntax[1],err);
-							if (err = 0) then begin
-								n2:=Str2Int(syntax[2],err);
-								if (err = 0) then color(n1,n2);
-							end;	 
-						end
+		'lcm','bcnn'	:if NumInCheck(syntax,syntaxNum)=true then begin
+							for i:=1 to syntaxNum do
+								Num[i]:=Str2Int(syntax[i]).value;
+							writeln(lcm(Num,syntaxNum));
+						end;				
+		'fact','ptnt'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
+		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
+							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
+								else writeln(EReport('',ErrorId4));
+		'dec'			:if (Str2Int(syntax[1]).check=True) then begin
+								dec:=Str2Int(syntax[1]).value;
+								writeln('Dec=',dec);
+							end
+						else writeln(EReport('',ErrorId4));
+		'ptb2','eqn2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) 
+							and (Str2Num(syntax[3]).check=True) then 
+							eqn2(Str2Num(syntax[1]).value,Str2Num(syntax[2]).value,Str2Num(syntax[3]).value)
+						else writeln(EReport('',ErrorId1))
 	else Equation(s);
 	end;
 end;
 
-procedure EquNumProcess(s:string;k:word; var n1,n2:extended);
-begin
-	n1:=EquProcess(copy(s,1,k-1));
-	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
-end;
-
-function EquProcess(s:string):extended;
-var 
-	n1,n2:extended;
-	err:word;
-begin
-	if (pos('+',s)<>0) then begin
-		EquNumProcess(s,pos('+',s),n1,n2);
-		EquProcess:=n1+n2;
-	end
-	else if (pos('-',s)<>0) then begin
-		EquNumProcess(s,poslast('-',s),n1,n2);
-		EquProcess:=n1-n2;
-	end
-	else if (pos('*',s)<>0) then begin
-		EquNumProcess(s,pos('*',s),n1,n2);
-		EquProcess:=n1*n2;
-	end	
-	else if (pos('/',s)<>0) then begin
-		EquNumProcess(s,poslast('/',s),n1,n2);
-		EquProcess:=n1/n2;
-	end	
-//	else if (pos(':',s)<>0) then begin
-//		EquNumProcess(s,pos(':',s),n1,n2);
-//		EquProcess:=n1 div n2;
-//	end
-//	else if (pos('%',s)<>0) then begin
-//		EquNumProcess(s,pos('%',s),n1,n2);
-//		EquProcess:=n1 mod n2;
-//	end
-//	else if (pos('^',s)<>0) then begin
-//		EquNumProcess(s,pos('^',s),n1,n2);
-//		EquProcess:=n1n2;
-//	end
-	else EquProcess:=Str2Int(s,err);
-end;
-// Loop back EquProcess function if there is a complex equation
-procedure Equation(s:string);
-begin
-	s:=ClrSpace(s);
-	if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) 
-		{or (pos('%',s)<>0) or (pos(':',s)<>0) or (pos('^',s)<>0)}
-		then begin
-			ans:=EquProcess(s);
-			writeln(ans:0:2);
-		end
-	else writeln(ErrorId1);
-end;
-
-
-procedure ReadFile(FName:string);
+procedure RunFile(FName:string;w:byte);
 var 
 	f:text;
-	extension,str:string;
-	k:integer;
+	str:string;
 begin
-	FName:=Trim(FName);
+	if pos('.',FName)=0 then FName:=FName+'.vmath';
 	{$I-}
-	assign(f,FName);
-	Reset(f);
+		assign(f,FName);
+		Reset(f);
 	{$I+}
-	if (IOResult<>0) then writeln(ErrorId3)
-	else begin
-		k:=length(Fname)-pos('.',Fname);
-		extension:=copy(Fname,pos('.',Fname)+1,k);
+	if IOResult = 0 then begin
 		repeat
 			readln(f,str);
-			if (extension='vmath') then CmdProcess(str)
-				else writeln(str);
+			CmdProcess(str);
 		until eof(f);
 		close(f);
-	end;
+	end
+	else if w = 1 then writeln(EReport(FName,ErrorId3));
 end;
 
 end.

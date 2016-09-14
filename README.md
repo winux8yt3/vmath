@@ -1,4 +1,5 @@
-# VMath Beta
+![VMath](/logo.png) VMath Beta
+==============================
 
 #### VIETNAMESE
 **VMath** là phần mềm toán học miễn phí cho mọi người.
@@ -18,17 +19,29 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ## Info
 
-- **Programmer**: Nguyễn Tuấn Dũng *(Winux8yt3)*
+- **Programmer**: Nguyễn Tuấn Dũng *(@winux8yt3)*
 - *Email*: ntd.112552@gmail.com
 
 ## Project Website
 
-- [Program](https://bit.ly/vmath-xplorer)
-- [Source Code](https://bit.ly/vmath-source)
+- [Main Website](https://winux8yt3.github.io/vmath)
+- [SourceForge](https://bit.ly/vmath-xplorer)
+- [Github](https://bit.ly/vmath-source)
 
 > Currently the project is compiled only for Windows. For other OS please download Wine.
 
 ## Changelog
+
+### Version 0.8 *Build 160915*
+
+- **Added** boolean expression: `and`,`or`,`<`,`=`,`>`
+- **Added** `ucln` / `gcd` (Greatest common divisor)
+- **Added** `bcnn` / `lcm` (Least common multiple)
+- **Added** `ptnt` / `fact` (Factorization to Prime)
+- **Added** `ptb2` / `eqn2` (Quadratic Equation Degree 2) *known as ax^2+bx+c=0*
+- **Added** `FunFact`
+- **Added** `dec` Variable
+- **Added** Error Report
 
 ### Version 0.7.1 *Build 160903*
 
@@ -53,4 +66,4 @@ Redistribution and copying of this program and its source code is allowed only f
 - **Edited** the info
 
 ## License
-[MIT License](https://github.com/winux8yt3/vmath/blob/master/LICENSE) (c) Nguyễn Tuấn Dũng *(Winux8yt3)*
+[MIT License](/LICENSE) (c) Nguyễn Tuấn Dũng *(@winux8yt3)*
