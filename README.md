@@ -13,7 +13,7 @@ Chỉ được phép sao lưu, tái phân phối lại phần mềm hay mã ngu�
 **VMath** is a free math program for everyone.
 Redistribution and copying of this program and its source code is allowed only for non-commercial purposes.
 *Featuring:*
-- Input / Output Data
+- Command-Line Interface
 - Math Functions
 - 2 Lauguages: Vietnamese & English
 
