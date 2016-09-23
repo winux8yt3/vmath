@@ -128,19 +128,16 @@ end;
     
 function fact(num:Longword):string;
 var 
-	i,k:longword;
-	c,count,check:word;
+	k:longword;
+	count,check:word;
 begin
 	check:=0;fact:='';k:=1;
 	while k<=num do begin
-		c:=0;count:=0;inc(k);
-		for i:=1 to k do
-			if k mod i = 0 then inc(c);
-		if c=2 then
-			while num mod k = 0 do begin
-				num:=num div k;
-				inc(count);
-			end;
+		count:=0;inc(k);
+		while num mod k = 0 do begin
+			num:=num div k;
+			inc(count);
+		end;
 		if count = 1 then
 			begin
 				if check=0 then inc(check)
@@ -180,6 +177,7 @@ begin
 			if t[j] mod i = 0 then inc(c);
 		if c=n then gcd:=i;
 	end;
+	ans:=gcd;
 end;
 
 function lcm(t:tNum;n:word):longword;
@@ -198,6 +196,7 @@ begin
 			if i mod t[j] = 0 then inc(c);
 		if c=n then lcm:=i;
 	end;
+	ans:=lcm;
 end;
 
 end.
