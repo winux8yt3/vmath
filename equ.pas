@@ -54,28 +54,28 @@ function EquProcess(s:string):extended;
 var 
 	n1,n2:extended;
 begin
-	if (pos('+',s)<>0) and (pos('+',s)>pos('(',s)) then begin
+	if (pos('+',s)<>0) and ((pos('+',s)>poslast(')',s)) or (pos('+',s)<pos('(',s))) then begin
 		NumProcess(s,pos('+',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
-	else if (pos('-',s)<>0) and (pos('-',s)>pos(')',s)) then begin
+	else if (pos('-',s)<>0) and ((pos('-',s)>poslast(')',s)) or (pos('-',s)<pos('(',s))) then begin
 		NumProcess(s,poslast('-',s),n1,n2);
 		EquProcess:=n1-n2;
 	end
-	else if (pos('*',s)<>0) and (pos('*',s)>pos(')',s)) and (s<>'') then begin
+	else if (pos('*',s)<>0) and (s<>'') and ((pos('*',s)>poslast(')',s)) or (pos('*',s)<pos('(',s))) then begin
 		NumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
-	else if (pos('/',s)<>0) and (pos('/',s)>poslast(')',s)) and (s<>'') then begin
+	else if (pos('/',s)<>0) and (s<>'') and ((pos('/',s)>poslast(')',s)) or (pos('/',s)<pos('(',s))) then begin
 		NumProcess(s,poslast('/',s),n1,n2);
 		if (n2=0) or (n1=0) then writeln(EReport(s,ErrorId2))
 		else EquProcess:=n1/n2;
 	end
-	else if (pos('^',s)<>0) and (pos('^',s)>poslast(')',s)) and (s<>'') then begin
+	else if (pos('^',s)<>0) and (s<>'') and ((pos('^',s)>poslast(')',s)) or (pos('^',s)<pos('(',s))) then begin
 		NumProcess(s,pos('^',s),n1,n2);
 		EquProcess:=Power(n1,n2);
 	end
-	else if (pos('(',s)<>0) and (pos(')',s)<>0) then 
+	else if (pos('(',s)<>0) and (pos(')',s)<>0) and (pos(')',s)-pos('(',s)>1) then 
 		EquProcess:=EquProcess(copy(s,2,length(s)-2))
 	else if (VarPos(s,Vars)<>0) and (Str2Num(s).check=False)
 		then EquProcess:=Vars[VarPos(s,Vars)].value
