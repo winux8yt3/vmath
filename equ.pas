@@ -25,10 +25,10 @@ procedure Equation(s:string);
 begin
 	if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
 		then VarProcess(ClrSpace(s))
-    else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
+{   else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
 		or (pos('<',s)<>0) and (pos('<',s)=poslast('<',s)) 
 		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
-			then writeln(bool(ClrSpace(s)))
+			then writeln(bool(ClrSpace(s)))}
     else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
 	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
@@ -58,23 +58,25 @@ begin
 		NumProcess(s,pos('+',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
-	else if (pos('-',s)<>0) then begin
+	else if (pos('-',s)<>0) and (pos('-',s)>pos(')',s)) then begin
 		NumProcess(s,poslast('-',s),n1,n2);
 		EquProcess:=n1-n2;
 	end
-	else if (pos('*',s)<>0) and (s<>'') then begin
+	else if (pos('*',s)<>0) and (pos('*',s)>pos(')',s)) and (s<>'') then begin
 		NumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
-	else if (pos('/',s)<>0) and (s<>'') then begin
+	else if (pos('/',s)<>0) and (pos('/',s)>poslast(')',s)) and (s<>'') then begin
 		NumProcess(s,poslast('/',s),n1,n2);
 		if (n2=0) or (n1=0) then writeln(EReport(s,ErrorId2))
 		else EquProcess:=n1/n2;
 	end
-	else if (pos('^',s)<>0) and (s<>'') then begin
+	else if (pos('^',s)<>0) and (pos('^',s)>poslast(')',s)) and (s<>'') then begin
 		NumProcess(s,pos('^',s),n1,n2);
 		EquProcess:=Power(n1,n2);
 	end
+	else if (pos('(',s)<>0) and (pos(')',s)<>0) then 
+		EquProcess:=EquProcess(copy(s,2,length(s)-2))
 	else if (VarPos(s,Vars)<>0) and (Str2Num(s).check=False)
 		then EquProcess:=Vars[VarPos(s,Vars)].value
 	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
