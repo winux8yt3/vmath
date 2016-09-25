@@ -6,7 +6,6 @@ uses
     crt,dos,lang,programstr;
 
 type 
-	TStr = array[0..256] of string;
 	TStr2Num = record
 		Check:boolean;
 		Value:extended;

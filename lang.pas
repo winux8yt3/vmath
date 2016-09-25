@@ -75,10 +75,10 @@ begin
     eqn1Text:='1 nghiem: ';
     eqn2Text:='2 nghiem: ';
 
-    ErrorId1:='Sai cau truc hoac sai cau lenh.';
+    ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
-    ErrorId4:='Cho So Tu Nhien, nhan so thuc.'
+    ErrorId4:='Cho Nhap So'
 end;
 
 procedure LangEn;
@@ -135,10 +135,10 @@ begin
     eqn1Text:='1 Solution: ';
     eqn2Text:='2 Solutions: ';
 
-    ErrorId1:='Syntax Error or Input Error.';
+    ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
-    ErrorId4:='Expecting Natural Number, Got Real Number.'
+    ErrorId4:='Expecting Number.'
 end;
 
 procedure ActiveLang(s:string);

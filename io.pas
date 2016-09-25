@@ -61,8 +61,10 @@ begin
 	s:=Trim(s);
 	CmdSyntax(s);
 	case lowercase(syntax[0]) of
+		''				:	writeln(EReport('',ErrorId1));
 		'?','info'		:	Info;
 		'help'			:	Help;
+		'lang'			:	ActiveLang(syntax[1]);
 		'date'			:	writeln(Date);
 		'time'			:	writeln(Time);
 		'clear'			:	clrscr;
@@ -89,7 +91,8 @@ begin
 		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
 							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
 								else writeln(EReport('',ErrorId4));
-		'dec'			:if (Str2Int(syntax[1]).check=True) then begin
+		'dec'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
+							then begin
 								dec:=Str2Int(syntax[1]).value;
 								writeln('Dec=',dec);
 							end

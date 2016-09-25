@@ -6,7 +6,8 @@ uses
     basic,lang;
 
 function ChkFile(FName:string):word;
-//procedure CodeProcess(F:text);
+//procedure FileProcess(F:text);
+// This Function will be implemented in version 1.1
 
 implementation
 

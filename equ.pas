@@ -5,16 +5,15 @@ interface
 uses 
 	basic,math,lang,programStr;
 
-type
-	tNum = array[1..256]of longword;
-
 var 
     err:word;
 
 procedure Equation(s:string);
 function EquProcess(s:string):extended;
-//function VarProcess(s:shortstring);
-function Bool(s:string):boolean;
+function VarPos(s:string;a:TVar):word;
+procedure VarProcess(s:shortstring);
+//function Bool(s:string):boolean;
+//procedure Bracket(s:string);
 procedure eqn2(a,b,c:extended);
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
@@ -25,8 +24,10 @@ implementation
 
 procedure Equation(s:string);
 begin
-    if (pos('=',s)<>0) or (pos('<',s)<>0) or (pos('>',s)<>0) then
-        writeln(bool(ClrSpace(s)))
+	if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
+		then VarProcess(ClrSpace(s))
+//  else if (pos('=',s)<>0) or (pos('<',s)<>0) or (pos('>',s)<>0) 
+//		then writeln(bool(ClrSpace(s)))
     else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
 	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
@@ -41,13 +42,13 @@ begin
 	n1:=EquProcess(copy(s,1,k-1));
 	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
 end;
-
+{
 procedure BoolProcess(s:string;k:word; var n1,n2:boolean);
 begin
 	n1:=Bool(copy(s,1,k-1));
 	n2:=Bool(copy(s,k+1,(length(s)-k)));
 end;
-
+}
 function EquProcess(s:string):extended;
 var 
 	n1,n2:extended;
@@ -72,11 +73,12 @@ begin
 		NumProcess(s,pos('^',s),n1,n2);
 		EquProcess:=Power(n1,n2);
 	end
-	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
-            else {VarProcess} ;
+	else if (VarPos(s,Vars)<>0) and (Str2Num(s).check=False)
+		then EquProcess:=Vars[VarPos(s,Vars)].value
+	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value;
 end;
 // Loop back EquProcess function if there is a complex Equation
-
+{
 function Bool(s:string):boolean;
 var 
 	n1,n2:extended;
@@ -104,15 +106,40 @@ begin
         if n1>n2 then bool:=True;
     end
 end;
-{
-function VarProcess(s:shortstring);
+}
+function VarPos(s:string;a:TVar):word;
+var i:word;
 begin
-	case s of
-		
-	else writeln(EReport(s,ErrorId1))
+	VarPos:=0;
+	i:=0;
+	while (s<>a[i].vname) and (i<35566) do begin
+		inc(i);
+		if s=a[i].vname then VarPos:=i;
 	end;
 end;
-}
+
+procedure VarProcess(s:string);
+var 
+	str:shortstring;
+	k:word;
+	eq:Extended;
+begin
+	k:=pos('==',s);
+	str:=copy(s,1,k-1);
+	eq:=EquProcess(copy(s,k+2,(length(s)-k-1)));
+	ans:=eq;
+	if Str2Num(s).check=False then begin
+		if VarPos(str,Vars)=0 then	
+		begin
+		inc(VarNum);
+		Vars[VarNum].vname:=str;	
+	end;
+	Vars[VarPos(str,Vars)].value:=eq;
+	writeln(str,'=',eq);
+	end
+	else writeln(EReport(str,ErrorId4))
+end;
+
 procedure eqn2(a,b,c:extended);
 var 
     delta:extended;

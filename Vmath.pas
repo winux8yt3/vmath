@@ -18,7 +18,7 @@ begin
 	writeln('===========================================');
 	ActiveLang(tmpString);
 	writeln(WelcomeMsg);
-	write(FunFact(0));
+	writeln(FunFact(0));
 	RunFile('start.vmath',0);
 	repeat
 		writeln;
@@ -43,9 +43,9 @@ begin
 		for i:=c to ParamCount do tmpString:=tmpString+paramstr(i);
 		write('[VMath] >> ');Equation(tmpString);
 	end else
-	if (paramstr(1)='-r') and (paramstr(2)<>'') then begin
+	if (Paramstr(1)<>'') and (chkFile(paramstr(1))=0) then begin
 		writeln('[VMath] >> Processing . . .');
-		RunFile(paramstr(2),1);
+		RunFile(paramstr(1),0);
 	end 
 	else console;
 end.
