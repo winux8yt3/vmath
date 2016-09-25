@@ -13,7 +13,6 @@ function EquProcess(s:string):extended;
 function VarPos(s:string;a:TVar):word;
 procedure VarProcess(s:shortstring);
 function Bool(s:string):boolean;
-//procedure Bracket(s:string);
 procedure eqn2(a,b,c:extended);
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
@@ -55,7 +54,7 @@ function EquProcess(s:string):extended;
 var 
 	n1,n2:extended;
 begin
-	if (pos('+',s)<>0) then begin
+	if (pos('+',s)<>0) and (pos('+',s)>pos('(',s)) then begin
 		NumProcess(s,pos('+',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
@@ -63,21 +62,23 @@ begin
 		NumProcess(s,poslast('-',s),n1,n2);
 		EquProcess:=n1-n2;
 	end
-	else if (pos('*',s)<>0) then begin
+	else if (pos('*',s)<>0) and (s<>'') then begin
 		NumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
-	else if (pos('/',s)<>0) then begin
+	else if (pos('/',s)<>0) and (s<>'') then begin
 		NumProcess(s,poslast('/',s),n1,n2);
-		EquProcess:=n1/n2;
-	end	
-	else if (pos('^',s)<>0) then begin
+		if (n2=0) or (n1=0) then writeln(EReport(s,ErrorId2))
+		else EquProcess:=n1/n2;
+	end
+	else if (pos('^',s)<>0) and (s<>'') then begin
 		NumProcess(s,pos('^',s),n1,n2);
 		EquProcess:=Power(n1,n2);
 	end
 	else if (VarPos(s,Vars)<>0) and (Str2Num(s).check=False)
 		then EquProcess:=Vars[VarPos(s,Vars)].value
-	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value;
+	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
+	else exit;
 end;
 // Loop back EquProcess function if there is a complex Equation
 
