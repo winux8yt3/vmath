@@ -6,7 +6,7 @@ uses
     basic,lang;
 
 function ChkFile(FName:string):word;
-//procedure FileProcess(F:text);
+//procedure FileCodeProc(F:text);
 // This Function will be implemented in version 1.1
 
 implementation
@@ -20,5 +20,10 @@ begin
 	{$I+}
 	ChkFile:=IOResult;
 end;
-
+{
+procedure FileCodeProc(F:Text);
+begin
+// Truncate & Seek
+end;
+}
 end.
