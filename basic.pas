@@ -122,7 +122,7 @@ begin
 	writeln('run        : ',HelpTextRun);
 	writeln('time       : ',HelpTextTime);
 	writeln;
-	writeln('EQUATION    + | - | * | / | ^');
+	writeln('EQUATION    + | - | * | / | # (root) | ^');
 end;
 
 procedure Msg(s:string);

@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	sysutils,crt,dos,lang,basic,equ,programStr,f;
+	sysutils,crt,dos,lang,basic,equ,programStr,f,graphic;
 
 var
 	Num:tNum;
@@ -26,6 +26,7 @@ end;
 
 procedure ExitProc;
 begin
+	writeln;
 	write(TkMsg);
 	delay(1500);
 	exit;
@@ -97,10 +98,7 @@ begin
 								writeln('Dec=',dec);
 							end
 						else writeln(EReport('',ErrorId4));
-		'ptb2','eqn2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True) 
-							and (Str2Num(syntax[3]).check=True) then 
-							eqn2(Str2Num(syntax[1]).value,Str2Num(syntax[2]).value,Str2Num(syntax[3]).value)
-						else writeln(EReport('',ErrorId1))
+		'ptb2','eqn2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]))
 	else Equation(s);
 	end;
 end;

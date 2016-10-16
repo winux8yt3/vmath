@@ -13,16 +13,18 @@ function EquProcess(s:string):extended;
 function VarPos(s:string;a:TVar):word;
 procedure VarProcess(s:shortstring);
 function Bool(s:string):boolean;
-procedure eqn2(a,b,c:extended);
+function eqn2(x,y,z:string):string;
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
 function gcd(t:tNum;n:word):longword;
 function lcm(t:tNum;n:word):longword;
+//procedure fx(s:string);
 
 implementation
 
 procedure Equation(s:string);
 begin
+//	if (pos('fx=',ClrSpace(s))=1) then fx(ClrSpace(s)) else
 	if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
 		then VarProcess(ClrSpace(s))
 {   else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
@@ -30,7 +32,7 @@ begin
 		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
 			then writeln(bool(ClrSpace(s)))}
     else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
-	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
+	    or (pos('/',s)<>0) or (pos('^',s)<>0) or (pos('#',s)<>0) then
 		begin
 		   	ans:=EquProcess(ClrSpace(s));
 		   	writeln(ans:0:dec);
@@ -145,17 +147,29 @@ begin
 	else writeln(EReport(str,ErrorId4))
 end;
 
-procedure eqn2(a,b,c:extended);
+function eqn2(x,y,z:string):string;
 var 
-    delta:extended;
+    a,b,c,delta:extended;
 begin
-    if a<>0 then begin
-	    delta:=(b*b-4*a*c);
-	    if delta<0 then writeln(eqn0Text)
-    	else if delta>0 then writeln(eqn2Text,'x1= ',((-b+delta)/(2*a)):0:dec,' | x2= ',((-b-delta)/(2*a)):0:dec)
-        else writeln(eqn1Text,(-b/(2*a)):0:dec);
-    end
-    else writeln(EReport('',ErrorId1));
+	if (Str2Num(x).check=True) and (Str2Num(y).check=True) 
+		and (Str2Num(z).check=True) then 
+	begin
+		a:=Str2Num(x).value;
+		b:=Str2Num(y).value;
+		c:=Str2Num(z).value;
+ 		if a<>0 then begin
+		    delta:=(b*b-4*a*c);
+	    	if delta<0 then eqn2:=eqn0Text
+			else if delta=0 then eqn2:=eqn1Text+Num2Str((-b/2/a),dec)
+    		else if delta>0 then begin
+				eqn2:=eqn2Text;
+				eqn2:=eqn2+'x1= '+Num2Str(((-b+sqrt(delta))/2/a),dec);
+				eqn2:=eqn2+' | x2= '+Num2Str(((-b-sqrt(delta))/2/a),dec);
+			end;
+    	end
+    	else writeln(EReport(Num2Str(a,dec),ErrorId1));
+	end
+	else writeln(EReport('',ErrorId1))
 end;
     
 function fact(num:Longword):string;
@@ -229,6 +243,13 @@ begin
 		if c=n then lcm:=i;
 	end;
 	ans:=lcm;
+end;
+
+procedure fx(s:string);
+begin
+	if (pos('x',s)>2) then begin
+		a:=s[pos('x',s)-pos('=',s)+1]
+	end	
 end;
 
 end.

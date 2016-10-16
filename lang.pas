@@ -14,7 +14,8 @@ var
     HelpTextFact,HelpTextFunFact:string;
     Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:string;
     eqn0Text,eqn1Text,eqn2Text:string;
-    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4:string;
+    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:string;
+    ErrorId7:string;
 
 procedure ActiveLang(s:string);
 
@@ -78,7 +79,10 @@ begin
     ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
-    ErrorId4:='Cho Nhap So'
+    ErrorId4:='Cho Nhap So';
+    ErrorId5:='Bien chua xac dinh';
+    ErrorId6:='Loi do hoa';
+    ErrorId7:='Khong co X';
 end;
 
 procedure LangEn;
@@ -138,7 +142,10 @@ begin
     ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
-    ErrorId4:='Expecting Number.'
+    ErrorId4:='Expecting Number.';
+    ErrorId5:='String not exist';
+    ErrorId6:='Graphic Error';
+    ErrorId7:='Expecting X';
 end;
 
 procedure ActiveLang(s:string);

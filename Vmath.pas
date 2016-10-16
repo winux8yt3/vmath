@@ -1,7 +1,7 @@
 program Vmath;
 
-uses sysutils,crt,io,lang,programStr,basic,equ,f;
-
+uses sysutils,crt,io,lang,programStr,basic,equ,f,graphic;
+// vmathui;
 var 
 	tmpString:string;
 	i,c:longint;
