@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	sysutils,crt,dos,lang,basic,equ,programStr,f,graphic;
+	crt,dos,lang,basic,equ,programStr,f,graphic;
 
 var
 	Num:tNum;

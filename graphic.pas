@@ -29,15 +29,14 @@ procedure EndGraphic;
 begin
     write('Closing Graph System . . .');CloseGraph;
 end;
-
+{
 procedure Fx2Draw(a,b:real);
 var x0,y0:real;
 begin
 	x0:=a*0+b;
-    y0:=y/a;
+    y0:=/a;
     ActiveGraphic;
-
 end;
-
+}
 
 end.

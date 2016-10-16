@@ -28,6 +28,9 @@ procedure Help;
 procedure Msg(s:string);
 function FunFact(r:byte):string;
 function EReport(str,err:string):string;
+function Trim(s:string):string;
+function TrimLeft(s:string):string;
+function TrimRight(s:string):string;
 
 implementation
 
@@ -40,6 +43,15 @@ begin
 		p:=pos(' ',s);
 	end;
 	ClrSpace:=s;
+end;
+
+function CleanSpace(s:string):string;
+var i:byte;
+begin
+	s:=Trim(s);
+	for i:=1 to length(s) do
+		while (s[i]=' ') and (s[i+1]=' ') do delete(s,i,1);
+	CleanSpace:=s;
 end;
 
 function Num2Str (v:extended;d:byte):String;
@@ -148,6 +160,24 @@ end;
 function EReport(str:string;err:string):string;
 begin
 	EReport:='<'+str+'>:'+err;
+end;
+
+function Trim(s:string):string;
+begin
+	s:=TrimLeft(s);
+	Trim:=TrimRight(s);
+end;
+
+function TrimLeft(s:string):string;
+begin
+	while pos(' ',s)=1 do delete(s,1,1);
+	TrimLeft:=s;
+end;
+
+function TrimRight(s:string):string;
+begin
+	while poslast(' ',s)=length(s) do delete(s,length(s),1);
+	TrimRight:=s;
 end;
 
 end.

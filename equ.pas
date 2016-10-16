@@ -244,7 +244,7 @@ begin
 	end;
 	ans:=lcm;
 end;
-
+{
 procedure fx(s:string);
 var a,b:real;
 begin
@@ -252,5 +252,5 @@ begin
 		a:=s[pos('x',s)-pos('=',s)+1]
 	end	
 end;
-
+}
 end.
