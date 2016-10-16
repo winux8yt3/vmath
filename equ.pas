@@ -135,7 +135,7 @@ begin
 	str:=copy(s,1,k-1);
 	eq:=EquProcess(copy(s,k+2,(length(s)-k-1)));
 	ans:=eq;
-	if Str2Num(s).check=False then begin
+	if Str2Num(s[1]).check=False then begin
 		if VarPos(str,Vars)=0 then	
 		begin
 			inc(VarNum);
@@ -246,6 +246,7 @@ begin
 end;
 
 procedure fx(s:string);
+var a,b:real;
 begin
 	if (pos('x',s)>2) then begin
 		a:=s[pos('x',s)-pos('=',s)+1]
