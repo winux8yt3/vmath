@@ -203,8 +203,9 @@ function NumInCheck(t:tStr;endNum:word):boolean;
 var i:word;
 begin
 	NumInCheck:=true;
-	for i:=1 to endNum do if (Str2Int(t[i]).check=false)
-		or (Str2Int(t[i]).value<=0) then NumInCheck:=false;
+	for i:=1 to endNum do 
+		if (Str2Int(t[i]).check=false) or (Str2Int(t[i]).value<=0) or (t[i]=' ')
+			then NumInCheck:=false;
 	if NumInCheck=False then writeln(EReport('',ErrorId4));
 end;
 

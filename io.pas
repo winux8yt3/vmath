@@ -74,16 +74,16 @@ begin
 		'PREANS'		:	writeln(ans:0:dec);
 		'RUN'			:	RunFile(syntax[1],1);
 		'FUNFACT'		:	writeln(FunFact(0));
-		'GCD','UCLN'	:if NumInCheck(syntax,syntaxNum)=true then begin
+		'GCD','UCLN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(gcd(Num,syntaxNum));
-						end;
-		'LCM','BCNN'	:if NumInCheck(syntax,syntaxNum)=true then begin
+						end else write(EReport('',ErrorId1));
+		'LCM','BCNN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(lcm(Num,syntaxNum));
-						end;				
+						end else write(EReport('',ErrorId1));				
 		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
 							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
 		'COLOR'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
