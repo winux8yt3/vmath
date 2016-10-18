@@ -61,44 +61,41 @@ begin
 	ClrSyntax;
 	s:=Trim(s);
 	CmdSyntax(s);
-	case lowercase(syntax[0]) of
+	case Upcase(syntax[0]) of
 		''				:	writeln(EReport('',ErrorId1));
-		'?','info'		:	Info;
-		'help'			:	Help;
-		'lang'			:	ActiveLang(syntax[1]);
-		'date'			:	writeln(Date);
-		'time'			:	writeln(Time);
-		'clear'			:	clrscr;
-		'print'			:	Print(s);
-		'exit'			:	ExitProc;
-		'preans'		:	writeln(ans:0:dec);
-		'run'			:	RunFile(syntax[1],1);
-		'pause'			:	Msg('Press Enter To Continue . . .');
-		'funfact'		:	writeln(FunFact(0));
-		'delay'			:if Str2Int(syntax[1]).check=True then
-							 delay(Str2Int(syntax[1]).value);
-		'gcd','ucln'	:if NumInCheck(syntax,syntaxNum)=true then begin
+		'?','INFO'		:	Info;
+		'HELP'			:	Help;
+		'LANG'			:	ActiveLang(syntax[1]);
+		'DATE'			:	writeln(Date);
+		'TIME'			:	writeln(Time);
+		'CLEAR'			:	clrscr;
+		'PRINT'			:	Print(s);
+		'EXIT'			:	ExitProc;
+		'PREANS'		:	writeln(ans:0:dec);
+		'RUN'			:	RunFile(syntax[1],1);
+		'FUNFACT'		:	writeln(FunFact(0));
+		'GCD','UCLN'	:if NumInCheck(syntax,syntaxNum)=true then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(gcd(Num,syntaxNum));
 						end;
-		'lcm','bcnn'	:if NumInCheck(syntax,syntaxNum)=true then begin
+		'LCM','BCNN'	:if NumInCheck(syntax,syntaxNum)=true then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(lcm(Num,syntaxNum));
 						end;				
-		'fact','ptnt'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
 							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
-		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
+		'COLOR'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
 							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
 								else writeln(EReport('',ErrorId4));
-		'dec'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
+		'DEC'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
 							then begin
 								dec:=Str2Int(syntax[1]).value;
 								writeln('Dec=',dec);
 							end
 						else writeln(EReport('',ErrorId4));
-		'ptb2','eqn2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]))
+		'PTB2','EQN2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]))
 	else Equation(s);
 	end;
 end;

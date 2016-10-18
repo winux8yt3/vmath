@@ -6,8 +6,8 @@ uses
     basic,lang;
 
 function ChkFile(FName:string):word;
-//procedure FileCodeProc(F:text);
-// This Function will be implemented in version 1.1
+//procedure FileProcess(F:text);
+// This Function will be implemented in version 1.0
 
 implementation
 
@@ -21,9 +21,30 @@ begin
 	ChkFile:=IOResult;
 end;
 {
-procedure FileCodeProc(F:Text);
+procedure FileProcess(F:Text);
 begin
 // Truncate & Seek
 end;
 }
+
+procedure RunFile(FName:string;w:byte);
+var 
+	f:text;
+	str:string;
+begin
+	if pos('.',FName)=0 then FName:=FName+'.vmath';
+	{$I-}
+		assign(f,FName);
+		Reset(f);
+	{$I+}
+	if IOResult = 0 then begin
+		repeat
+			readln(f,str);
+//			FileProcess(FName);
+		until eof(f);
+		close(f);
+	end
+	else if w = 1 then writeln(EReport(FName,ErrorId3));
+end;
+
 end.

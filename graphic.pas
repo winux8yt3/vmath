@@ -30,7 +30,7 @@ begin
     write('Closing Graph System . . .');CloseGraph;
 end;
 {
-procedure Fx2Draw(a,b:real);
+procedure Fx1Draw(a,b:real);
 var x0,y0:real;
 begin
 	x0:=a*0+b;

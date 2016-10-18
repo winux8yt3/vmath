@@ -134,7 +134,7 @@ begin
 	writeln('run        : ',HelpTextRun);
 	writeln('time       : ',HelpTextTime);
 	writeln;
-	writeln('EQUATION    + | - | * | / | # (root) | ^');
+	writeln('EQUATION    + | - | * | / | ^');
 end;
 
 procedure Msg(s:string);

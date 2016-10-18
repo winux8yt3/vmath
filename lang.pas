@@ -2,7 +2,7 @@ unit lang;
     
 interface
 
-uses sysutils,programStr;
+uses programStr;
 
 var 
     ProgramInfo,WelcomeMsg,DoneMsg,TkMsg:string;
@@ -150,9 +150,9 @@ end;
 
 procedure ActiveLang(s:string);
 begin
-    case lowercase(s) of
-        'vi'    :   LangVi;
-        'en'    :   LangEn
+    case upcase(s) of
+        'VI'    :   LangVi;
+        'EN'    :   LangEn
     else LangEn;
     end;
 end;

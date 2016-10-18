@@ -27,12 +27,12 @@ begin
 //	if (pos('fx=',ClrSpace(s))=1) then fx(ClrSpace(s)) else
 	if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
 		then VarProcess(ClrSpace(s))
-{   else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
+    else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
 		or (pos('<',s)<>0) and (pos('<',s)=poslast('<',s)) 
 		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
-			then writeln(bool(ClrSpace(s)))}
+			then writeln(bool(ClrSpace(s)))
     else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
-	    or (pos('/',s)<>0) or (pos('^',s)<>0) or (pos('#',s)<>0) then
+	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
 		   	ans:=EquProcess(ClrSpace(s));
 		   	writeln(ans:0:dec);
@@ -135,7 +135,7 @@ begin
 	str:=copy(s,1,k-1);
 	eq:=EquProcess(copy(s,k+2,(length(s)-k-1)));
 	ans:=eq;
-	if Str2Num(s[1]).check=False then begin
+	if Upcase(s[1]) in ['A'..'Z'] then begin
 		if VarPos(str,Vars)=0 then	
 		begin
 			inc(VarNum);
@@ -249,7 +249,9 @@ procedure fx(s:string);
 var a,b:real;
 begin
 	if (pos('x',s)>2) then begin
-		a:=s[pos('x',s)-pos('=',s)+1]
+		a:=Str2Num(copy(s,pos('=',s)+1,pos('x',s)-pos('=',s)-1).value;
+		b:=Str2Num(copy(s,pos('x',s)+2,length(s)-pos('x',s)-2)).value;
+		fx1draw(a,b);
 	end	
 end;
 }
