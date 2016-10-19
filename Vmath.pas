@@ -6,18 +6,22 @@ var
 	tmpString:string;
 	i,c:longint;
 
-procedure console;
+procedure console(lang:string);
 begin
 	Window(1,1,80,255);
 	clrscr;
-	write('Choose Your Language [Default is English]');writeln;
-	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
-	write('(En | Vi) >> ');readln(tmpString);
+	if lang='' then begin
+		write('Choose Your Language [Default is English]');writeln;
+		write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
+		write('(En | Vi) >> ');readln(tmpString);		
+		ActiveLang(tmpString);
+	end
+	else ActiveLang(lang);
 	clrscr;
 	writeln('===========================================');
 	writeln('               VMath Xplorer               ');
 	writeln('===========================================');
-	ActiveLang(tmpString);
+	
 	writeln(WelcomeMsg);
 	writeln(FunFact(0));
 	RunFile('start.vmath',0);
@@ -48,5 +52,7 @@ begin
 		writeln('[VMath] >> Processing . . .');
 		RunFile(paramstr(1),0);
 	end 
-	else console;
+	else if (lowercase(Paramstr(1))='-l') then
+		Console(Paramstr(2))
+	else console('');
 end.
