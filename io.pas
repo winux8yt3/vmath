@@ -61,41 +61,41 @@ begin
 	s:=trimright(s);
 	CmdSyntax(s);
 	case Upcase(syntax[0]) of
-		''			:	writeln(EReport('',ErrorId1));
-		'?','INFO'	:	Info;
-		'HELP'		:	Help;
-		'LANG'		:	ActiveLang(syntax[1]);
-		'DATE'		:	writeln(Date);
-		'TIME'		:	writeln(Time);
-		'CLEAR'		:	clrscr;
-		'PRINT'		:	Print(s);
-		'EXIT'		:	ExitProc;
-		'PREANS'	:	writeln(ans:0:dec);
-		'RUN'		:	RunFile(syntax[1],1);
-		'TIP'		:	writeln(FunFact(0));
-		gcdCmd		:if (NumInCheck(syntax,syntaxNum)=true) then begin
-						for i:=1 to syntaxNum do
-							Num[i]:=Str2Int(syntax[i]).value;
-						writeln(gcd(Num,syntaxNum));
-					end else write(EReport('',ErrorId1));
-		lcmCmd		:if (NumInCheck(syntax,syntaxNum)=true) then begin
-						for i:=1 to syntaxNum do
+		''				:	writeln(EReport('',ErrorId1));
+		'?','INFO'		:	Info;
+		'HELP'			:	Help;
+		'LANG'			:	ActiveLang(syntax[1]);
+		'DATE'			:	writeln(Date);
+		'TIME'			:	writeln(Time);
+		'CLEAR'			:	clrscr;
+		'PRINT'			:	Print(s);
+		'EXIT'			:	ExitProc;
+		'PREANS'		:	writeln(ans:0:dec);
+		'RUN'			:	RunFile(syntax[1],1);
+		'TIP'			:	writeln(FunFact(0));
+		'GCD','UCLN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
+							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
-						writeln(lcm(Num,syntaxNum));
-					end else write(EReport('',ErrorId1));				
-		FactorCmd	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
-						then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
-		'color'		:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
-						then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
-							else writeln(EReport('',ErrorId4));
-		'dec'		:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
-						then begin
-							dec:=Str2Int(syntax[1]).value;
-							writeln('Dec=',dec);
-						end
-					else writeln(EReport('',ErrorId4));
-		Eqn2Cmd		:writeln(eqn2(syntax[1],syntax[2],syntax[3]));
-		'PLOT'		:fxplot(ClrSpace(copy(s,6,length(s)-6)));
+							writeln(gcd(Num,syntaxNum));
+						end else write(EReport('',ErrorId1));
+		'LCM','BCNN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
+							for i:=1 to syntaxNum do
+								Num[i]:=Str2Int(syntax[i]).value;
+							writeln(lcm(Num,syntaxNum));
+						end else write(EReport('',ErrorId1));				
+		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
+		'COLOR'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
+							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
+								else writeln(EReport('',ErrorId4));
+		'DEC'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
+							then begin
+								dec:=Str2Int(syntax[1]).value;
+								writeln('Dec=',dec);
+							end
+						else writeln(EReport('',ErrorId4));
+		'PTB2','EQN2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]));
+		'PLOT'			:fxplot(ClrSpace(copy(s,6,length(s)-6)));
 	else Equation(s);
 	end;
 end;
