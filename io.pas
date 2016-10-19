@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	crt,dos,lang,basic,equ,programStr,f,plot,sysutils;
+	crt,dos,lang,basic,equ,programStr,f,plot;
 
 var
 	Num:tNum;
@@ -58,44 +58,44 @@ end;
 procedure CmdProcess(s:string);
 begin
 	ClrSyntax;
-	s:=CleanSpace(s);
+	s:=trimright(s);
 	CmdSyntax(s);
-	case lowercase(syntax[0]) of
-		''				:	writeln(EReport('',ErrorId1));
-		'?','info'		:	Info;
-		'help'			:	Help;
-		'lang'			:	ActiveLang(syntax[1]);
-		'date'			:	writeln(Date);
-		'time'			:	writeln(Time);
-		'clear'			:	clrscr;
-		'print'			:	Print(s);
-		'exit'			:	ExitProc;
-		'preans'		:	writeln(ans:0:dec);
-		'run'			:	RunFile(syntax[1],1);
-		'funfact'		:	writeln(FunFact(0));
-		'gcd','ucln'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
-							for i:=1 to syntaxNum do
+	case Upcase(syntax[0]) of
+		''			:	writeln(EReport('',ErrorId1));
+		'?','INFO'	:	Info;
+		'HELP'		:	Help;
+		'LANG'		:	ActiveLang(syntax[1]);
+		'DATE'		:	writeln(Date);
+		'TIME'		:	writeln(Time);
+		'CLEAR'		:	clrscr;
+		'PRINT'		:	Print(s);
+		'EXIT'		:	ExitProc;
+		'PREANS'	:	writeln(ans:0:dec);
+		'RUN'		:	RunFile(syntax[1],1);
+		'TIP'		:	writeln(FunFact(0));
+		gcdCmd		:if (NumInCheck(syntax,syntaxNum)=true) then begin
+						for i:=1 to syntaxNum do
+							Num[i]:=Str2Int(syntax[i]).value;
+						writeln(gcd(Num,syntaxNum));
+					end else write(EReport('',ErrorId1));
+		lcmCmd		:if (NumInCheck(syntax,syntaxNum)=true) then begin
+						for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
-							writeln(gcd(Num,syntaxNum));
-						end else write(EReport('',ErrorId1));
-		'lcm','bcnn'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
-							for i:=1 to syntaxNum do
-								Num[i]:=Str2Int(syntax[i]).value;
-							writeln(lcm(Num,syntaxNum));
-						end else write(EReport('',ErrorId1));				
-		'fact','ptnt'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
-							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
-		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
-							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
-								else writeln(EReport('',ErrorId4));
-		'dec'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
-							then begin
-								dec:=Str2Int(syntax[1]).value;
-								writeln('Dec=',dec);
-							end
-						else writeln(EReport('',ErrorId4));
-		'ptb2','eqn2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]));
-		'plot'			:fxplot(copy(s,6,length(s)-6));
+						writeln(lcm(Num,syntaxNum));
+					end else write(EReport('',ErrorId1));				
+		FactorCmd	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+						then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
+		'color'		:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
+						then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
+							else writeln(EReport('',ErrorId4));
+		'dec'		:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
+						then begin
+							dec:=Str2Int(syntax[1]).value;
+							writeln('Dec=',dec);
+						end
+					else writeln(EReport('',ErrorId4));
+		Eqn2Cmd		:writeln(eqn2(syntax[1],syntax[2],syntax[3]));
+		'PLOT'		:fxplot(ClrSpace(copy(s,6,length(s)-6)));
 	else Equation(s);
 	end;
 end;

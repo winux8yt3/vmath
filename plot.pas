@@ -44,6 +44,7 @@ begin
     y1:=y1+(GetMaxY div 2);
     y2:=y2+(GetMaxY div 2);
     Line(x1,y1,x2,y2);
+    readln;
     closegraph;
 end;
 

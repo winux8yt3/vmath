@@ -50,7 +50,7 @@ function CleanSpace(s:string):string;
 var i:byte;
 begin
 	s:=Trim(s);
-	if length(s)<>0 then 
+	if (length(s)>0) and (pos(' ',s)<>0) then 
 		for i:=1 to length(s) do
 			while (s[i]=' ') and (s[i+1]=' ') do delete(s,i,1);
 	CleanSpace:=s;
@@ -166,7 +166,8 @@ end;
 function Trim(s:string):string;
 begin
 	s:=TrimLeft(s);
-	Trim:=TrimRight(s);
+	s:=TrimRight(s);
+	Trim:=s;
 end;
 
 function TrimLeft(s:string):string;
@@ -177,7 +178,8 @@ end;
 
 function TrimRight(s:string):string;
 begin
-	while poslast(' ',s)=length(s) do delete(s,length(s),1);
+	if length(s)>0 then
+		while poslast(' ',s)=length(s) do delete(s,length(s),1);
 	TrimRight:=s;
 end;
 

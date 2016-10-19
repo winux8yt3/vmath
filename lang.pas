@@ -14,6 +14,7 @@ var
     HelpTextFact,HelpTextFunFact:string;
     Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:string;
     eqn0Text,eqn1Text,eqn2Text:string;
+    gcdCmd,lcmCmd,factorCmd,eqn2Cmd:string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:string;
     ErrorId7:string;
 
@@ -75,6 +76,11 @@ begin
     eqn0Text:='Khong co nghiem';
     eqn1Text:='1 nghiem: ';
     eqn2Text:='2 nghiem: ';
+    
+    gcdCmd:='UCLN';
+    lcmCmd:='BCNN';
+    factorCmd:='PTNT';
+    eqn2Cmd:='PTB2';
 
     ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
     ErrorId2:='Phep chia cho 0.';
@@ -138,6 +144,11 @@ begin
     eqn0Text:='No Solution';
     eqn1Text:='1 Solution: ';
     eqn2Text:='2 Solutions: ';
+
+    gcdCmd:='GCD';
+    lcmCmd:='LCM';
+    factorCmd:='FACT';
+    eqn2Cmd:='EQN2';
 
     ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
     ErrorId2:='Division By Zero.';

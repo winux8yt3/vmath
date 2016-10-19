@@ -249,8 +249,9 @@ end;
 procedure fxplot(s:string);
 var a,b:integer;
 begin
-	if (pos('x',s)>2) and (s<>'') then begin
-		a:=Str2Int(copy(s,pos('=',s)+1,pos('x',s)-pos('=',s)-1)).value;
+	delete(s,1,3);
+	if (s<>'') then begin
+		a:=Str2Int(copy(s,1,pos('x',s)-1)).value;
 		b:=Str2Int(copy(s,pos('x',s)+2,length(s)-pos('x',s)-2)).value;
 		plotfx1(a,b);
 	end	
