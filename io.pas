@@ -68,7 +68,6 @@ begin
 		'DATE'			:	writeln(Date);
 		'TIME'			:	writeln(Time);
 		'CLEAR'			:	clrscr;
-		'PRINT'			:	Print(s);
 		'EXIT'			:	ExitProc;
 		'PREANS'		:	writeln(ans:0:dec);
 		'RUN'			:	RunFile(syntax[1],1);

@@ -151,8 +151,8 @@ end;
 procedure ActiveLang(s:string);
 begin
     case upcase(s) of
-        'VI'    :   LangVi;
-        'EN'    :   LangEn
+        'VI','1'    :   LangVi;
+        'EN','0'    :   LangEn
     else LangEn;
     end;
 end;
