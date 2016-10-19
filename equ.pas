@@ -3,7 +3,7 @@ unit equ;
 interface
 
 uses 
-	basic,math,lang,programStr;
+	basic,math,lang,programStr,plot;
 
 var 
     err:word;
@@ -18,7 +18,7 @@ function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
 function gcd(t:tNum;n:word):longword;
 function lcm(t:tNum;n:word):longword;
-//procedure fx(s:string);
+procedure fxplot(s:string);
 
 implementation
 
@@ -245,15 +245,15 @@ begin
 	end;
 	ans:=lcm;
 end;
-{
-procedure fx(s:string);
-var a,b:real;
+
+procedure fxplot(s:string);
+var a,b:integer;
 begin
-	if (pos('x',s)>2) then begin
-		a:=Str2Num(copy(s,pos('=',s)+1,pos('x',s)-pos('=',s)-1).value;
-		b:=Str2Num(copy(s,pos('x',s)+2,length(s)-pos('x',s)-2)).value;
-		fx1draw(a,b);
+	if (pos('x',s)>2) and (s<>'') then begin
+		a:=Str2Int(copy(s,pos('=',s)+1,pos('x',s)-pos('=',s)-1)).value;
+		b:=Str2Int(copy(s,pos('x',s)+2,length(s)-pos('x',s)-2)).value;
+		plotfx1(a,b);
 	end	
 end;
-}
+
 end.

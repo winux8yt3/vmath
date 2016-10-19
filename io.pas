@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	crt,dos,lang,basic,equ,programStr,f,graphic;
+	crt,dos,lang,basic,equ,programStr,f,plot,sysutils;
 
 var
 	Num:tNum;
@@ -48,9 +48,8 @@ begin
 	p:=pos(' ',s);
 	while p<>0 do begin
 		syntax[syntaxNum]:=copy(s,1,p-1);
-		delete(s,1,p-1);
+		delete(s,1,p);
 		inc(syntaxNum);
-		s:=Trim(s);
 		p:=pos(' ',s);
 	end;
 	syntax[syntaxNum]:=copy(s,1,length(s));
@@ -59,43 +58,44 @@ end;
 procedure CmdProcess(s:string);
 begin
 	ClrSyntax;
-	s:=Trim(s);
+	s:=CleanSpace(s);
 	CmdSyntax(s);
-	case Upcase(syntax[0]) of
+	case lowercase(syntax[0]) of
 		''				:	writeln(EReport('',ErrorId1));
-		'?','INFO'		:	Info;
-		'HELP'			:	Help;
-		'LANG'			:	ActiveLang(syntax[1]);
-		'DATE'			:	writeln(Date);
-		'TIME'			:	writeln(Time);
-		'CLEAR'			:	clrscr;
-		'PRINT'			:	Print(s);
-		'EXIT'			:	ExitProc;
-		'PREANS'		:	writeln(ans:0:dec);
-		'RUN'			:	RunFile(syntax[1],1);
-		'FUNFACT'		:	writeln(FunFact(0));
-		'GCD','UCLN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
+		'?','info'		:	Info;
+		'help'			:	Help;
+		'lang'			:	ActiveLang(syntax[1]);
+		'date'			:	writeln(Date);
+		'time'			:	writeln(Time);
+		'clear'			:	clrscr;
+		'print'			:	Print(s);
+		'exit'			:	ExitProc;
+		'preans'		:	writeln(ans:0:dec);
+		'run'			:	RunFile(syntax[1],1);
+		'funfact'		:	writeln(FunFact(0));
+		'gcd','ucln'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(gcd(Num,syntaxNum));
 						end else write(EReport('',ErrorId1));
-		'LCM','BCNN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
+		'lcm','bcnn'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(lcm(Num,syntaxNum));
 						end else write(EReport('',ErrorId1));				
-		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+		'fact','ptnt'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
 							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
-		'COLOR'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
+		'color'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
 							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
 								else writeln(EReport('',ErrorId4));
-		'DEC'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
+		'dec'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
 							then begin
 								dec:=Str2Int(syntax[1]).value;
 								writeln('Dec=',dec);
 							end
 						else writeln(EReport('',ErrorId4));
-		'PTB2','EQN2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]))
+		'ptb2','eqn2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]));
+		'plot'			:fxplot(copy(s,6,length(s)-6));
 	else Equation(s);
 	end;
 end;

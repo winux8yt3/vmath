@@ -16,6 +16,7 @@ type
 	end;
 
 function ClrSpace (s:string):string;
+function CleanSpace(s:string):string;
 function Num2Str (v:extended;d:byte):String;
 function Str2Num (s:string):TStr2Num;
 function Str2Int (s:string):TStr2Int;
@@ -49,8 +50,9 @@ function CleanSpace(s:string):string;
 var i:byte;
 begin
 	s:=Trim(s);
-	for i:=1 to length(s) do
-		while (s[i]=' ') and (s[i+1]=' ') do delete(s,i,1);
+	if length(s)<>0 then 
+		for i:=1 to length(s) do
+			while (s[i]=' ') and (s[i+1]=' ') do delete(s,i,1);
 	CleanSpace:=s;
 end;
 
