@@ -38,7 +38,7 @@ begin
 	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
 		   	ans:=EquProcess(ClrSpace(s));
-		   	if Str2Int(Num2Str(ans,-1)).check=True then writeln(Str2Int(Num2Str(ans,-1)).value)
+		   	if Trunc(ans)=ans then writeln(ans:0:0)
 			   else writeln(ans:0:dec);
 		end
     else writeln(EReport(s,ErrorId1));
