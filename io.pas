@@ -87,7 +87,9 @@ begin
 								writeln('Dec=',dec);
 							end
 						else writeln(EReport('',ErrorId4));
-		'PTB2','EQN2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]));
+		'PTB2','EQN2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
+						and (Str2Num(syntax[3]).check=True) and (syntaxNum=4) then
+						writeln(eqn2(syntax[1],syntax[2],syntax[3]));
 		'PLOT'			:if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True)
 						then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value);
 	else if EquCheck(syntax,syntaxNum)=True then Equation(s)
