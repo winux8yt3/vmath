@@ -78,9 +78,6 @@ begin
 						end else write(EReport('',ErrorId1));				
 		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=2)
 							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
-		'COLOR'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
-							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
-								else writeln(EReport('',ErrorId4));
 		'DEC'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
 							then begin
 								dec:=Str2Int(syntax[1]).value;

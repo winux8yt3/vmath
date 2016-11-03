@@ -148,7 +148,7 @@ begin
 	str:=UPCASE(copy(s,1,k-1));
 	eq:=EquProcess(copy(s,k+2,(length(s)-k-1)));
 	ans:=eq;
-	if str<>'PREANS' then Bool:=True;
+	if (str<>'PREANS') and (str<>'DEC') then Bool:=True;
 //	for k:=1 to length(s) do if s[k] in [symbol] then Bool:=False;
 	if (Upcase(s[1]) in ['A'..'Z']) and (Bool=True) then begin
 		if VarPos(str)=0 then	

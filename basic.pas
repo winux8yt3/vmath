@@ -59,8 +59,7 @@ end;
 
 function Num2Str (v:extended;d:integer):String;
 begin
-	if d>=0 then Str(v:0:d,Num2Str)
-	else if d=-1 then Str(v,Num2Str); 
+	Str(v:0:d,Num2Str);
 end;
 
 function Str2Num(s:string):TStr2Num;
