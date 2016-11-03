@@ -6,6 +6,17 @@ var
 	tmpString:string;
 	i,c:longint;
 
+//procedure ReadCfg;
+//begin
+//	assign(f,'vmath.cfg');
+//	{$I-}
+//		Reset(f);
+//	{$I+}
+//	if IOResult=0 then begin
+		// Add Variable to Read
+//	end;
+//end;
+
 procedure console(lang:string);
 begin
 	Window(1,1,80,255);
