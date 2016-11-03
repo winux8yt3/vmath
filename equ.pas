@@ -7,18 +7,21 @@ uses
 
 var 
     err:word;
+    Vars:TVar;
+    VarNum:word = 0;
 
 procedure Equation(s:string);
+function EquCheck(a:tStr;ALength:byte):boolean;
 function EquProcess(s:string):extended;
-function VarPos(s:string;a:TVar):word;
+function VarPos(s:string):word;
 procedure VarProcess(s:shortstring);
+function VarCheck(s:string):boolean;
 function Bool(s:string):boolean;
 function eqn2(x,y,z:string):string;
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
 function gcd(t:tNum;n:word):longword;
 function lcm(t:tNum;n:word):longword;
-procedure fxplot(s:string);
 
 implementation
 
@@ -35,9 +38,18 @@ begin
 	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
 		   	ans:=EquProcess(ClrSpace(s));
-		   	writeln(ans:0:dec);
+		   	if Str2Int(Num2Str(ans,-1)).check=True then writeln(Str2Int(Num2Str(ans,-1)).value)
+			   else writeln(ans:0:dec);
 		end
     else writeln(EReport(s,ErrorId1));
+end;
+
+function EquCheck(a:tStr;ALength:byte):boolean;
+var i:byte;
+begin
+	EquCheck:=True;
+	for i:=1 to Alength-1 do
+		if (VarCheck(a[i])=True) and (VarCheck(a[i+1])=True) then EquCheck:=False; 
 end;
 
 procedure NumProcess(s:string;k:word; var n1,n2:extended);
@@ -79,8 +91,8 @@ begin
 	end
 	else if (pos('(',s)<>0) and (pos(')',s)<>0) and (pos(')',s)-pos('(',s)>1) then 
 		EquProcess:=EquProcess(copy(s,2,length(s)-2))
-	else if (VarPos(s,Vars)<>0) and (Str2Num(s).check=False)
-		then EquProcess:=Vars[VarPos(s,Vars)].value
+	else if (VarPos(s)<>0) and (Str2Num(s).check=False)
+		then EquProcess:=Vars[VarPos(s)].value
 	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
 	else exit;
 end;
@@ -114,14 +126,14 @@ begin
     end
 end;
 
-function VarPos(s:string;a:TVar):word;
+function VarPos(s:string):word;
 var i:word;
 begin
 	VarPos:=0;
 	i:=0;
-	while (s<>a[i].vname) and (i<35566) do begin
-		inc(i);
-		if s=a[i].vname then VarPos:=i;
+	while (i<=VarNum) and (s=Vars[i].vname) do begin
+		inc(i);	
+		if s=Vars[i].vname then VarPos:=i;
 	end;
 end;
 
@@ -129,22 +141,34 @@ procedure VarProcess(s:string);
 var 
 	str:shortstring;
 	k:word;
+    Bool:boolean;
 	eq:Extended;
 begin
 	k:=pos('==',s);
-	str:=copy(s,1,k-1);
+	str:=UPCASE(copy(s,1,k-1));
 	eq:=EquProcess(copy(s,k+2,(length(s)-k-1)));
 	ans:=eq;
-	if Upcase(s[1]) in ['A'..'Z'] then begin
-		if VarPos(str,Vars)=0 then	
+	if str<>'PREANS' then Bool:=True;
+//	for k:=1 to length(s) do if s[k] in [symbol] then Bool:=False;
+	if (Upcase(s[1]) in ['A'..'Z']) and (Bool=True) then begin
+		if VarPos(str)=0 then	
 		begin
 			inc(VarNum);
 			Vars[VarNum].vname:=str;
 		end;
-	Vars[VarPos(str,Vars)].value:=eq;
-	writeln(str,' = ',eq:0:dec);
+		Vars[VarPos(str)].value:=eq;
+		writeln(str,' = ',eq:0:dec);
 	end
 	else writeln(EReport(str,ErrorId4))
+end;
+
+function VarCheck(s:string):boolean;
+var i:word;
+begin
+	if Str2Num(s).check=True then VarCheck:=True
+		else VarCheck:=False;
+	for i:=0 to VarNum do
+		if s=Vars[i].vname then VarCheck:=True;
 end;
 
 function eqn2(x,y,z:string):string;
@@ -169,7 +193,7 @@ begin
     	end
     	else writeln(EReport(Num2Str(a,dec),ErrorId1));
 	end
-	else writeln(EReport('',ErrorId1))
+	else eqn2:=(EReport('',ErrorId1))
 end;
     
 function fact(num:Longword):string;
@@ -244,17 +268,6 @@ begin
 		if c=n then lcm:=i;
 	end;
 	ans:=lcm;
-end;
-
-procedure fxplot(s:string);
-var a,b:integer;
-begin
-	delete(s,1,3);
-	if (s<>'') then begin
-		a:=Str2Int(copy(s,0,pos('x',s)-1)).value;
-		b:=Str2Int(copy(s,pos('x',s)+1,length(s)-pos('x',s)-2)).value;
-		plotfx1(a,b);
-	end	
 end;
 
 end.

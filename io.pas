@@ -17,12 +17,6 @@ procedure RunFile(FName:string;w:byte);
 
 implementation
 
-procedure Print(s:string);
-begin
-	delete(s,1,5);
-	s:=trimleft(s);
-	writeln(s);
-end;
 
 procedure ExitProc;
 begin
@@ -72,17 +66,17 @@ begin
 		'PREANS'		:	writeln(ans:0:dec);
 		'RUN'			:	RunFile(syntax[1],1);
 		'TIP'			:	writeln(FunFact(0));
-		'GCD','UCLN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
+		'GCD','UCLN'	:if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>2) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(gcd(Num,syntaxNum));
 						end else write(EReport('',ErrorId1));
-		'LCM','BCNN'	:if (NumInCheck(syntax,syntaxNum)=true) then begin
+		'LCM','BCNN'	:if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>2) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(lcm(Num,syntaxNum));
 						end else write(EReport('',ErrorId1));				
-		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0)
+		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=2)
 							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
 		'COLOR'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[2]).check=True)
 							then color(Str2Int(syntax[1]).value,Str2Int(syntax[2]).value)
@@ -94,8 +88,10 @@ begin
 							end
 						else writeln(EReport('',ErrorId4));
 		'PTB2','EQN2'	:writeln(eqn2(syntax[1],syntax[2],syntax[3]));
-		'PLOT'			:fxplot(ClrSpace(copy(s,6,length(s)-6)));
-	else Equation(s);
+		'PLOT'			:if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True)
+						then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value);
+	else if EquCheck(syntax,syntaxNum)=True then Equation(s)
+	else write(EReport('',ErrorId1));
 	end;
 end;
 

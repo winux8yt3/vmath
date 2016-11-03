@@ -17,7 +17,7 @@ type
 
 function ClrSpace (s:string):string;
 function CleanSpace(s:string):string;
-function Num2Str (v:extended;d:byte):String;
+function Num2Str (v:extended;d:integer):String;
 function Str2Num (s:string):TStr2Num;
 function Str2Int (s:string):TStr2Int;
 function PosLast (ch,s:string):word;
@@ -32,6 +32,7 @@ function EReport(str,err:string):string;
 function Trim(s:string):string;
 function TrimLeft(s:string):string;
 function TrimRight(s:string):string;
+procedure Print(s:string);
 
 implementation
 
@@ -56,9 +57,10 @@ begin
 	CleanSpace:=s;
 end;
 
-function Num2Str (v:extended;d:byte):String;
+function Num2Str (v:extended;d:integer):String;
 begin
- 	Str(v:0:d,Num2Str);
+	if d>=0 then Str(v:0:d,Num2Str)
+	else if d=-1 then Str(v,Num2Str); 
 end;
 
 function Str2Num(s:string):TStr2Num;
@@ -97,7 +99,7 @@ function Date():string;
 		Year,Month,Day,Num : word;
 	begin
 		GetDate(Year,Month,Day,Num);
-		Date:=DateText+DayNum[Num]+', '+Num2Str(Day,0)+'/'+Num2Str(Month,0)+'/'+Num2Str(Year,0)+'.';
+		Date:=Num2Str(Day,0)+'/'+Num2Str(Month,0)+'/'+Num2Str(Year,0)+'.';
 	end;
 	
 function Time():string;
@@ -105,7 +107,7 @@ function Time():string;
 		Hr,Min,Sec,Milisec : word;
 	begin
 		GetTime(Hr,Min,Sec,Milisec);
-        Time:=TimeText+Num2Str(Hr,0)+':'+Num2Str(Min,0)+':'+Num2Str(Sec,0)+'.'+Num2Str(Milisec,0);
+        Time:=Num2Str(Hr,0)+':'+Num2Str(Min,0)+':'+Num2Str(Sec,0)+'.'+Num2Str(Milisec,0);
 	end;
 
 procedure Color(txcolor,BgColor:byte);
@@ -125,7 +127,6 @@ begin
 	writeln('dec        : ',HelpTextDec);
 	writeln('exit       : ',HelpTextExit);
 	writeln('fact,ptnt  : ',HelpTextFact);
-	writeln('funfact    : ',HelpTextFunFact);
 	writeln('gcd,ucln   : ',HelpTextGcd);
 	writeln('lcm,bcnn   : ',HelpTextLcm);
 	writeln('help       : ',HelpTextHelp);
@@ -134,6 +135,7 @@ begin
 	writeln('ptb2,eqn2  : ',HelpTexteqn2);
 	writeln('run        : ',HelpTextRun);
 	writeln('time       : ',HelpTextTime);
+	writeln('tip        : ',HelpTextFunFact);
 	writeln;
 	writeln('EQUATION    + | - | * | / | ^');
 end;
@@ -165,9 +167,7 @@ end;
 
 function Trim(s:string):string;
 begin
-	s:=TrimLeft(s);
-	s:=TrimRight(s);
-	Trim:=s;
+	Trim:=TrimLeft(TrimRight(s));
 end;
 
 function TrimLeft(s:string):string;
@@ -181,6 +181,13 @@ begin
 	if length(s)>0 then
 		while poslast(' ',s)=length(s) do delete(s,length(s),1);
 	TrimRight:=s;
+end;
+
+procedure Print(s:string);
+begin
+	delete(s,1,5);
+	s:=trimleft(s);
+	writeln(s);
 end;
 
 end.
