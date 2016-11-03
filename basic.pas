@@ -120,8 +120,9 @@ procedure Help;
 begin
 	writeln;
 	writeln('?,info     : ',HelpTextInfo);
+	writeln('ActiveGraph: ');
+	writeln('ExitGraph  : ');
 	writeln('clear      : ',HelpTextClear);
-	writeln('color      : ',HelpTextColor);
 	writeln('date       : ',HelpTextDate);
 	writeln('dec        : ',HelpTextDec);
 	writeln('exit       : ',HelpTextExit);

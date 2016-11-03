@@ -20,7 +20,6 @@ implementation
 
 procedure ExitProc;
 begin
-	writeln;
 	write(TkMsg);
 	delay(1500);
 	exit;
@@ -58,6 +57,8 @@ begin
 		''				:	writeln(EReport('',ErrorId1));
 		'?','INFO'		:	Info;
 		'HELP'			:	Help;
+		'ACTIVEGRAPH'	:	ActiveGraph;
+		'EXITGRAPH'		:	ExitGraph;
 		'LANG'			:	ActiveLang(syntax[1]);
 		'DATE'			:	writeln(Date);
 		'TIME'			:	writeln(Time);
@@ -66,17 +67,17 @@ begin
 		'PREANS'		:	writeln(ans:0:dec);
 		'RUN'			:	RunFile(syntax[1],1);
 		'TIP'			:	writeln(FunFact(0));
-		'GCD','UCLN'	:if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>2) then begin
+		'GCD','UCLN'	:if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(gcd(Num,syntaxNum));
 						end else write(EReport('',ErrorId1));
-		'LCM','BCNN'	:if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>2) then begin
+		'LCM','BCNN'	:if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							writeln(lcm(Num,syntaxNum));
 						end else write(EReport('',ErrorId1));				
-		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=2)
+		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=1)
 							then writeln(fact(Str2Int(syntax[1]).value)) else writeln(EReport('',ErrorId4));
 		'DEC'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
 							then begin
@@ -87,8 +88,8 @@ begin
 		'PTB2','EQN2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
 						and (Str2Num(syntax[3]).check=True) and (syntaxNum=4) then
 						writeln(eqn2(syntax[1],syntax[2],syntax[3]));
-		'PLOT'			:if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True)
-						then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value);
+		'PLOT'			:if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True) and (Str2Int(syntax[2]).check=True)
+						and (syntaxNum=3) then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value);
 	else if EquCheck(syntax,syntaxNum)=True then Equation(s)
 	else write(EReport('',ErrorId1));
 	end;
