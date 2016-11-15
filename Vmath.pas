@@ -3,7 +3,7 @@ program Vmath;
 uses sysutils,crt,io,lang,programStr,basic,equ,f;
 // vmathui;
 var 
-	tmpString:string;
+	tmpString:String;
 	i,c:longint;
 
 //procedure ReadCfg;
@@ -17,7 +17,7 @@ var
 //	end;
 //end;
 
-procedure console(lang:string);
+procedure console(lang:String);
 begin
 	Window(1,1,80,255);
 	clrscr;
@@ -63,7 +63,7 @@ begin
 		writeln('[VMath] >> Processing . . .');
 		RunFile(paramstr(1),0);
 	end 
-	else if (lowercase(Paramstr(1))='-l') then
-		Console(Paramstr(2))
+	else if (lowercase(Paramstr(1))='-en') then Console('en')
+	else if (lowercase(Paramstr(1))='-vi') then Console('vi')
 	else console('');
 end.

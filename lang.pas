@@ -1,23 +1,23 @@
 unit lang;
-    
+
 interface
 
 uses programStr;
 
 var 
-    ProgramInfo,WelcomeMsg,DoneMsg,TkMsg:string;
-    LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:string;
-    DayNum:array[0..6] of string;
-    HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:string;
-    HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:string;
-    HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:string;
-    HelpTextFact,HelpTextFunFact:string;
-    Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:string;
-    eqn0Text,eqn1Text,eqn2Text:string;
-    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:string;
-    ErrorId7:string;
+    ProgramInfo,WelcomeMsg,DoneMsg,TkMsg:String;
+    LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
+    HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:String;
+    HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:String;
+    HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
+    HelpTextFact,HelpTextFunFact:String;
+    Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:String;
+    eqn0Text,eqn1Text,eqn2Text:String;
+    GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
+    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:String;
+    ErrorId7:String;
 
-procedure ActiveLang(s:string);
+procedure ActiveLang(s:String);
 
 implementation
 
@@ -39,20 +39,11 @@ begin
     OutputText:='Xuat';
     ExitText:='Thoat chuong trinh ?';
 
-    DayNum[0]:='Chu Nhat';
-    DayNum[1]:='Thu Hai';
-    DayNum[2]:='Thu Ba';
-    DayNum[3]:='Thu Tu';
-    DayNum[4]:='Thu Nam';
-    DayNum[5]:='Thu Sau';
-    DayNum[6]:='Thu Bay';
-
-    HelpTextInfo:='Th'#244'ng tin v'#234' ph'#226'n m'#234'm';
-    HelpTextClear:='Xo'#225' m'#224'n h'#236'nh';
-    HelpTextColor:='Thay doi mau chu va phong nen';
+    HelpTextInfo:='Thông tin ph'#7847'n m'#7873'm';
+    HelpTextClear:='Xoá màn hình';
     HelpTextDate:='In ra ng'#224'y';
     HelpTextDec:='Do dai phan thap phan trong ket qua toan hoc';
-    HelpTextExit:='Tho'#225't';
+    HelpTextExit:='Thoát';
     HelpTextHelp:='Huong dan su dung';
     HelpTextPause:='Tam dung chuong trinh';
     HelpTextPreans:='In ra ket qua luc truoc';
@@ -75,6 +66,12 @@ begin
     eqn0Text:='Khong co nghiem';
     eqn1Text:='1 nghiem: ';
     eqn2Text:='2 nghiem: ';
+
+    GNotEnabledMsg:='Graphic Not Yet Activated';
+    GEnabledMsg:='Graphic Already Activated.';
+    GDisabledMsg:='Graphic Already Closed.';
+    GLoadMsg:='Loading Graphic . . .';
+    GCloseMsg:='Closing Graphic . . .';
 
     ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
     ErrorId2:='Phep chia cho 0.';
@@ -101,14 +98,6 @@ begin
     InputText:='Input';
     OutputText:='Output';
     ExitText:='Exit program ?';
-
-    DayNum[0]:='Sunday';
-    DayNum[1]:='Monday';
-    DayNum[2]:='Tuesday';
-    DayNum[3]:='Wednesday';
-    DayNum[4]:='Thursday';
-    DayNum[5]:='Friday';
-    DayNum[6]:='Saturday';
 
     HelpTextInfo:='About the Program';
     HelpTextClear:='Clear screen';
@@ -139,6 +128,12 @@ begin
     eqn1Text:='1 Solution: ';
     eqn2Text:='2 Solutions: ';
 
+    GNotEnabledMsg:='Do hoa chua duoc kich hoat';
+    GEnabledMsg:='Do hoa da duoc kich hoat.';
+    GDisabledMsg:='Do hoa da bi tat.';
+    GLoadMsg:='Dang nap che do do hoa . . .';
+    GCloseMsg:='Dang tat che do do hoa . . .';
+
     ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
@@ -148,7 +143,7 @@ begin
     ErrorId7:='Expecting X';
 end;
 
-procedure ActiveLang(s:string);
+procedure ActiveLang(s:String);
 begin
     case upcase(s) of
         'VI','1'    :   LangVi;

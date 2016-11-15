@@ -1,5 +1,7 @@
 unit basic;
     
+{$CODEPAGE UTF8} 
+
 interface
     
 uses
