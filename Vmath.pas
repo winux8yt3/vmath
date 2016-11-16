@@ -51,7 +51,7 @@ begin
 	writeln(CopyrightInfo);
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
-		if (paramstr(2)='-d') and (Str2Num(paramstr(2)).check=True) then
+		if (paramstr(2)='-d') and (Str2Num(paramstr(3)).check=True) then
 		begin
 			dec:=Str2Int(paramstr(3)).value;
 			c:=4;

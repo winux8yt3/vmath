@@ -10,7 +10,7 @@ var
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:String;
     HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
-    HelpTextFact,HelpTextFunFact:String;
+    HelpTextFact,HelpTextFunFact,HelpTextAGraph,HelpTextEGraph:String;
     Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:String;
     eqn0Text,eqn1Text,eqn2Text:String;
     GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
@@ -55,6 +55,8 @@ begin
     HelpTextLcm:='Boi chung nho nhat';
     HelpTextFact:='Phan tich thanh cac thua so nguyen to';
     HelpTextFunFact:='Thong tin thuc te vui';
+    HelpTextAGraph:='Bat che do do hoa';
+    HelpTextEGraph:='Tat che do do hoa';
 
     Fact1:='Ti le chieu dai va chieu rong cua to giay loai A la 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y la so nguyen to; m,n la so tu nhien) [Euler]';
@@ -67,11 +69,11 @@ begin
     eqn1Text:='1 nghiem: ';
     eqn2Text:='2 nghiem: ';
 
-    GNotEnabledMsg:='Graphic Not Yet Activated';
-    GEnabledMsg:='Graphic Already Activated.';
-    GDisabledMsg:='Graphic Already Closed.';
-    GLoadMsg:='Loading Graphic . . .';
-    GCloseMsg:='Closing Graphic . . .';
+    GNotEnabledMsg:='Do hoa chua duoc kich hoat';
+    GEnabledMsg:='Do hoa da duoc kich hoat.';
+    GDisabledMsg:='Do hoa da bi tat.';
+    GLoadMsg:='Dang nap che do do hoa . . .';
+    GCloseMsg:='Dang tat che do do hoa . . .';
 
     ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
     ErrorId2:='Phep chia cho 0.';
@@ -116,6 +118,8 @@ begin
     HelpTextLcm:='Least common multiple';
     HelpTextFact:='Factorization to Prime';
     HelpTextFunFact:='Fun fact';
+    HelpTextAGraph:='Enable Graph mode';
+    HelpTextEGraph:='Disable Graph mode';
 
     Fact1:='Ratio of length and width of type-A paper is 1/sqrt(2)';
     Fact2:='x^m <> y^n (x,y is prime; m,n is natural number) [Euler]';
@@ -128,11 +132,11 @@ begin
     eqn1Text:='1 Solution: ';
     eqn2Text:='2 Solutions: ';
 
-    GNotEnabledMsg:='Do hoa chua duoc kich hoat';
-    GEnabledMsg:='Do hoa da duoc kich hoat.';
-    GDisabledMsg:='Do hoa da bi tat.';
-    GLoadMsg:='Dang nap che do do hoa . . .';
-    GCloseMsg:='Dang tat che do do hoa . . .';
+    GNotEnabledMsg:='Graphic Not Yet Activated';
+    GEnabledMsg:='Graphic Already Activated.';
+    GDisabledMsg:='Graphic Already Closed.';
+    GLoadMsg:='Loading Graphic . . .';
+    GCloseMsg:='Closing Graphic . . .';
 
     ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
     ErrorId2:='Division By Zero.';
