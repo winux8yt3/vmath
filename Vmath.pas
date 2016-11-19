@@ -6,15 +6,15 @@ var
 	tmpString:String;
 	i,c:longint;
 
-//procedure ReadCfg;
-//begin
-//	assign(f,'vmath.cfg');
-//	{$I-}
-//		Reset(f);
-//	{$I+}
-//	if IOResult=0 then begin
-		// Add Variable to Read
-//	end;
+procedure ReadCfg;
+begin
+	assign(f,'vmath.cfg');
+	{$I-}
+		Reset(f);
+	{$I+}
+	if IOResult=0 then begin
+		
+	end;
 //end;
 
 procedure console(lang:String);
