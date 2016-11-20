@@ -41,7 +41,7 @@ begin
 		   	if Trunc(ans)=ans then writeln(ans:0:0)
 			   else writeln(ans:0:dec);
 		end
-    else writeln(EReport(s,ErrorId1));
+    else write(EReport(s,ErrorId1));
 end;
 
 function EquCheck(a:tStr;ALength:byte):boolean;
@@ -82,7 +82,7 @@ begin
 	end	
 	else if (pos('/',s)<>0) and (s<>'') and ((pos('/',s)>poslast(')',s)) or (pos('/',s)<pos('(',s))) then begin
 		NumProcess(s,poslast('/',s),n1,n2);
-		if (n2=0) or (n1=0) then writeln(EReport(s,ErrorId2))
+		if (n2=0) or (n1=0) then write(EReport(s,ErrorId2))
 		else EquProcess:=n1/n2;
 	end
 	else if (pos('^',s)<>0) and (s<>'') and ((pos('^',s)>poslast(')',s)) or (pos('^',s)<pos('(',s))) then begin
@@ -159,7 +159,7 @@ begin
 		Vars[VarPos(str)].value:=eq;
 		writeln(str,' = ',eq:0:dec);
 	end
-	else writeln(EReport(str,ErrorId4))
+	else write(EReport(str,ErrorId4))
 end;
 
 function VarCheck(s:string):boolean;
@@ -191,7 +191,7 @@ begin
 				eqn2:=eqn2+' | x2= '+Num2Str(((-b-sqrt(delta))/2/a),dec);
 			end;
     	end
-    	else writeln(EReport(Num2Str(a,dec),ErrorId1));
+    	else write(EReport(Num2Str(a,dec),ErrorId1));
 	end
 	else eqn2:=(EReport('',ErrorId1))
 end;
@@ -230,7 +230,7 @@ begin
 	for i:=1 to endNum do 
 		if (Str2Int(t[i]).check=false) or (Str2Int(t[i]).value<=0) or (t[i]=' ')
 			then NumInCheck:=false;
-	if NumInCheck=False then writeln(EReport('',ErrorId4));
+	if NumInCheck=False then write(EReport('',ErrorId4));
 end;
 
 function gcd(t:tNum;n:word):longword;

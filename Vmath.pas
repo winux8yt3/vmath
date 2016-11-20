@@ -6,39 +6,27 @@ var
 	tmpString:String;
 	i,c:longint;
 
-procedure ReadCfg;
-begin
-	assign(f,'vmath.cfg');
-	{$I-}
-		Reset(f);
-	{$I+}
-	if IOResult=0 then begin
-		
-	end;
-//end;
-
 procedure console(lang:String);
 begin
-	Window(1,1,80,255);
+	Window(1,1,120,255);
 	clrscr;
 	if lang='' then begin
-		write('Choose Your Language [Default is English]');writeln;
-		write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
-		write('(En | Vi) >> ');readln(tmpString);		
+		writeln('Choose Your Language [Default is English]');
+		writeln('Chon ngon ngu [Mac dinh la Tieng Anh]');
+		write('(En | Vi) >> ');read(tmpString);
 		ActiveLang(tmpString);
 	end
 	else ActiveLang(lang);
+	write(LoadText);
+	if ChkFile('vmath.cfg')=0 then ReadCfg;
 	clrscr;
 	writeln('===========================================');
 	writeln('               VMath Xplorer               ');
 	writeln('===========================================');
-	
 	writeln(WelcomeMsg);
-	writeln(FunFact(0));
 	RunFile('start.vmath',0);
 	repeat
-		writeln;
-		write(InputText,' >> ');readln(tmpString);
+		write(#13#10#13#10,InputText,' >> ');readln(tmpString);
 		writeln;
 		write(OutputText,' >> ');
 		CmdProcess(tmpString);

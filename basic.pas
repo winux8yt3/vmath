@@ -3,7 +3,7 @@ unit basic;
 interface
     
 uses
-    crt,dos,lang,programstr;
+    crt,dos,programstr;
 
 type 
 	TStr2Num = record
@@ -14,21 +14,25 @@ type
 		Check:boolean;
 		Value:longint;
 	end;
+	TStr2Bool = record
+		Check:boolean;
+		Value:boolean;
+	end;	
 
 function ClrSpace (s:string):string;
 function CleanSpace(s:string):string;
 function Num2Str (v:extended;d:integer):String;
 function Str2Num (s:string):TStr2Num;
 function Str2Int (s:string):TStr2Int;
+function Str2Bool (s:string):TStr2Bool;
 function PosLast (ch,s:string):word;
-procedure Info;
 function Date():string;
 function Time():string;
-procedure Color(txcolor,BgColor:byte);
-procedure Help;
+procedure TxColor(TColor:byte);
+procedure BgColor(Bcolor:byte);
+procedure Color(tcolor,BColor:byte);
 procedure Msg(s:string);
-function FunFact(r:byte):string;
-function EReport(str,err:string):string;
+function EReport(str:string;err:string):string;
 function Trim(s:string):string;
 function TrimLeft(s:string):string;
 function TrimRight(s:string):string;
@@ -78,19 +82,20 @@ begin
 	if err=0 then Str2Int.Check:=True;
 end;
 
+function Str2Bool (s:string):TStr2Bool;
+begin
+	Str2Bool.Check:=True;
+	if upcase(s)='TRUE' then Str2Bool.value:=True
+		else if upcase(s)='FALSE' then Str2Bool.value:=False
+			else Str2Bool.Check:=False;
+end;
+
 function PosLast (ch,s:string):word;
 var k:word;
 begin
 	PosLast:=0;k:=1;
 	for k:=1 to length(s) do
 		if ch=copy(s,k,length(ch)) then PosLast:=k;
-end;
-
-procedure Info;
-begin
-    writeln(ProgramInfo);
-    writeln(CopyrightInfo);
-    writeln(InfoText);
 end;
 
 function Date():string;
@@ -109,35 +114,20 @@ function Time():string;
         Time:=Num2Str(Hr,0)+':'+Num2Str(Min,0)+':'+Num2Str(Sec,0)+'.'+Num2Str(Milisec,0);
 	end;
 
-procedure Color(txcolor,BgColor:byte);
+procedure TxColor(TColor:byte);
 begin
-	writeln(LoadText);
-	TextColor(txcolor);
-	TextBackground(BgColor);
+	TextColor(Tcolor);
 end;
 
-procedure Help;
+procedure BgColor(Bcolor:byte);
 begin
-	writeln;
-	writeln('?,info     : ',HelpTextInfo);
-	writeln('ActiveGraph: ',HelpTextAGraph);
-	writeln('ExitGraph  : ',HelpTextEGraph);
-	writeln('clear      : ',HelpTextClear);
-	writeln('date       : ',HelpTextDate);
-	writeln('dec        : ',HelpTextDec);
-	writeln('exit       : ',HelpTextExit);
-	writeln('fact,ptnt  : ',HelpTextFact);
-	writeln('gcd,ucln   : ',HelpTextGcd);
-	writeln('lcm,bcnn   : ',HelpTextLcm);
-	writeln('help       : ',HelpTextHelp);
-	writeln('preans     : ',HelpTextPreans);
-	writeln('print      : ',HelpTextPrint);
-	writeln('ptb2,eqn2  : ',HelpTexteqn2);
-	writeln('run        : ',HelpTextRun);
-	writeln('time       : ',HelpTextTime);
-	writeln('tip        : ',HelpTextFunFact);
-	writeln;
-	writeln('EQUATION    + | - | * | / | ^');
+	TextBackground(Bcolor);
+end;
+
+procedure Color(Tcolor,BColor:byte);
+begin
+	TXcolor(Tcolor);
+	BGcolor(BColor);
 end;
 
 procedure Msg(s:string);
@@ -145,24 +135,9 @@ begin
 	write(s);readln;
 end;
 
-function FunFact(r:byte):string;
-begin
-	randomize;
-	while r=0 do r:=random(7);
-	Funfact:='Fact #'+Num2Str(r,0)+': ';
-	case r of
-		1	:FunFact:=FunFact+Fact1;
-		2	:FunFact:=FunFact+Fact2;
-		3	:FunFact:=FunFact+Fact3;
-		4	:FunFact:=FunFact+Fact4;
-		5	:FunFact:=FunFact+Fact5;
-		6	:FunFact:=FunFact+Fact6;
-	end;
-end;
-
 function EReport(str:string;err:string):string;
 begin
-	EReport:='<'+str+'>:'+err;
+	if ErrHide=False then EReport:='<'+str+'>:'+err;
 end;
 
 function Trim(s:string):string;

@@ -15,12 +15,13 @@ const
     CopyrightInfo: string = 'Copyright (c) 2016 Nguyen Tuan Dung (Winux8yt3)';
     ProgramName: string = 'VMath Xplorer';
     Version: string = '0.9-pre5';
-    VersionBuild: string = '161119';
+    VersionBuild: string = '161120';
     VersionInfo: string = 'Beta';
     
 
 var
     CmdH:TStr;
+    ErrHide:boolean=False;
     ans:extended;
     dec:byte = 2;
 

@@ -2,24 +2,33 @@ unit lang;
 
 interface
 
-uses programStr;
+uses programStr,f,basic;
 
+//Switch to Const in 1.0
 var 
     ProgramInfo,WelcomeMsg,DoneMsg,TkMsg:String;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:String;
     HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
-    HelpTextFact,HelpTextFunFact,HelpTextAGraph,HelpTextEGraph:String;
-    Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:String;
+    HelpTextFact,HelpTextGraph:String;
     eqn0Text,eqn1Text,eqn2Text:String;
-    GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
+    GEnable,GDisable,GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
     ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:String;
     ErrorId7:String;
 
 procedure ActiveLang(s:String);
+procedure Help;
+procedure Info;
 
 implementation
+
+procedure Info;
+begin
+    writeln(ProgramInfo);
+    writeln(CopyrightInfo);
+    writeln(InfoText);
+end;
 
 procedure LangVi;
 begin
@@ -54,21 +63,14 @@ begin
     HelpTextGcd:='Uoc chung lon nhat';
     HelpTextLcm:='Boi chung nho nhat';
     HelpTextFact:='Phan tich thanh cac thua so nguyen to';
-    HelpTextFunFact:='Thong tin thuc te vui';
-    HelpTextAGraph:='Bat che do do hoa';
-    HelpTextEGraph:='Tat che do do hoa';
-
-    Fact1:='Ti le chieu dai va chieu rong cua to giay loai A la 1/sqrt(2)';
-    Fact2:='x^m <> y^n (x,y la so nguyen to; m,n la so tu nhien) [Euler]';
-    Fact3:='a/9 = 0.(a) | ab/99 = 0.(ab)';
-    Fact4:='| f(n) = n^2 + n + 41 | n < 40 | => f(n) la so nguyen to [Euler]';
-    Fact5:='So 2 la so nguyen to chan duy nhat';
-    Fact6:='So nguyen to lon nhat tinh toi ngay 7/1/2016 la 2^74,207,281-1';
+    HelpTextGraph:='BAT/TAT che do do hoa';
 
     eqn0Text:='Khong co nghiem';
     eqn1Text:='1 nghiem: ';
     eqn2Text:='2 nghiem: ';
 
+    GEnable:='BAT';
+    GDisable:='TAT';
     GNotEnabledMsg:='Do hoa chua duoc kich hoat';
     GEnabledMsg:='Do hoa da duoc kich hoat.';
     GDisabledMsg:='Do hoa da bi tat.';
@@ -117,21 +119,14 @@ begin
     HelpTextGcd:='Greatest common divisor';
     HelpTextLcm:='Least common multiple';
     HelpTextFact:='Factorization to Prime';
-    HelpTextFunFact:='Fun fact';
-    HelpTextAGraph:='Enable Graph mode';
-    HelpTextEGraph:='Disable Graph mode';
-
-    Fact1:='Ratio of length and width of type-A paper is 1/sqrt(2)';
-    Fact2:='x^m <> y^n (x,y is prime; m,n is natural number) [Euler]';
-    Fact3:='a/9 = 0.(a) | ab/99 = 0.(ab)';
-    Fact4:='| f(n) = n^2 + n + 41 ; n < 40 | => f(n) is prime [Euler]';
-    Fact5:='The only even prime number is 2.';
-    Fact6:='Largest prime number until 7/1/2016 is 2^74,207,281-1';
+    HelpTextGraph:='ACTIVE/EXIT Graph mode';
 
     eqn0Text:='No Solution';
     eqn1Text:='1 Solution: ';
     eqn2Text:='2 Solutions: ';
 
+    GEnable:='ACTIVE';
+    GDisable:='EXIT';
     GNotEnabledMsg:='Graphic Not Yet Activated';
     GEnabledMsg:='Graphic Already Activated.';
     GDisabledMsg:='Graphic Already Closed.';
@@ -147,13 +142,54 @@ begin
     ErrorId7:='Expecting X';
 end;
 
+procedure CodeVi;
+begin
+    
+end;
+
+procedure CodeEn;
+begin
+    
+end;
+
 procedure ActiveLang(s:String);
 begin
     case upcase(s) of
         'VI','1'    :   LangVi;
-        'EN','0'    :   LangEn
-    else LangEn;
+        'EN','0'    :   LangEn;
+    else if (ChkFile(s)=0) then ReadLang(s) else LangEn;
     end;
+end;
+
+procedure ActiveCodeLang(s:string);
+begin
+    case upcase(s) of 
+        'VI'        :   CodeVi;
+        'EN'        :   CodeEn;
+    end;
+end;
+
+procedure Help;
+begin
+	writeln;
+	writeln('?,info     : ',HelpTextInfo);
+    writeln('color      : ',HelpTextColor);
+	writeln('clear      : ',HelpTextClear);
+	writeln('date       : ',HelpTextDate);
+	writeln('dec        : ',HelpTextDec);
+	writeln('exit       : ',HelpTextExit);
+	writeln('fact,ptnt  : ',HelpTextFact);
+	writeln('gcd,ucln   : ',HelpTextGcd);
+	writeln('graph      : ',HelpTextGraph);
+	writeln('lcm,bcnn   : ',HelpTextLcm);
+	writeln('help       : ',HelpTextHelp);
+	writeln('preans     : ',HelpTextPreans);
+	writeln('print      : ',HelpTextPrint);
+	writeln('ptb2,eqn2  : ',HelpTexteqn2);
+	writeln('run        : ',HelpTextRun);
+	writeln('time       : ',HelpTextTime);
+	writeln;
+	writeln('EQUATION    + | - | * | / | ^');
 end;
 
 end.
