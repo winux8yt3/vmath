@@ -33,13 +33,13 @@ begin
     else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
 		or (pos('<',s)<>0) and (pos('<',s)=poslast('<',s)) 
 		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
-			then writeln(bool(ClrSpace(s)))
+			then write(bool(ClrSpace(s)))
     else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
 	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
 		begin
 		   	ans:=EquProcess(ClrSpace(s));
-		   	if Trunc(ans)=ans then writeln(ans:0:0)
-			   else writeln(ans:0:dec);
+		   	if Trunc(ans)=ans then write(ans:0:0)
+			   else write(ans:0:dec);
 		end
     else write(EReport(s,ErrorId1));
 end;
@@ -157,7 +157,7 @@ begin
 			Vars[VarNum].vname:=str;
 		end;
 		Vars[VarPos(str)].value:=eq;
-		writeln(str,' = ',eq:0:dec);
+		write(str,' = ',eq:0:dec);
 	end
 	else write(EReport(str,ErrorId4))
 end;

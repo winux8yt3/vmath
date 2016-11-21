@@ -17,9 +17,9 @@ var
 
 procedure ActiveGraph;
 begin
-    if GActive=True then writeln(GEnabledMsg) else
+    if GActive=True then write(GEnabledMsg) else
     begin
-	    writeln(GLoadMsg);
+	    write(GLoadMsg);
 	    gd:=Detect;
         gm:=0;
         InitGraph(gd,gm,'C:\PP\BGI');
@@ -32,8 +32,8 @@ end;
 
 procedure ExitGraph;
 begin
-    if GActive=False then writeln(GDisabledMsg) else begin
-        writeln(GCloseMsg);
+    if GActive=False then write(GDisabledMsg) else begin
+        write(GCloseMsg);
         Closegraph;
         GActive:=False;
     end;
@@ -51,7 +51,7 @@ end;
 procedure PlotFx1(a,b:integer);
 var x1,y1,x2,y2:integer;
 begin
-    if GActive=False then writeln(GNotEnabledMsg) else
+    if GActive=False then write(GNotEnabledMsg) else
     begin
         x1:=-20;
 	    y1:=(a*x1)+b;
@@ -64,7 +64,7 @@ begin
         y1:=(GetMaxY div 2)-y1*20;
         y2:=(GetMaxY div 2)-y2*20;
         Line(x2,y1,x1,y2);
-        writeln('DONE!');
+        write(DoneMsg);
     end;
 end;
 

@@ -3,7 +3,7 @@ program Vmath;
 uses sysutils,crt,io,lang,programStr,basic,equ,f;
 // vmathui;
 var 
-	tmpString:String;
+	tmpString:String = '';
 	i,c:longint;
 
 procedure console(lang:String);
@@ -13,30 +13,28 @@ begin
 	if lang='' then begin
 		writeln('Choose Your Language [Default is English]');
 		writeln('Chon ngon ngu [Mac dinh la Tieng Anh]');
-		write('(En | Vi) >> ');read(tmpString);
+		write('(En | Vi) >> ');readln(tmpString);
 		ActiveLang(tmpString);
 	end
 	else ActiveLang(lang);
-	write(LoadText);
+	clrscr;
 	if ChkFile('vmath.cfg')=0 then ReadCfg;
+	write(LoadText);
 	clrscr;
 	writeln('===========================================');
 	writeln('               VMath Xplorer               ');
 	writeln('===========================================');
-	writeln(WelcomeMsg);
+	write(WelcomeMsg);
 	RunFile('start.vmath',0);
 	repeat
 		write(#13#10#13#10,InputText,' >> ');readln(tmpString);
-		writeln;
-		write(OutputText,' >> ');
+		write(#13#10,OutputText,' >> ');
 		CmdProcess(tmpString);
 	until tmpString='exit';
 end;
 
 begin
-	ActiveLang('en');
-	writeln(ProgramInfo);
-	writeln(CopyrightInfo);
+	Info;
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
 		if (paramstr(2)='-d') and (Str2Num(paramstr(3)).check=True) then

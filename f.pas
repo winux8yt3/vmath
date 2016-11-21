@@ -36,7 +36,24 @@ begin
 	case Upcase(s) of
 		'BGCOLOR'	:	bgcolor(Str2Int(val).value);
 		'TXCOLOR'	:	txColor(Str2Int(val).value);
-		'ERRHIDE'	:	ErrHide:=Str2Bool(val).value;
+		'ERRHIDE'	:	if Str2Bool(val).check=True then ErrHide:=Str2Bool(val).value;
+	end;
+end;
+
+procedure ReadLangVar(s,val:string);
+begin
+	case Upcase(s) of
+		'DONEMSG'		:	DoneMsg:=val;
+		'WELCOMEMSG'	:	WelcomeMsg:=val+' '+ProgramInfo;
+		'LOADTEXT'		:	LoadText:=val;
+		'INPUTTEXT'		:	InputText:=val;
+		'OUTPUTTEXT'	:	OutputText:=val;
+		'EXITTEXT'		:	ExitText:=val;
+		'GNOTENABLEDMSG':	GNotEnabledMsg:=val;
+		'GENABLED'		:	GEnabledMsg:=val;
+		'GDISABLEDMSG'	:	GDisabledMsg:=val;
+		'GLOADMSG'		:	GLoadMsg:=val;
+		'GCLOSEMSG'		:	GCloseMsg:=val;
 	end;
 end;
 
@@ -45,6 +62,7 @@ var
 	val,s:string;
 	f:text;
 begin
+	write(LoadText,'vmath.cfg');
 	assign(f,'vmath.cfg');
 	Reset(f);
 	while not eoln(f) do begin
@@ -52,7 +70,7 @@ begin
 		VarCut(s,val);
 		if val<>'' then begin
 			ReadCfgVar(s,val);
-			writeln('[',s,']:=',val);
+			writeln('[',s,']=',val);
 		end;
 	end;
 end;
@@ -62,11 +80,16 @@ var
 	val,s:string;
 	f:text;
 begin
+	write('Reading Language');
 	assign(f,FName);
 	Reset(f);
 	while not eoln(f) do begin
 		readln(f,s);
-//		ReadLangVar(s,val);
+		VarCut(s,val);
+		if val<>'' then begin
+			ReadLangVar(s,val);
+			writeln('[',s,']:=',val);
+		end;
 	end;
 end;
 

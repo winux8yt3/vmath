@@ -41,13 +41,8 @@ procedure Print(s:string);
 implementation
 
 function ClrSpace (s:string):string;
-var p:byte;
 begin
-	p:=pos(' ',s);
-	while p <> 0 do begin
-		delete(s,p,1);
-		p:=pos(' ',s);
-	end;
+	while pos(' ',s) <> 0 do delete(s,pos(' ',s),1);
 	ClrSpace:=s;
 end;
 
@@ -162,7 +157,7 @@ procedure Print(s:string);
 begin
 	delete(s,1,5);
 	s:=trimleft(s);
-	writeln(s);
+	write(s);
 end;
 
 end.
