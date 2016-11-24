@@ -1,9 +1,4 @@
-pause
 time
 pause
-date
-pause
-clear
-info
-pause
+delay 23
 exit

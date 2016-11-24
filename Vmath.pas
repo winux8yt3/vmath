@@ -1,41 +1,43 @@
 program Vmath;
 
 uses sysutils,crt,io,lang,programStr,basic,equ,f;
-
+// vmathui;
 var 
-	tmpString:string;
+	tmpString:String = '';
 	i,c:longint;
 
-procedure console;
+procedure console(lang:String);
 begin
+	Window(1,1,120,255);
 	clrscr;
-	write('Choose Your Language [Default is English]');writeln;
-	write('Chon ngon ngu [Mac dinh la Tieng Anh]');writeln;
-	write('(En | Vi) >> ');readln(tmpString);
+	if lang='' then begin
+		writeln('Choose Your Language [Default is English]');
+		writeln('Chon ngon ngu [Mac dinh la Tieng Anh]');
+		write('(En | Vi) >> ');readln(tmpString);
+		ActiveLang(tmpString);
+	end
+	else ActiveLang(lang);
+	clrscr;
+	if ChkFile('vmath.cfg')=0 then ReadCfg;
+	write(LoadText);
 	clrscr;
 	writeln('===========================================');
 	writeln('               VMath Xplorer               ');
 	writeln('===========================================');
-	ActiveLang(tmpString);
-	writeln(WelcomeMsg);
-	write(FunFact(0));
+	write(WelcomeMsg);
 	RunFile('start.vmath',0);
 	repeat
-		writeln;
-		write(InputText,' >> ');readln(tmpString);
-		writeln;
-		write(OutputText,' >> ');
+		write(#13#10#13#10,InputText,' >> ');readln(tmpString);
+		write(#13#10,OutputText,' >> ');
 		CmdProcess(tmpString);
 	until tmpString='exit';
 end;
 
 begin
-	ActiveLang('en');
-	writeln(ProgramInfo);
-	writeln(CopyrightInfo);
+	Info;
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
-		if (paramstr(2)='-d') and (Str2Num(paramstr(2)).check=True) then
+		if (paramstr(2)='-d') and (Str2Num(paramstr(3)).check=True) then
 		begin
 			dec:=Str2Int(paramstr(3)).value;
 			c:=4;
@@ -43,9 +45,11 @@ begin
 		for i:=c to ParamCount do tmpString:=tmpString+paramstr(i);
 		write('[VMath] >> ');Equation(tmpString);
 	end else
-	if (paramstr(1)='-r') and (paramstr(2)<>'') then begin
+	if (Paramstr(1)<>'') and (chkFile(paramstr(1))=0) then begin
 		writeln('[VMath] >> Processing . . .');
-		RunFile(paramstr(2),1);
+		RunFile(paramstr(1),0);
 	end 
-	else console;
+	else if (lowercase(Paramstr(1))='-en') then Console('en')
+	else if (lowercase(Paramstr(1))='-vi') then Console('vi')
+	else console('');
 end.

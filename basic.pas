@@ -1,12 +1,11 @@
 unit basic;
-    
+
 interface
     
 uses
-    crt,dos,lang,programstr;
+    crt,dos,programstr;
 
 type 
-	TStr = array[0..256] of string;
 	TStr2Num = record
 		Check:boolean;
 		Value:extended;
@@ -15,37 +14,51 @@ type
 		Check:boolean;
 		Value:longint;
 	end;
+	TStr2Bool = record
+		Check:boolean;
+		Value:boolean;
+	end;	
 
 function ClrSpace (s:string):string;
-function Num2Str (v:extended;d:byte):String;
+function CleanSpace(s:string):string;
+function Num2Str (v:extended;d:integer):String;
 function Str2Num (s:string):TStr2Num;
 function Str2Int (s:string):TStr2Int;
+function Str2Bool (s:string):TStr2Bool;
 function PosLast (ch,s:string):word;
-procedure Info;
 function Date():string;
 function Time():string;
-procedure Color(txcolor,BgColor:byte);
-procedure Help;
+procedure TxColor(TColor:byte);
+procedure BgColor(Bcolor:byte);
+procedure Color(tcolor,BColor:byte);
 procedure Msg(s:string);
-function FunFact(r:byte):string;
-function EReport(str,err:string):string;
+function EReport(str:string;err:string):string;
+function Trim(s:string):string;
+function TrimLeft(s:string):string;
+function TrimRight(s:string):string;
+procedure Print(s:string);
 
 implementation
 
 function ClrSpace (s:string):string;
-var p:byte;
 begin
-	p:=pos(' ',s);
-	while p <> 0 do begin
-		delete(s,p,1);
-		p:=pos(' ',s);
-	end;
+	while pos(' ',s) <> 0 do delete(s,pos(' ',s),1);
 	ClrSpace:=s;
 end;
 
-function Num2Str (v:extended;d:byte):String;
+function CleanSpace(s:string):string;
+var i:byte;
 begin
- 	Str(v:0:d,Num2Str);
+	s:=Trim(s);
+	if (length(s)>0) and (pos(' ',s)<>0) then 
+		for i:=1 to length(s) do
+			while (s[i]=' ') and (s[i+1]=' ') do delete(s,i,1);
+	CleanSpace:=s;
+end;
+
+function Num2Str (v:extended;d:integer):String;
+begin
+	Str(v:0:d,Num2Str);
 end;
 
 function Str2Num(s:string):TStr2Num;
@@ -61,7 +74,15 @@ var err:byte;
 begin
 	Str2Int.Check:=False;
  	val(s,Str2Int.value,err);
-	if err=0 then Str2Int.Check:=True;
+	if (err=0) and (Str2Int.value=trunc(Str2Int.value)) then Str2Int.Check:=True;
+end;
+
+function Str2Bool (s:string):TStr2Bool;
+begin
+	Str2Bool.Check:=True;
+	if upcase(s)='TRUE' then Str2Bool.value:=True
+		else if upcase(s)='FALSE' then Str2Bool.value:=False
+			else Str2Bool.Check:=False;
 end;
 
 function PosLast (ch,s:string):word;
@@ -72,19 +93,12 @@ begin
 		if ch=copy(s,k,length(ch)) then PosLast:=k;
 end;
 
-procedure Info;
-begin
-    writeln(ProgramInfo);
-    writeln(CopyrightInfo);
-    writeln(InfoText);
-end;
-
 function Date():string;
 	var 
 		Year,Month,Day,Num : word;
 	begin
 		GetDate(Year,Month,Day,Num);
-		Date:=DateText+DayNum[Num]+', '+Num2Str(Day,0)+'/'+Num2Str(Month,0)+'/'+Num2Str(Year,0)+'.';
+		Date:=Num2Str(Day,0)+'/'+Num2Str(Month,0)+'/'+Num2Str(Year,0)+'.';
 	end;
 	
 function Time():string;
@@ -92,38 +106,23 @@ function Time():string;
 		Hr,Min,Sec,Milisec : word;
 	begin
 		GetTime(Hr,Min,Sec,Milisec);
-        Time:=TimeText+Num2Str(Hr,0)+':'+Num2Str(Min,0)+':'+Num2Str(Sec,0)+'.'+Num2Str(Milisec,0);
+        Time:=Num2Str(Hr,0)+':'+Num2Str(Min,0)+':'+Num2Str(Sec,0)+'.'+Num2Str(Milisec,0);
 	end;
 
-procedure Color(txcolor,BgColor:byte);
+procedure TxColor(TColor:byte);
 begin
-	writeln(LoadText);
-	TextColor(txcolor);
-	TextBackground(BgColor);
+	TextColor(Tcolor);
 end;
 
-procedure Help;
+procedure BgColor(Bcolor:byte);
 begin
-	writeln;
-	writeln('?,info     : ',HelpTextInfo);
-	writeln('clear      : ',HelpTextClear);
-	writeln('color      : ',HelpTextColor);
-	writeln('date       : ',HelpTextDate);
-	writeln('dec        : ',HelpTextDec);
-	writeln('exit       : ',HelpTextExit);
-	writeln('fact,ptnt  : ',HelpTextFact);
-	writeln('funfact    : ',HelpTextFunFact);
-	writeln('gcd,ucln   : ',HelpTextGcd);
-	writeln('lcm,bcnn   : ',HelpTextLcm);
-	writeln('help       : ',HelpTextHelp);
-	writeln('pause      : ',HelpTextPause);
-	writeln('preans     : ',HelpTextPreans);
-	writeln('print      : ',HelpTextPrint);
-	writeln('ptb2,eqn2  : ',HelpTexteqn2);
-	writeln('run        : ',HelpTextRun);
-	writeln('time       : ',HelpTextTime);
-	writeln;
-	writeln('EQUATION    + | - | * | / | ^');
+	TextBackground(Bcolor);
+end;
+
+procedure Color(Tcolor,BColor:byte);
+begin
+	TXcolor(Tcolor);
+	BGcolor(BColor);
 end;
 
 procedure Msg(s:string);
@@ -131,24 +130,34 @@ begin
 	write(s);readln;
 end;
 
-function FunFact(r:byte):string;
-begin
-	randomize;
-	while r=0 do r:=random(7);
-	Funfact:='Fact #'+Num2Str(r,0)+': ';
-	case r of
-		1	:FunFact:=FunFact+Fact1;
-		2	:FunFact:=FunFact+Fact2;
-		3	:FunFact:=FunFact+Fact3;
-		4	:FunFact:=FunFact+Fact4;
-		5	:FunFact:=FunFact+Fact5;
-		6	:FunFact:=FunFact+Fact6;
-	end;
-end;
-
 function EReport(str:string;err:string):string;
 begin
-	EReport:='<'+str+'>:'+err;
+	if ErrHide=False then EReport:='<'+str+'>:'+err;
+end;
+
+function Trim(s:string):string;
+begin
+	Trim:=TrimLeft(TrimRight(s));
+end;
+
+function TrimLeft(s:string):string;
+begin
+	while pos(' ',s)=1 do delete(s,1,1);
+	TrimLeft:=s;
+end;
+
+function TrimRight(s:string):string;
+begin
+	if length(s)>0 then
+		while poslast(' ',s)=length(s) do delete(s,length(s),1);
+	TrimRight:=s;
+end;
+
+procedure Print(s:string);
+begin
+	delete(s,1,5);
+	s:=trimleft(s);
+	write(s);
 end;
 
 end.

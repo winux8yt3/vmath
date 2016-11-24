@@ -1,57 +1,53 @@
 unit lang;
-    
+
 interface
 
-uses sysutils,programStr;
+uses programStr,f,basic;
 
+//Switch to Const in 1.0
 var 
-    ProgramInfo,WelcomeMsg,DoneMsg,TkMsg:string;
-    LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:string;
-    DayNum:array[0..6] of string;
-    HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:string;
-    HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:string;
-    HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:string;
-    HelpTextFact,HelpTextFunFact:string;
-    Fact1,Fact2,Fact3,Fact4,Fact5,Fact6:string;
-    eqn0Text,eqn1Text,eqn2Text:string;
-    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4:string;
+    WelcomeMsg,DoneMsg,TkMsg:String;
+    LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
+    HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:String;
+    HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:String;
+    HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
+    HelpTextFact,HelpTextGraph,HelpTextVer:String;
+    eqn0Text,eqn1Text,eqn2Text:String;
+    GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
+    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:String;
+    ErrorId7:String;
 
-procedure ActiveLang(s:string);
+procedure ActiveLang(s:String);
+procedure Help;
+procedure Info;
 
 implementation
 
+procedure Info;
+begin
+    write(#13#10,CopyrightInfo,#13#10,ProgramInfo,' Build Time:',BuildTime,#13#10,InfoText);
+end;
+
+
 procedure LangVi;
 begin
-    write(#208'ang T'#229'i G'#243'i Ng'#244'n Ng'#252'. . .');
-    writeln;
+    write(#208'ang T'#229'i Gói Ng'#244'n Ng'#252'. . .');
 
-    ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Ban Dung So '+VersionBuild+'.';
     DoneMsg:='Xong!';
     WelcomeMsg:='Chao mung ban den voi '+ProgramInfo;
     TkMsg:='Cam on ban da tham gia chuong trinh thu nghiem VMath BETA';
 
     LoadText:='Dang Tai...';
-    InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-xplorer';
-    DateText:='Hom nay la: ';
-    TimeText:='Bay gio la: ';
+    InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-io';
     InputText:='Nhap';
     OutputText:='Xuat';
     ExitText:='Thoat chuong trinh ?';
 
-    DayNum[0]:='Chu Nhat';
-    DayNum[1]:='Thu Hai';
-    DayNum[2]:='Thu Ba';
-    DayNum[3]:='Thu Tu';
-    DayNum[4]:='Thu Nam';
-    DayNum[5]:='Thu Sau';
-    DayNum[6]:='Thu Bay';
-
-    HelpTextInfo:='Th'#244'ng tin v'#234' ph'#226'n m'#234'm';
-    HelpTextClear:='Xo'#225' m'#224'n h'#236'nh';
-    HelpTextColor:='Thay doi mau chu va phong nen';
-    HelpTextDate:='In ra ng'#224'y';
+    HelpTextInfo:='Thông tin ph'#7847'n m'#7873'm';
+    HelpTextClear:='Xoá màn hình';
+    HelpTextDate:='In ra ngày';
     HelpTextDec:='Do dai phan thap phan trong ket qua toan hoc';
-    HelpTextExit:='Tho'#225't';
+    HelpTextExit:='Thoát';
     HelpTextHelp:='Huong dan su dung';
     HelpTextPause:='Tam dung chuong trinh';
     HelpTextPreans:='In ra ket qua luc truoc';
@@ -62,49 +58,41 @@ begin
     HelpTextGcd:='Uoc chung lon nhat';
     HelpTextLcm:='Boi chung nho nhat';
     HelpTextFact:='Phan tich thanh cac thua so nguyen to';
-    HelpTextFunFact:='Thong tin thuc te vui';
-
-    Fact1:='Ti le chieu dai va chieu rong cua to giay loai A la 1/sqrt(2)';
-    Fact2:='x^m <> y^n (x,y la so nguyen to; m,n la so tu nhien) [Euler]';
-    Fact3:='a/9 = 0.(a) | ab/99 = 0.(ab)';
-    Fact4:='| f(n) = n^2 + n + 41 | n < 40 | => f(n) la so nguyen to [Euler]';
-    Fact5:='So 2 la so nguyen to chan duy nhat';
-    Fact6:='So nguyen to lon nhat tinh toi ngay 7/1/2016 la 2^74,207,281-1';
+    HelpTextGraph:='BAT/TAT che do do hoa';
+    HelpTextVer:='Phiên ban phan mem';
 
     eqn0Text:='Khong co nghiem';
     eqn1Text:='1 nghiem: ';
     eqn2Text:='2 nghiem: ';
 
-    ErrorId1:='Sai cau truc hoac sai cau lenh.';
+    GNotEnabledMsg:='Do hoa chua duoc kich hoat';
+    GEnabledMsg:='Do hoa da duoc kich hoat.';
+    GDisabledMsg:='Do hoa da bi tat.';
+    GLoadMsg:='Dang nap che do do hoa . . .';
+    GCloseMsg:='Dang tat che do do hoa . . .';
+
+    ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
-    ErrorId4:='Cho So Tu Nhien, nhan so thuc.'
+    ErrorId4:='Cho Nhap So';
+    ErrorId5:='Bien chua xac dinh';
+    ErrorId6:='Loi do hoa';
+    ErrorId7:='Khong co X';
 end;
 
 procedure LangEn;
 begin
-    write('Loading Language Pack . . .');writeln;
+    write('Loading Language Pack . . .');
 
-    ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Build '+VersionBuild+'.';
-    DoneMsg:='Done';    
+    DoneMsg:='Done!';    
     WelcomeMsg:='Welcome you to '+ProgramInfo;
     TkMsg:='Thanks for participating VMath BETA Program';
 
     LoadText:='Loading...';
-    InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-xplorer';
-    DateText:='Today is: ';
-    TimeText:='Now is: ';
+    InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-io';
     InputText:='Input';
     OutputText:='Output';
     ExitText:='Exit program ?';
-
-    DayNum[0]:='Sunday';
-    DayNum[1]:='Monday';
-    DayNum[2]:='Tuesday';
-    DayNum[3]:='Wednesday';
-    DayNum[4]:='Thursday';
-    DayNum[5]:='Friday';
-    DayNum[6]:='Saturday';
 
     HelpTextInfo:='About the Program';
     HelpTextClear:='Clear screen';
@@ -122,32 +110,59 @@ begin
     HelpTextGcd:='Greatest common divisor';
     HelpTextLcm:='Least common multiple';
     HelpTextFact:='Factorization to Prime';
-    HelpTextFunFact:='Fun fact';
-
-    Fact1:='Ratio of length and width of type-A paper is 1/sqrt(2)';
-    Fact2:='x^m <> y^n (x,y is prime; m,n is natural number) [Euler]';
-    Fact3:='a/9 = 0.(a) | ab/99 = 0.(ab)';
-    Fact4:='| f(n) = n^2 + n + 41 ; n < 40 | => f(n) is prime [Euler]';
-    Fact5:='The only even prime number is 2.';
-    Fact6:='Largest prime number until 7/1/2016 is 2^74,207,281-1';
+    HelpTextGraph:='ACTIVE/EXIT Graph mode';
+    HelpTextVer:='Program Version';
 
     eqn0Text:='No Solution';
     eqn1Text:='1 Solution: ';
     eqn2Text:='2 Solutions: ';
 
-    ErrorId1:='Syntax Error or Input Error.';
+    GNotEnabledMsg:='Graphic Not Yet Activated';
+    GEnabledMsg:='Graphic Already Activated.';
+    GDisabledMsg:='Graphic Already Closed.';
+    GLoadMsg:='Loading Graphic . . .';
+    GCloseMsg:='Closing Graphic . . .';
+
+    ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
-    ErrorId4:='Expecting Natural Number, Got Real Number.'
+    ErrorId4:='Expecting Number.';
+    ErrorId5:='String not exist';
+    ErrorId6:='Graphic Error';
+    ErrorId7:='Expecting X';
 end;
 
-procedure ActiveLang(s:string);
+procedure ActiveLang(s:String);
 begin
-    case lowercase(s) of
-        'vi'    :   LangVi;
-        'en'    :   LangEn
-    else LangEn;
+    case upcase(s) of
+        'VI','1'    :   LangVi;
+        'EN','0'    :   LangEn;
+    else if (s<>'') and (ChkFile(s)=0) then ReadLang(s) else LangEn;
     end;
+end;
+
+procedure Help;
+begin
+    writeln;
+	writeln('?,INFO     : ',HelpTextInfo);
+    writeln('COLOR      : ',HelpTextColor);
+	writeln('CLEAR      : ',HelpTextClear);
+	writeln('DATE       : ',HelpTextDate);
+	writeln('DEC        : ',HelpTextDec);
+	writeln('EXIT       : ',HelpTextExit);
+	writeln('FACT,PTNT  : ',HelpTextFact);
+	writeln('GCD,UCLN   : ',HelpTextGcd);
+	writeln('GRAPH      : ',HelpTextGraph);
+	writeln('LCM,BCNN   : ',HelpTextLcm);
+	writeln('HELP       : ',HelpTextHelp);
+	writeln('PREANS     : ',HelpTextPreans);
+	writeln('PRINT      : ',HelpTextPrint);
+	writeln('PTB2,EQN2  : ',HelpTexteqn2);
+	writeln('RUN        : ',HelpTextRun);
+	writeln('TIME       : ',HelpTextTime);
+    writeln('VER        : ',HelpTextVer);
+	writeln;
+	write('EQUATION    + | - | * | / | ^');
 end;
 
 end.
