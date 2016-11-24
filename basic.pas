@@ -74,7 +74,7 @@ var err:byte;
 begin
 	Str2Int.Check:=False;
  	val(s,Str2Int.value,err);
-	if err=0 then Str2Int.Check:=True;
+	if (err=0) and (Str2Int.value=trunc(Str2Int.value)) then Str2Int.Check:=True;
 end;
 
 function Str2Bool (s:string):TStr2Bool;

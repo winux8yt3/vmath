@@ -191,9 +191,9 @@ begin
 				eqn2:=eqn2+' | x2= '+Num2Str(((-b-sqrt(delta))/2/a),dec);
 			end;
     	end
-    	else write(EReport(Num2Str(a,dec),ErrorId1));
+    	else eqn2:=EReport(Num2Str(a,dec),ErrorId1);
 	end
-	else eqn2:=(EReport('',ErrorId1))
+	else eqn2:=(EReport('',ErrorId1));
 end;
     
 function fact(num:Longword):string;

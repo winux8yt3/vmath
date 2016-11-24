@@ -29,12 +29,13 @@ function BuildNum():string;
 implementation
 
 function BuildNum():string;
-var s:string={$I %DATE%};
+var s:string={$I %DATE%}+'-'+{$I %TIME%};
 begin
 	while pos('/',s) <> 0 do delete(s,pos('/',s),1);
-	delete(s,1,2);
+	while pos(':',s) <> 0 do delete(s,pos(':',s),1);
+    delete(s,1,2);delete(s,length(s)-1,2);
     BuildNum:=s;
 end;
 begin
-    ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+'-'+BuildNum+'.';
+    ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Build '+BuildNum+'.';
 end.

@@ -77,18 +77,19 @@ begin
 							for i:=1 to syntaxNum do
 								Num[i]:=Str2Int(syntax[i]).value;
 							write(lcm(Num,syntaxNum));
-						end else write(EReport('',ErrorId1));				
+						end else write(EReport('',ErrorId1));	
 		'FACT','PTNT'	:if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=1)
 							then write(fact(Str2Int(syntax[1]).value)) else write(EReport('',ErrorId4));
 		'DEC'			:if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
+						and (Str2Int(syntax[1]).value>=0) and (syntaxNum=1)
 							then begin
 								dec:=Str2Int(syntax[1]).value;
 								write('Dec=',dec);
 							end
 						else write(EReport('',ErrorId4));
 		'PTB2','EQN2'	:if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
-						and (Str2Num(syntax[3]).check=True) and (syntaxNum=4) then
-						write(eqn2(syntax[1],syntax[2],syntax[3]));
+						and (Str2Num(syntax[3]).check=True) and (syntaxNum=3) then
+						write(eqn2(syntax[1],syntax[2],syntax[3])) else write(EReport('',ErrorId4));
 		'PLOT'			:if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True) and (Str2Int(syntax[2]).check=True)
 						and (syntaxNum=3) then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value);
 	else if EquCheck(syntax,syntaxNum)=True then Equation(s)

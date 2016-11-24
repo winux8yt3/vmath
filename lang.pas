@@ -25,7 +25,7 @@ implementation
 
 procedure Info;
 begin
-    write(#13#10,CopyrightInfo,#13#10,ProgramInfo,'Build Time:',BuildTime,#13#10,InfoText);
+    write(#13#10,CopyrightInfo,#13#10,ProgramInfo,' Build Time:',BuildTime,#13#10,InfoText);
 end;
 
 
