@@ -14,7 +14,7 @@ type
 const 
     CopyrightInfo: string = 'Copyright (c) 2016 Nguyen Tuan Dung (Winux8yt3)';
     ProgramName: string = 'VMath Xplorer';
-    Version: string = '0.9';
+    Version: string = '0.9 RC1';
     BuildTime: string = {$I %DATE%}+'-'+{$I %TIME%};
     VersionInfo: string = 'Beta';
 var
