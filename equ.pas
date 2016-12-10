@@ -11,7 +11,7 @@ var
     VarNum:word = 0;
 
 procedure Equation(s:string);
-function EquCheck(a:tStr;ALength:byte):boolean;
+function EquCheck(s:string):boolean;
 function EquProcess(s:string):extended;
 function VarPos(s:string):word;
 procedure VarProcess(s:shortstring);
@@ -27,7 +27,6 @@ implementation
 
 procedure Equation(s:string);
 begin
-//	if (pos('fx=',ClrSpace(s))=1) then fx(ClrSpace(s)) else
 	if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
 		then VarProcess(ClrSpace(s))
     else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
@@ -44,12 +43,10 @@ begin
     else write(EReport(s,ErrorId1));
 end;
 
-function EquCheck(a:tStr;ALength:byte):boolean;
-var i:byte;
+function EquCheck(s:string):boolean;
 begin
 	EquCheck:=True;
-	for i:=1 to Alength-1 do
-		if (VarCheck(a[i])=True) and (VarCheck(a[i+1])=True) then EquCheck:=False; 
+	if StAmt('(',s)<>StAmt(')',s) then EquCheck:=False;
 end;
 
 procedure NumProcess(s:string;k:word; var n1,n2:extended);
@@ -64,19 +61,20 @@ begin
 	n2:=Bool(copy(s,k+1,(length(s)-k)));
 end;
 
+
 function EquProcess(s:string):extended;
 var 
 	n1,n2:extended;
 begin
-	if (pos('+',s)<>0) and ((pos('+',s)>poslast(')',s)) or (pos('+',s)<pos('(',s))) then begin
+	if (pos('+',s)<>0) and ((pos('+',s)<pos('(',s)) or (pos('+',s)>pos(')',s))) then begin
 		NumProcess(s,pos('+',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
-	else if (pos('-',s)<>0) and ((pos('-',s)>poslast(')',s)) or (pos('-',s)<pos('(',s))) then begin
+	else if (pos('-',s)<>0) and ((pos('-',s)<pos('(',s)) or (pos('-',s)>pos(')',s))) then begin
 		NumProcess(s,poslast('-',s),n1,n2);
 		EquProcess:=n1-n2;
 	end
-	else if (pos('*',s)<>0) and (s<>'') and ((pos('*',s)>poslast(')',s)) or (pos('*',s)<pos('(',s))) then begin
+	else if (pos('*',s)<>0) and (s<>'') and ((pos('+',s)<pos('(',s)) or (pos('+',s)>pos(')',s))) then begin
 		NumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
@@ -248,7 +246,6 @@ begin
 			if t[j] mod i = 0 then inc(c);
 		if c=n then gcd:=i;
 	end;
-	ans:=gcd;
 end;
 
 function lcm(t:tNum;n:word):longword;
@@ -267,7 +264,6 @@ begin
 			if i mod t[j] = 0 then inc(c);
 		if c=n then lcm:=i;
 	end;
-	ans:=lcm;
 end;
 
 end.

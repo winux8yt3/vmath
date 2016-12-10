@@ -29,6 +29,7 @@ begin
 	repeat
 		write(#13#10#13#10,InputText,' >> ');readln(tmpString);
 		write(#13#10,OutputText,' >> ');
+		CmdSyntax(tmpString);
 		CmdProcess(tmpString);
 	until tmpString='exit';
 end;

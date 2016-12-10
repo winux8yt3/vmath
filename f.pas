@@ -13,7 +13,7 @@ procedure ReadCfg;
 
 implementation
 
-uses lang;
+uses lang,io;
 
 function ChkFile(FName:string):word;
 var f:text;
@@ -98,7 +98,6 @@ end;
 procedure RunFile(FName:string;w:byte);
 var 
 	f:text;
-	str:string;
 begin
 	if pos('.',FName)=0 then FName:=FName+'.vmath';
 	{$I-}
@@ -106,18 +105,24 @@ begin
 		Reset(f);
 	{$I+}
 	if IOResult = 0 then begin
-		repeat
-			readln(f,str);
-			FileProcess(FName);
-		until eof(f);
+		FileProcess(f);
 		close(f);
 	end
 	else if w = 1 then write(EReport(FName,ErrorID3));
 end;
 
-procedure FileProcess(FName:string);
+procedure FileProcess(var f:text);
+var str:string;
 begin
-	// Truncate & Seek
+	while not eof(f) do begin
+		readln(f,str);
+		CmdSyntax(str);
+		case syntax[0] of
+			'DELAY'		:	Delay(Str2Int(syntax[1]).value);
+			'PRINT'		:	Print(str);
+		else CmdProcess(str);
+		end; 
+	end;
 end;
 
 end.

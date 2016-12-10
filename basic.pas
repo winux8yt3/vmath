@@ -37,6 +37,7 @@ function Trim(s:string):string;
 function TrimLeft(s:string):string;
 function TrimRight(s:string):string;
 procedure Print(s:string);
+function StAmt(str,s:string):byte;
 
 implementation
 
@@ -158,6 +159,11 @@ begin
 	delete(s,1,5);
 	s:=trimleft(s);
 	write(s);
+end;
+
+function StAmt(str,s:string):byte;
+begin
+	while pos(str,s)>0 do inc(StAmt);
 end;
 
 end.
