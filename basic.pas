@@ -163,6 +163,7 @@ end;
 
 function StAmt(str,s:string):byte;
 begin
+	StAmt:=0;
 	while pos(str,s)>0 do inc(StAmt);
 end;
 

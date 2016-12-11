@@ -16,7 +16,7 @@ function EquProcess(s:string):extended;
 function VarPos(s:string):word;
 procedure VarProcess(s:shortstring);
 function VarCheck(s:string):boolean;
-function Bool(s:string):boolean;
+//function Bool(s:string):boolean;
 function eqn2(x,y,z:string):string;
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
@@ -27,26 +27,25 @@ implementation
 
 procedure Equation(s:string);
 begin
-	if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
+	if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s))
 		then VarProcess(ClrSpace(s))
-    else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
+{    else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
 		or (pos('<',s)<>0) and (pos('<',s)=poslast('<',s)) 
 		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
-			then write(bool(ClrSpace(s)))
+			then write(bool(ClrSpace(s)))}
     else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
-	    or (pos('/',s)<>0) or (pos('^',s)<>0) then
-		begin
-		   	ans:=EquProcess(ClrSpace(s));
-		   	if Trunc(ans)=ans then write(ans:0:0)
-			   else write(ans:0:dec);
+	    or (pos('/',s)<>0) or (pos('^',s)<>0) then begin
+		   	if Trunc(EquProcess(ClrSpace(s)))=EquProcess(ClrSpace(s)) then 
+				write(EquProcess(ClrSpace(s)):0:0)
+					else write(EquProcess(ClrSpace(s)):0:dec);
 		end
     else write(EReport(s,ErrorId1));
 end;
 
 function EquCheck(s:string):boolean;
 begin
-	EquCheck:=True;
-	if StAmt('(',s)<>StAmt(')',s) then EquCheck:=False;
+	if (StAmt('(',s)>0) and (StAmt(')',s)>0) and (StAmt('(',s)<>StAmt(')',s)) then EquCheck:=False
+		else EquCheck:=True;
 end;
 
 procedure NumProcess(s:string;k:word; var n1,n2:extended);
@@ -54,14 +53,13 @@ begin
 	n1:=EquProcess(copy(s,1,k-1));
 	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
 end;
-
+{
 procedure BoolProcess(s:string;k:word; var n1,n2:boolean);
 begin
 	n1:=Bool(copy(s,1,k-1));
 	n2:=Bool(copy(s,k+1,(length(s)-k)));
 end;
-
-
+}
 function EquProcess(s:string):extended;
 var 
 	n1,n2:extended;
@@ -74,28 +72,27 @@ begin
 		NumProcess(s,poslast('-',s),n1,n2);
 		EquProcess:=n1-n2;
 	end
-	else if (pos('*',s)<>0) and (s<>'') and ((pos('+',s)<pos('(',s)) or (pos('+',s)>pos(')',s))) then begin
+	else if (pos('*',s)<>0) and (s<>'') and ((pos('*',s)<pos('(',s)) or (pos('*',s)>pos(')',s))) then begin
 		NumProcess(s,pos('*',s),n1,n2);
 		EquProcess:=n1*n2;
 	end	
-	else if (pos('/',s)<>0) and (s<>'') and ((pos('/',s)>poslast(')',s)) or (pos('/',s)<pos('(',s))) then begin
+	else if (pos('/',s)<>0) and (s<>'') and ((pos('/',s)<pos('(',s)) or (pos('/',s)>pos(')',s))) then begin
 		NumProcess(s,poslast('/',s),n1,n2);
-		if (n2=0) or (n1=0) then write(EReport(s,ErrorId2))
+		if (n2=0) then write(EReport(s,ErrorId2))
 		else EquProcess:=n1/n2;
 	end
-	else if (pos('^',s)<>0) and (s<>'') and ((pos('^',s)>poslast(')',s)) or (pos('^',s)<pos('(',s))) then begin
+	else if (pos('^',s)<>0) and (s<>'') and ((pos('^',s)<pos('(',s)) or (pos('^',s)>pos(')',s))) then begin
 		NumProcess(s,pos('^',s),n1,n2);
 		EquProcess:=Power(n1,n2);
 	end
-	else if (pos('(',s)<>0) and (pos(')',s)<>0) and (pos(')',s)-pos('(',s)>1) then 
+	else if (pos('(',s)<>0) and (pos(')',s)<>0) and (pos(')',s)-pos('(',s)>0) then 
 		EquProcess:=EquProcess(copy(s,2,length(s)-2))
-	else if (VarPos(s)<>0) and (Str2Num(s).check=False)
-		then EquProcess:=Vars[VarPos(s)].value
+	else if (VarPos(s)<>0) and (Str2Num(s).check=False) then EquProcess:=Vars[VarPos(s)].value
 	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
 	else exit;
 end;
 // Loop back EquProcess function if there is a complex Equation
-
+{
 function Bool(s:string):boolean;
 var 
 	n1,n2:extended;
@@ -123,7 +120,7 @@ begin
         if n1>n2 then bool:=True;
     end
 end;
-
+}
 function VarPos(s:string):word;
 var i:word;
 begin
@@ -142,11 +139,11 @@ var
     Bool:boolean;
 	eq:Extended;
 begin
-	k:=pos('==',s);
+	k:=pos('=',s);
 	str:=UPCASE(copy(s,1,k-1));
-	eq:=EquProcess(copy(s,k+2,(length(s)-k-1)));
+	eq:=EquProcess(copy(s,k+1,(length(s)-k)));
 	ans:=eq;
-	if (str<>'PREANS') and (str<>'DEC') then Bool:=True;
+	if (str<>'DEC') then Bool:=True;
 //	for k:=1 to length(s) do if s[k] in [symbol] then Bool:=False;
 	if (Upcase(s[1]) in ['A'..'Z']) and (Bool=True) then begin
 		if VarPos(str)=0 then	
@@ -155,7 +152,8 @@ begin
 			Vars[VarNum].vname:=str;
 		end;
 		Vars[VarPos(str)].value:=eq;
-		write(str,' = ',eq:0:dec);
+		if trunc(eq)=eq then write(str,' = ',eq:0:0);
+			else write(str,' = ',eq:0:dec);
 	end
 	else write(EReport(str,ErrorId4))
 end;

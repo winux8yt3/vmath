@@ -2,10 +2,10 @@ unit f;
     
 interface
 
-uses basic,programstr;
+uses basic,programstr,crt;
 
 function ChkFile(FName:string):word;
-procedure FileProcess(FName:string);
+procedure FileProcess(var f:text);
 procedure RunFile(FName:string;w:byte);
 procedure ReadLang(FName:string);
 procedure ReadCfg;

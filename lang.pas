@@ -9,7 +9,7 @@ var
     WelcomeMsg,DoneMsg,TkMsg:String;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
     HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:String;
-    HelpTextHelp,HelpTextInfo,HelpTextPause,HelpTextPreans,HelpTextPrint:String;
+    HelpTextHelp,HelpTextInfo,HelpTextPausea:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
     HelpTextFact,HelpTextGraph,HelpTextVer:String;
     eqn0Text,eqn1Text,eqn2Text:String;
@@ -49,9 +49,6 @@ begin
     HelpTextDec:='Do dai phan thap phan trong ket qua toan hoc';
     HelpTextExit:='Thoát';
     HelpTextHelp:='Huong dan su dung';
-    HelpTextPause:='Tam dung chuong trinh';
-    HelpTextPreans:='In ra ket qua luc truoc';
-    HelpTextPrint:='In dong chu';
     HelpTextRun:='Chay File .vmath';
     HelpTextTime:='In ra thoi gian';
     HelpTexteqn2:='Tinh phuong trinh bac 2';
@@ -100,10 +97,7 @@ begin
     HelpTextDate:='Print date';
     HelpTextDec:='Number of decimal place in math result';
     HelpTextExit:='Exit';
-    HelpTextHelp:='Instruction';
-    HelpTextPause:='Pause the program';
-    HelpTextPreans:='Print last math answer';
-    HelpTextPrint:='Print text';
+    HelpTextHelp:='This Help';
     HelpTextRun:='Run .vmath File';
     HelpTextTime:='Print time';
     HelpTexteqn2:='Calculate quadratic equation';
@@ -148,15 +142,13 @@ begin
     writeln('COLOR      : ',HelpTextColor);
 	writeln('CLEAR      : ',HelpTextClear);
 	writeln('DATE       : ',HelpTextDate);
-	writeln('DEC        : ',HelpTextDec);
+	writeln('DP         : ',HelpTextDec);
 	writeln('EXIT       : ',HelpTextExit);
 	writeln('FACT,PTNT  : ',HelpTextFact);
 	writeln('GCD,UCLN   : ',HelpTextGcd);
 	writeln('GRAPH      : ',HelpTextGraph);
 	writeln('LCM,BCNN   : ',HelpTextLcm);
 	writeln('HELP       : ',HelpTextHelp);
-	writeln('PREANS     : ',HelpTextPreans);
-	writeln('PRINT      : ',HelpTextPrint);
 	writeln('PTB2,EQN2  : ',HelpTexteqn2);
 	writeln('RUN        : ',HelpTextRun);
 	writeln('TIME       : ',HelpTextTime);
