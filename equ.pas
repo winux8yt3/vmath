@@ -20,8 +20,8 @@ function VarCheck(s:string):boolean;
 function eqn2(x,y,z:string):string;
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
-function gcd(t:tNum;n:word):longword;
-function lcm(t:tNum;n:word):longword;
+function ArrayGcd(a:tNum;n,p:word):longword;
+function ArrayLcm(a:tNum;n,p:word):longword;
 
 implementation
 
@@ -152,7 +152,7 @@ begin
 			Vars[VarNum].vname:=str;
 		end;
 		Vars[VarPos(str)].value:=eq;
-		if trunc(eq)=eq then write(str,' = ',eq:0:0);
+		if trunc(eq)=eq then write(str,' = ',eq:0:0)
 			else write(str,' = ',eq:0:dec);
 	end
 	else write(EReport(str,ErrorId4))
@@ -229,39 +229,29 @@ begin
 	if NumInCheck=False then write(EReport('',ErrorId4));
 end;
 
-function gcd(t:tNum;n:word):longword;
-var 
-	i,k:longword;
-	c,j:word;
+function GCD(a,b:longword):longword;
 begin
-	k:=t[1];
-	for i:=2 to n do
-		if t[i]<k then k:=t[i];
-	gcd:=1;
-	for i:=2 to k do begin
-		c:=0;
-		for j:=1 to n do
-			if t[j] mod i = 0 then inc(c);
-		if c=n then gcd:=i;
-	end;
+    if a<>b then begin
+        if a>b then GCD:=GCD(a-b,b) else GCD:=GCD(a,b-a);
+    end
+    else GCD:=a;
+end;  
+
+function LCM(a,b:longword):longword;
+begin
+    LCM:=(a*b) div GCD(a,b);
 end;
 
-function lcm(t:tNum;n:word):longword;
-var 
-	i,k:longword;
-	c,j:word;
+function ArrayLCM(a:tNum;n,p:word):longword;
 begin
-	lcm:=t[1];k:=t[1];
-	for i:=2 to n do begin
-		if lcm mod t[i] <> 0 then lcm:=lcm*t[i];
-		if t[i]>k then k:=t[i];
-	end;
-	for i:=lcm-1 downto k do begin
-		c:=0;
-		for j:=1 to n do
-			if i mod t[j] = 0 then inc(c);
-		if c=n then lcm:=i;
-	end;
+    if p<n-2 then ArrayLCM:=LCM(a[p],ArrayLCM(a,n,p+1))
+        else ArrayLCM:=LCM(a[p],a[p+1]);
+end;
+
+function ArrayGCD(a:tNum;n,p:word):longword;
+begin
+    if p<n-2 then ArrayGCD:=GCD(a[p],ArrayGCD(a,n,p+1))
+        else ArrayGCD:=GCD(a[p],a[p+1]);
 end;
 
 end.
