@@ -95,14 +95,14 @@ procedure CmdProcess(s:string);
 											write('Decimal Place(s)=',dec);
 										end
 										else write(EReport('',ErrorId4));
-		else write(EReport('',ErrorId1));
+		else Equation(s);
 		end;	
 	end;
 begin
+	if Equation(s)=False then
 	case syntaxNum of
 		0	:	CmdProcess1;
 		1	:	CmdProcess2;
-		else if s[1]='~' then Equation(s)
 		else CmdProcess0;
 	end;
 end;

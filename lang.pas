@@ -8,7 +8,7 @@ uses programStr,f,basic;
 var 
     WelcomeMsg,DoneMsg,TkMsg:String;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
-    HelpTextClear,HelpTextColor,HelpTextDate,HelpTextDec,HelpTextExit:String;
+    HelpTextClear,HelpTextDate,HelpTextDec,HelpTextExit:String;
     HelpTextHelp,HelpTextInfo,HelpTextPausea:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
     HelpTextFact,HelpTextGraph,HelpTextVer:String;
@@ -93,7 +93,6 @@ begin
 
     HelpTextInfo:='About the Program';
     HelpTextClear:='Clear screen';
-    HelpTextColor:='Change text and background color';
     HelpTextDate:='Print date';
     HelpTextDec:='Number of decimal place in math result';
     HelpTextExit:='Exit';
@@ -139,7 +138,6 @@ procedure Help;
 begin
     writeln;
 	writeln('?,INFO     : ',HelpTextInfo);
-    writeln('COLOR      : ',HelpTextColor);
 	writeln('CLEAR      : ',HelpTextClear);
 	writeln('DATE       : ',HelpTextDate);
 	writeln('DP         : ',HelpTextDec);

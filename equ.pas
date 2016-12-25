@@ -10,13 +10,13 @@ var
     Vars:TVar;
     VarNum:word = 0;
 
-procedure Equation(s:string);
+function Equation(s:string):boolean;
 function EquCheck(s:string):boolean;
 function EquProcess(s:string):extended;
 function VarPos(s:string):word;
 procedure VarProcess(s:shortstring);
 function VarCheck(s:string):boolean;
-//function Bool(s:string):boolean;
+function Bool(s:string):boolean;
 function eqn2(x,y,z:string):string;
 function fact(num:Longword):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
@@ -25,21 +25,28 @@ function ArrayLcm(a:tNum;n,p:word):longword;
 
 implementation
 
-procedure Equation(s:string);
+function Equation(s:string):boolean;
 begin
+	Equation:=True;
 	if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s))
 		then VarProcess(ClrSpace(s))
-{    else if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
-		or (pos('<',s)<>0) and (pos('<',s)=poslast('<',s)) 
-		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
-			then write(bool(ClrSpace(s)))}
     else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
 	    or (pos('/',s)<>0) or (pos('^',s)<>0) then begin
 		   	if Trunc(EquProcess(ClrSpace(s)))=EquProcess(ClrSpace(s)) then 
 				write(EquProcess(ClrSpace(s)):0:0)
 					else write(EquProcess(ClrSpace(s)):0:dec);
 		end
-    else write(EReport(s,ErrorId1));
+    else Equation:=False;
+	end;
+
+function TrueFalse(s:string):boolean;
+begin
+	TrueFalse:=True;
+    if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
+		or (pos('<',s)<>0) and (pos('<',s)=poslast('<',s)) 
+		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
+			then write(bool(ClrSpace(s)))
+	else TrueFalse:=False;
 end;
 
 function EquCheck(s:string):boolean;
@@ -53,13 +60,13 @@ begin
 	n1:=EquProcess(copy(s,1,k-1));
 	n2:=EquProcess(copy(s,k+1,(length(s)-k)));
 end;
-{
+
 procedure BoolProcess(s:string;k:word; var n1,n2:boolean);
 begin
 	n1:=Bool(copy(s,1,k-1));
 	n2:=Bool(copy(s,k+1,(length(s)-k)));
 end;
-}
+
 function EquProcess(s:string):extended;
 var 
 	n1,n2:extended;
@@ -92,7 +99,7 @@ begin
 	else exit;
 end;
 // Loop back EquProcess function if there is a complex Equation
-{
+
 function Bool(s:string):boolean;
 var 
 	n1,n2:extended;
@@ -120,7 +127,7 @@ begin
         if n1>n2 then bool:=True;
     end
 end;
-}
+
 function VarPos(s:string):word;
 var i:word;
 begin
@@ -231,10 +238,9 @@ end;
 
 function GCD(a,b:longword):longword;
 begin
-    if a<>b then begin
-        if a>b then GCD:=GCD(a-b,b) else GCD:=GCD(a,b-a);
-    end
-    else GCD:=a;
+    while a<>b do
+        if a>b then a:=a-b else b:=b-a;
+    GCD:=a;
 end;  
 
 function LCM(a,b:longword):longword;
