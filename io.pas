@@ -101,12 +101,12 @@ begin
 	ErrInp(s,0);
 	if s='' then err.id:=1
 	else if Equation(s)=False then	
-	case syntaxNum of
-		0	:	CmdProcess1;
-		1	:	CmdProcess2;
-		else CmdProcess0;
-	end;
-	write(EReport());
+		case syntaxNum of
+			0	:	CmdProcess1;
+			1	:	CmdProcess2;
+			else CmdProcess0;
+		end;
+	write(EReport);
 end;
 
 end.

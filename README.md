@@ -32,10 +32,15 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ## Changelog
 
-### Version 0.9 *Build 161225*
-- **Added** Graph Mode **Include** `Plot`
-- **Optimized** `GCD`,`LCD`
+### Version 1.0 *Build 170xxx*
 
+### Version 0.9.5 *Build 170105*
+- **Added** Graph Mode **Include** `Plot`
+- **Support** Dual Language Mode
+- **Remake** Start-up screen
+- **Optimized** `GCD`,`LCD`
+- **Fixed** Error Message
+- **Removed** `FunFact`
 
 ### Version 0.8 *Build 160915*
 
