@@ -6,10 +6,9 @@ uses basic,programstr,crt;
 
 function ChkFile(FName:string):word;
 procedure FileProcess(var f:text);
-procedure RunFile(FName:string;w:byte);
+procedure RunFile(FName:string);
 procedure ReadLang(FName:string);
 procedure ReadCfg;
-// This Function will be implemented in version 1.0
 
 implementation
 
@@ -95,7 +94,7 @@ begin
 	end;
 end;
 
-procedure RunFile(FName:string;w:byte);
+procedure RunFile(FName:string);
 var 
 	f:text;
 begin
@@ -108,7 +107,7 @@ begin
 		FileProcess(f);
 		close(f);
 	end
-	else if w = 1 then write(EReport(FName,ErrorID3));
+	else err.id:=3;
 end;
 
 procedure FileProcess(var f:text);

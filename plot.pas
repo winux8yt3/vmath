@@ -23,10 +23,8 @@ begin
 	    gd:=Detect;
         gm:=0;
         InitGraph(gd,gm,'C:\PP\BGI');
-        if GraphResult<>grok then begin
-            write(EReport(Num2Str(GraphResult,0),ErrorId6));
-            exit;
-        end else GActive:=True;
+        if GraphResult<>grok then ErrInp(Num2Str(GraphResult,0),6)
+        else GActive:=True;
     end;
 end;
 

@@ -21,11 +21,8 @@ begin
 	if ChkFile('vmath.cfg')=0 then ReadCfg;
 	write(LoadText);
 	clrscr;
-	writeln('===========================================');
-	writeln('               VMath Xplorer               ');
-	writeln('===========================================');
-	write(WelcomeMsg);
-	RunFile('start.vmath',0);
+	write(ProgramInfo,#13#10,WelcomeMsg);
+	RunFile('start.vmath');
 	repeat
 		write(#13#10#13#10,InputText,' >> ');readln(tmpString);
 		write(#13#10,OutputText,' >> ');
@@ -48,7 +45,7 @@ begin
 	end else
 	if (Paramstr(1)<>'') and (chkFile(paramstr(1))=0) then begin
 		writeln('[VMath] >> Processing . . .');
-		RunFile(paramstr(1),0);
+		RunFile(paramstr(1));
 	end 
 	else if (lowercase(Paramstr(1))='-en') then Console('en')
 	else if (lowercase(Paramstr(1))='-vi') then Console('vi')

@@ -48,27 +48,26 @@ procedure CmdProcess(s:string);
 			'GCD','UCLN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
 									for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
 									write(Arraygcd(Num,syntaxNum,1));
-								end else write(EReport('',ErrorId1));
+								end else err.id:=1;
 			'LCM','BCNN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
 									for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
 									write(Arraylcm(Num,syntaxNum,1));
-								end else write(EReport('',ErrorId1));	
+								end else err.id:=1;	
 			'FACT','PTNT'	:	if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=1)
-									then write(fact(Str2Int(syntax[1]).value)) else write(EReport('',ErrorId4));
+									then write(fact(Str2Int(syntax[1]).value)) else err.id:=4;
 			'PTB2','EQN2'	:	if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
 									and (Str2Num(syntax[3]).check=True) and (syntaxNum=3) then
-										write(eqn2(syntax[1],syntax[2],syntax[3])) else write(EReport('',ErrorId4));
+										write(eqn2(syntax[1],syntax[2],syntax[3])) else err.id:=4;
 			'PLOT'			:	if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True) and (Str2Int(syntax[2]).check=True)
 									and (syntaxNum=3) then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value)
-										else write(EReport(s,ErrorId1));
-		else write(EReport(s,ErrorId1));
+										else err.id:=1;
+		else err.id:=1;
 		end;	
 	end;
 
 	procedure CmdProcess1;
 	begin
 		case Upcase(syntax[0]) of
-			''				:	write(EReport('',ErrorId1));
 			'INFO'			:	Info;
 			'VER'			:	write(ProgramInfo);
 			'HELP'			:	Help;
@@ -76,7 +75,7 @@ procedure CmdProcess(s:string);
 			'TIME'			:	write(Time);
 			'CLS'			:	clrscr;
 			'EXIT'			:	ExitProc;
-		else write(EReport('',ErrorId1));
+		else err.id:=1;
 		end;	
 	end;
 
@@ -84,27 +83,30 @@ procedure CmdProcess(s:string);
 	begin
 		case Upcase(syntax[0]) of
 			'LANG'			:	ActiveLang(syntax[1]);
-			'RUN'			:	RunFile(syntax[1],1);
+			'RUN'			:	RunFile(syntax[1]);
 			'GRAPH'			:	if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
 									else if (Upcase(syntax[1])='EXIT') then ExitGraph
-									else write(EReport(syntax[1],ErrorId1));
+									else err.id:=1;
 			'DP'			:	if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
 									and (Str2Int(syntax[1]).value>=0)
 										then begin
 											dec:=Str2Int(syntax[1]).value;
 											write('Decimal Place(s)=',dec);
 										end
-										else write(EReport('',ErrorId4));
-		else Equation(s);
+										else err.id:=4;
+		else err.id:=1;
 		end;	
 	end;
 begin
-	if Equation(s)=False then
+	ErrInp(s,0);
+	if s='' then err.id:=1
+	else if Equation(s)=False then	
 	case syntaxNum of
 		0	:	CmdProcess1;
 		1	:	CmdProcess2;
 		else CmdProcess0;
 	end;
+	write(EReport());
 end;
 
 end.

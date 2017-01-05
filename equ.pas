@@ -6,12 +6,12 @@ uses
 	basic,math,lang,programStr,plot;
 
 var 
-    err:word;
     Vars:TVar;
     VarNum:word = 0;
 
 function Equation(s:string):boolean;
-function EquCheck(s:string):boolean;
+function TrueFalse(s:string):boolean;
+function Variable(s:string):boolean;
 function EquProcess(s:string):extended;
 function VarPos(s:string):word;
 procedure VarProcess(s:shortstring);
@@ -25,19 +25,26 @@ function ArrayLcm(a:tNum;n,p:word):longword;
 
 implementation
 
+function Variable(s:string):boolean;
+begin
+	Variable:=True;
+	if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
+		then VarProcess(ClrSpace(s)) else Variable:=False;
+end;
+
 function Equation(s:string):boolean;
 begin
-	Equation:=True;
-	if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s))
-		then VarProcess(ClrSpace(s))
-    else if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0)
-	    or (pos('/',s)<>0) or (pos('^',s)<>0) then begin
-		   	if Trunc(EquProcess(ClrSpace(s)))=EquProcess(ClrSpace(s)) then 
-				write(EquProcess(ClrSpace(s)):0:0)
-					else write(EquProcess(ClrSpace(s)):0:dec);
-		end
-    else Equation:=False;
+	Equation:=False;
+//	if not s in Tcmd then Equation:=True;
+	if TrueFalse(s)=False then begin
+		if (StAmt('(',s)=StAmt(')',s)) and (StAmt('(',s)>=0) and (StAmt(')',s)>=0) then Equation:=True;
+		if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) or (pos('^',s)<>0) 
+			and Equation=True then
+				if Trunc(EquProcess(ClrSpace(s)))=EquProcess(ClrSpace(s)) then 
+					write(EquProcess(ClrSpace(s)):0:0)
+						else write(EquProcess(ClrSpace(s)):0:dec);
 	end;
+end;
 
 function TrueFalse(s:string):boolean;
 begin
@@ -47,12 +54,6 @@ begin
 		or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
 			then write(bool(ClrSpace(s)))
 	else TrueFalse:=False;
-end;
-
-function EquCheck(s:string):boolean;
-begin
-	if (StAmt('(',s)>0) and (StAmt(')',s)>0) and (StAmt('(',s)<>StAmt(')',s)) then EquCheck:=False
-		else EquCheck:=True;
 end;
 
 procedure NumProcess(s:string;k:word; var n1,n2:extended);
@@ -85,7 +86,7 @@ begin
 	end	
 	else if (pos('/',s)<>0) and (s<>'') and ((pos('/',s)<pos('(',s)) or (pos('/',s)>pos(')',s))) then begin
 		NumProcess(s,poslast('/',s),n1,n2);
-		if (n2=0) then write(EReport(s,ErrorId2))
+		if (n2=0) then errinp(s,2)
 		else EquProcess:=n1/n2;
 	end
 	else if (pos('^',s)<>0) and (s<>'') and ((pos('^',s)<pos('(',s)) or (pos('^',s)>pos(')',s))) then begin
@@ -94,7 +95,7 @@ begin
 	end
 	else if (pos('(',s)<>0) and (pos(')',s)<>0) and (pos(')',s)-pos('(',s)>0) then 
 		EquProcess:=EquProcess(copy(s,2,length(s)-2))
-	else if (VarPos(s)<>0) and (Str2Num(s).check=False) then EquProcess:=Vars[VarPos(s)].value
+	else if (VarPos(s)<>0) then EquProcess:=Vars[VarPos(s)].value
 	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
 	else exit;
 end;
@@ -103,18 +104,8 @@ end;
 function Bool(s:string):boolean;
 var 
 	n1,n2:extended;
-	b1,b2:boolean;
 begin
-    bool := False;
-	if (pos('|',s)<>0) then begin
-		BoolProcess(s,pos('|',s),b1,b2);
-        if (b1=True) or (b2=True) then bool:=True;
-	end
-	else if (pos('&',s)<>0) then begin
-		BoolProcess(s,pos('&',s),b1,b2);
-        if (b1=True) and (b2=True) then bool:=True;
-	end
-    else if (pos('=',s)<>0) then begin
+    if (pos('=',s)<>0) then begin
         NumProcess(s,pos('=',s),n1,n2);
         if n1=n2 then bool:=True;
     end
@@ -146,23 +137,24 @@ var
     Bool:boolean;
 	eq:Extended;
 begin
-	k:=pos('=',s);
+	k:=pos('==',s);
 	str:=UPCASE(copy(s,1,k-1));
-	eq:=EquProcess(copy(s,k+1,(length(s)-k)));
-	ans:=eq;
-	if (str<>'DEC') then Bool:=True;
-//	for k:=1 to length(s) do if s[k] in [symbol] then Bool:=False;
-	if (Upcase(s[1]) in ['A'..'Z']) and (Bool=True) then begin
+//	if not (str in TCmd) then Bool:=True;
+	if Str2Num(str).check=True then Bool:=False;
+	for k:=1 to length(str) do if not (s[k] in ['1'..'9']) or not (s[k] in ['A'..'Z']) then Bool:=False;
+	k:=pos('==',s);
+	if (Upcase(s[1]) in ['A'..'Z']) then Bool:=True;
+	write(str,' = ');
+	if (Bool=True) and (Equation(copy(s,k+1,(length(s)-k)))=True) then begin
+		eq:=EquProcess(copy(s,k+1,length(s)+1-k));
+		ans:=eq;
 		if VarPos(str)=0 then	
 		begin
 			inc(VarNum);
 			Vars[VarNum].vname:=str;
 		end;
 		Vars[VarPos(str)].value:=eq;
-		if trunc(eq)=eq then write(str,' = ',eq:0:0)
-			else write(str,' = ',eq:0:dec);
-	end
-	else write(EReport(str,ErrorId4))
+	end else errinp(str,4);
 end;
 
 function VarCheck(s:string):boolean;
@@ -194,9 +186,11 @@ begin
 				eqn2:=eqn2+' | x2= '+Num2Str(((-b-sqrt(delta))/2/a),dec);
 			end;
     	end
-    	else eqn2:=EReport(Num2Str(a,dec),ErrorId1);
+    	else begin 
+			errinp(Num2Str(a,dec),1);
+		end;
 	end
-	else eqn2:=(EReport('',ErrorId1));
+	else err.id:=1;
 end;
     
 function fact(num:Longword):string;
@@ -233,7 +227,7 @@ begin
 	for i:=1 to endNum do 
 		if (Str2Int(t[i]).check=false) or (Str2Int(t[i]).value<=0) or (t[i]=' ')
 			then NumInCheck:=false;
-	if NumInCheck=False then write(EReport('',ErrorId4));
+	if NumInCheck=False then err.id:=4;
 end;
 
 function GCD(a,b:longword):longword;

@@ -32,6 +32,11 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ## Changelog
 
+### Version 0.9 *Build 161225*
+- **Added** Graph Mode **Include** `Plot`
+- **Optimized** `GCD`,`LCD`
+
+
 ### Version 0.8 *Build 160915*
 
 - **Added** boolean expression: `and`,`or`,`<`,`=`,`>`

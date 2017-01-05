@@ -2,7 +2,7 @@ unit lang;
 
 interface
 
-uses programStr,f,basic;
+uses programStr,f;
 
 //Switch to Const in 1.0
 var 
@@ -23,6 +23,8 @@ procedure Info;
 
 implementation
 
+uses basic;
+
 procedure Info;
 begin
     write(#13#10,CopyrightInfo,#13#10,ProgramInfo,' Build Time:',BuildTime,#13#10,InfoText);
@@ -34,7 +36,7 @@ begin
     write(#208'ang T'#229'i Gói Ng'#244'n Ng'#252'. . .');
 
     DoneMsg:='Xong!';
-    WelcomeMsg:='Chao mung ban den voi '+ProgramInfo;
+    WelcomeMsg:='Chao mung ban den voi VMath Xplorer';
     TkMsg:='Cam on ban da tham gia chuong trinh thu nghiem VMath BETA';
 
     LoadText:='Dang Tai...';
@@ -82,7 +84,7 @@ begin
     write('Loading Language Pack . . .');
 
     DoneMsg:='Done!';    
-    WelcomeMsg:='Welcome you to '+ProgramInfo;
+    WelcomeMsg:='Welcome you to VMath Xplorer';
     TkMsg:='Thanks for participating VMath BETA Program';
 
     LoadText:='Loading...';

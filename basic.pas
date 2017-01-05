@@ -32,7 +32,8 @@ procedure TxColor(TColor:byte);
 procedure BgColor(Bcolor:byte);
 procedure Color(tcolor,BColor:byte);
 procedure Msg(s:string);
-function EReport(str:string;err:string):string;
+procedure Errinp(str:string;id:byte);
+function EReport():string;
 function Trim(s:string):string;
 function TrimLeft(s:string):string;
 function TrimRight(s:string):string;
@@ -40,6 +41,8 @@ procedure Print(s:string);
 function StAmt(str,s:string):byte;
 
 implementation
+
+uses lang;
 
 function ClrSpace (s:string):string;
 begin
@@ -131,9 +134,26 @@ begin
 	write(s);readln;
 end;
 
-function EReport(str:string;err:string):string;
+procedure ErrInp(str:string;id:byte);
 begin
-	if ErrHide=False then EReport:='<'+str+'>:'+err;
+    Err.str:=str;
+    Err.id:=id;
+end;
+function EReport():string;
+	function errid(id:byte):string;
+	begin
+		case id of
+			1	:	errid:=ErrorID1;
+			2	:	errid:=ErrorID2;
+			3	:	errid:=ErrorID3;
+			4	:	errid:=ErrorID4;
+			5	:	errid:=ErrorID5;
+			6	:	errid:=ErrorID6;
+			7	:	errid:=ErrorID7;
+		end;
+	end;
+begin
+	if ErrHide=False then EReport:='<'+Err.str+'>:'+'Error ID '+Num2Str(err.id,0)+':'+errid(err.id);
 end;
 
 function Trim(s:string):string;
