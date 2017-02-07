@@ -24,8 +24,8 @@ begin
 	write(ProgramInfo,#13#10,WelcomeMsg);
 	RunFile('start.vmath');
 	repeat
-		write(#13#10#13#10,InputText,' >> ');readln(tmpString);
-		write(#13#10,OutputText,' >> ');
+		write(#13#10#13#10,'[Vmath] >> ');readln(tmpString);
+		write(#13#10,'[Ans] >>');
 		CmdSyntax(tmpString);
 		CmdProcess(tmpString);
 	until tmpString='exit';

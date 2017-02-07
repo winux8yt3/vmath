@@ -38,7 +38,8 @@ function Trim(s:string):string;
 function TrimLeft(s:string):string;
 function TrimRight(s:string):string;
 procedure Print(s:string);
-function StAmt(str,s:string):byte;
+function IsInt(n:extended):boolean;
+procedure DoNothing;
 
 implementation
 
@@ -182,10 +183,14 @@ begin
 	write(s);
 end;
 
-function StAmt(str,s:string):byte;
+function IsInt(n:extended):boolean;
 begin
-	StAmt:=0;
-	while pos(str,s)>0 do inc(StAmt);
+	IsInt:=False;
+	if Trunc(n)=n then IsInt:=True;
+end;
+
+procedure DoNothing;
+begin
 end;
 
 end.

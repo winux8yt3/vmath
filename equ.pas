@@ -9,7 +9,7 @@ var
     Vars:TVar;
     VarNum:word = 0;
 
-function Equation(s:string):boolean;
+procedure Equation(s:string);
 function TrueFalse(s:string):boolean;
 function Variable(s:string):boolean;
 function EquProcess(s:string):extended;
@@ -18,7 +18,7 @@ procedure VarProcess(s:shortstring);
 function VarCheck(s:string):boolean;
 function Bool(s:string):boolean;
 function eqn2(x,y,z:string):string;
-function fact(num:Longword):string;
+function fact(num:int64):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
 function ArrayGcd(a:tNum;n,p:word):longword;
 function ArrayLcm(a:tNum;n,p:word):longword;
@@ -32,17 +32,25 @@ begin
 		then VarProcess(ClrSpace(s)) else Variable:=False;
 end;
 
-function Equation(s:string):boolean;
+function EquChk(s:string):boolean;
+var i,c:integer;
 begin
-	Equation:=False;
-//	if not s in Tcmd then Equation:=True;
-	if TrueFalse(s)=False then begin
-		if (StAmt('(',s)=StAmt(')',s)) and (StAmt('(',s)>=0) and (StAmt(')',s)>=0) then Equation:=True;
-		if (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('*',s)<>0) or (pos('/',s)<>0) or (pos('^',s)<>0) 
-			and Equation=True then
-				if Trunc(EquProcess(ClrSpace(s)))=EquProcess(ClrSpace(s)) then 
-					write(EquProcess(ClrSpace(s)):0:0)
-						else write(EquProcess(ClrSpace(s)):0:dec);
+	c:=0;i:=0;
+	while (c>=0) and (i<length(s)) do begin
+		inc(i);
+		case s[i] of
+			#40	:	inc(c);
+			#41	:	c:=c-1;
+		end;
+	end;
+	if c>0 then EquChk:=True;	
+end;
+
+procedure Equation(s:string);
+begin
+	if (not TrueFalse(s)) and EquChk(s) then begin
+		if IsInt(EquProcess(ClrSpace(s))) then write(EquProcess(ClrSpace(s)):0:0)
+			else write(EquProcess(ClrSpace(s)):0:dec);
 	end;
 end;
 
@@ -72,7 +80,8 @@ function EquProcess(s:string):extended;
 var 
 	n1,n2:extended;
 begin
-	if (pos('+',s)<>0) and ((pos('+',s)<pos('(',s)) or (pos('+',s)>pos(')',s))) then begin
+	if err.id>0 then exit
+	else if (pos('+',s)<>0) and ((pos('+',s)<pos('(',s)) or (pos('+',s)>pos(')',s))) then begin
 		NumProcess(s,pos('+',s),n1,n2);
 		EquProcess:=n1+n2;
 	end
@@ -139,14 +148,13 @@ var
 begin
 	k:=pos('==',s);
 	str:=UPCASE(copy(s,1,k-1));
-//	if not (str in TCmd) then Bool:=True;
+	delete(s,1,k+1);
 	if Str2Num(str).check=True then Bool:=False;
 	for k:=1 to length(str) do if not (s[k] in ['1'..'9']) or not (s[k] in ['A'..'Z']) then Bool:=False;
-	k:=pos('==',s);
 	if (Upcase(s[1]) in ['A'..'Z']) then Bool:=True;
 	write(str,' = ');
-	if (Bool=True) and (Equation(copy(s,k+1,(length(s)-k)))=True) then begin
-		eq:=EquProcess(copy(s,k+1,length(s)+1-k));
+	if (Bool) and (EquChk(s)) then begin
+		eq:=EquProcess(s);
 		ans:=eq;
 		if VarPos(str)=0 then	
 		begin
@@ -193,30 +201,26 @@ begin
 	else err.id:=1;
 end;
     
-function fact(num:Longword):string;
+function fact(num:int64):string;
 var 
-	k:longword;
-	count,check:word;
+	t:byte;
+	i,k:int64;
+	chk:boolean=False;
 begin
-	check:=0;fact:='';k:=1;
-	while k<=num do begin
-		count:=0;inc(k);
-		while num mod k = 0 do begin
-			num:=num div k;
-			inc(count);
+	fact:='';k:=num;
+	i:=1;
+	while i<k do begin
+		inc(i);t:=0;
+		while k mod i = 0 do begin
+			k:=k div i;
+			inc(t);
 		end;
-		if count = 1 then
-			begin
-				if check=0 then inc(check)
-					else Fact:=Fact+' * ';
-				Fact:=Fact+Num2Str(k,0);
-			end
-		else if count > 1 then
-			begin
-				if check=0 then inc(check)
-					else Fact:=Fact+' * ';
-				Fact:=Fact+Num2Str(k,0)+'^'+Num2Str(count,0);
-			end;
+		if t>0 then begin
+			if Chk=True then fact:=fact+' * ';
+			Fact:=Fact+Num2Str(i,0);
+			if t>1 then Fact:=Fact+'^'+Num2Str(t,0);
+			Chk:=True;
+		end;
 	end;
 end;
 

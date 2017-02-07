@@ -42,9 +42,34 @@ begin
 end;
 
 procedure CmdProcess(s:string);
-	procedure CmdProcess0;
-	begin
+begin
+	ErrInp(s,0);
+	if s='' then DoNothing
+	else begin
 		case Upcase(syntax[0]) of
+			'FPC'			:	write('This Program Was Programmed To Compile Vmath, Not Pascal');
+		//syntaxNum=1
+			'INFO'			:	Info;
+			'VER'			:	write(ProgramInfo);
+			'HELP'			:	Help;
+			'DATE'			:	write(Date);
+			'TIME'			:	write(Time);
+			'CLS'			:	clrscr;
+			'EXIT'			:	ExitProc;
+		//syntaxNum=2
+			'LANG'			:	ActiveLang(syntax[1]);
+			'RUN'			:	RunFile(syntax[1]);
+			'GRAPH'			:	if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
+									else if (Upcase(syntax[1])='EXIT') then ExitGraph
+									else err.id:=1;
+			'DP'			:	if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
+									and (Str2Int(syntax[1]).value>=0)
+										then begin
+											dec:=Str2Int(syntax[1]).value;
+											write('Decimal Place(s)=',dec);
+										end
+										else err.id:=4;
+		//syntaxNum=0
 			'GCD','UCLN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
 									for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
 									write(Arraygcd(Num,syntaxNum,1));
@@ -61,51 +86,9 @@ procedure CmdProcess(s:string);
 			'PLOT'			:	if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True) and (Str2Int(syntax[2]).check=True)
 									and (syntaxNum=3) then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value)
 										else err.id:=1;
-		else err.id:=1;
-		end;	
-	end;
-
-	procedure CmdProcess1;
-	begin
-		case Upcase(syntax[0]) of
-			'INFO'			:	Info;
-			'VER'			:	write(ProgramInfo);
-			'HELP'			:	Help;
-			'DATE'			:	write(Date);
-			'TIME'			:	write(Time);
-			'CLS'			:	clrscr;
-			'EXIT'			:	ExitProc;
-		else err.id:=1;
-		end;	
-	end;
-
-	procedure CmdProcess2;
-	begin
-		case Upcase(syntax[0]) of
-			'LANG'			:	ActiveLang(syntax[1]);
-			'RUN'			:	RunFile(syntax[1]);
-			'GRAPH'			:	if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
-									else if (Upcase(syntax[1])='EXIT') then ExitGraph
-									else err.id:=1;
-			'DP'			:	if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
-									and (Str2Int(syntax[1]).value>=0)
-										then begin
-											dec:=Str2Int(syntax[1]).value;
-											write('Decimal Place(s)=',dec);
-										end
-										else err.id:=4;
-		else err.id:=1;
-		end;	
-	end;
-begin
-	ErrInp(s,0);
-	if s='' then err.id:=1
-	else if Equation(s)=False then	
-		case syntaxNum of
-			0	:	CmdProcess1;
-			1	:	CmdProcess2;
-			else CmdProcess0;
+		else if (not Variable('ans=='+s)) and (not Variable(s)) and (not TrueFalse(s)) then err.id:=1;
 		end;
+	end;
 	write(EReport);
 end;
 

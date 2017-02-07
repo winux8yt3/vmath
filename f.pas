@@ -5,7 +5,7 @@ interface
 uses basic,programstr,crt;
 
 function ChkFile(FName:string):word;
-procedure FileProcess(var f:text);
+//procedure FileProcess(var f:text);
 procedure RunFile(FName:string);
 procedure ReadLang(FName:string);
 procedure ReadCfg;
@@ -104,12 +104,12 @@ begin
 		Reset(f);
 	{$I+}
 	if IOResult = 0 then begin
-		FileProcess(f);
+		//FileProcess(f);
 		close(f);
 	end
 	else err.id:=3;
 end;
-
+{
 procedure FileProcess(var f:text);
 var str:string;
 begin
@@ -123,5 +123,5 @@ begin
 		end; 
 	end;
 end;
-
+}
 end.

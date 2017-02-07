@@ -9,7 +9,7 @@ var
     WelcomeMsg,DoneMsg,TkMsg:String;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
     HelpTextClear,HelpTextDate,HelpTextDec,HelpTextExit:String;
-    HelpTextHelp,HelpTextInfo,HelpTextPausea:String;
+    HelpTextHelp,HelpTextInfo:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
     HelpTextFact,HelpTextGraph,HelpTextVer:String;
     eqn0Text,eqn1Text,eqn2Text:String;
@@ -41,8 +41,6 @@ begin
 
     LoadText:='Dang Tai...';
     InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-io';
-    InputText:='Nhap';
-    OutputText:='Xuat';
     ExitText:='Thoat chuong trinh ?';
 
     HelpTextInfo:='Thông tin ph'#7847'n m'#7873'm';
@@ -89,8 +87,6 @@ begin
 
     LoadText:='Loading...';
     InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-io';
-    InputText:='Input';
-    OutputText:='Output';
     ExitText:='Exit program ?';
 
     HelpTextInfo:='About the Program';
