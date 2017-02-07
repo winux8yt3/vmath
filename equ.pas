@@ -216,10 +216,10 @@ begin
 			inc(t);
 		end;
 		if t>0 then begin
-			if Chk=True then fact:=fact+' * ';
+			if Chk then fact:=fact+' * ';
 			Fact:=Fact+Num2Str(i,0);
 			if t>1 then Fact:=Fact+'^'+Num2Str(t,0);
-			Chk:=True;
+			if not Chk then Chk:=True;
 		end;
 	end;
 end;
