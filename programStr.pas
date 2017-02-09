@@ -33,8 +33,9 @@ function BuildNum():string;
 implementation
 
 function BuildNum():string;
-var s:string={$I %DATE%}+'-'+{$I %TIME%};
+var s:string;
 begin
+    s:=BuildTime;
 	while pos('/',s) <> 0 do delete(s,pos('/',s),1);
 	while pos(':',s) <> 0 do delete(s,pos(':',s),1);
     delete(s,1,2);delete(s,length(s)-1,2);
