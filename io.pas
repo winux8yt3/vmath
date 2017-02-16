@@ -47,8 +47,8 @@ begin
 	if s='' then DoNothing
 	else begin
 		case Upcase(syntax[0]) of
-			'FPC'			:	write('This Program Was Programmed To Compile Vmath, Not Pascal');
-		//syntaxNum=1
+			'FPC'			:	write('Compiled With ',FPCInfo);
+		// syntaxNum=1
 			'INFO'			:	Info;
 			'VER'			:	write(ProgramInfo);
 			'HELP'			:	Help;
@@ -56,7 +56,7 @@ begin
 			'TIME'			:	write(Time);
 			'CLS'			:	clrscr;
 			'EXIT'			:	ExitProc;
-		//syntaxNum=2
+		// syntaxNum=2
 			'LANG'			:	ActiveLang(syntax[1]);
 			'RUN'			:	RunFile(syntax[1]);
 			'GRAPH'			:	if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
@@ -69,7 +69,7 @@ begin
 											write('Decimal Place(s)=',dec);
 										end
 										else err.id:=4;
-		//syntaxNum=0
+		// syntaxNum=0
 			'GCD','UCLN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
 									for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
 									write(Arraygcd(Num,syntaxNum,1));
@@ -86,10 +86,9 @@ begin
 			'PLOT'			:	if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True) and (Str2Int(syntax[2]).check=True)
 									and (syntaxNum=3) then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value)
 										else err.id:=1;
-		else if (not Variable('ans=='+s)) and (not Variable(s)) and (not TrueFalse(s)) then err.id:=1;
+		else if (not Variable(s)) and (not TrueFalse(s)) then err.id:=1;
 		end;
 	end;
 	write(EReport);
 end;
-
 end.

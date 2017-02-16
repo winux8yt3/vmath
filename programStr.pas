@@ -20,6 +20,7 @@ const
     Version: string = '0.9.5';
     BuildTime: string = {$I %DATE%}+'-'+{$I %TIME%};
     VersionInfo: string = 'Beta';
+    FPCInfo = 'Free Pascal '+{$I %FPCVERSION%}+' For '+{$I %FPCTARGETOS%}+'-'+{$I %FPCTARGETCPU%};
 var
     ProgramInfo:string;   
     CmdH:TStr;

@@ -106,7 +106,7 @@ begin
 		EquProcess:=EquProcess(copy(s,2,length(s)-2))
 	else if (VarPos(s)<>0) then EquProcess:=Vars[VarPos(s)].value
 	else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
-	else exit;
+	else if err.id<>0 then exit;
 end;
 // Loop back EquProcess function if there is a complex Equation
 
