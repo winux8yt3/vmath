@@ -7,6 +7,7 @@ uses
 
 procedure ActiveGraph;
 procedure ExitGraph;
+procedure ClearGraph;
 procedure PlotFx1(a,b:integer);
 
 implementation
@@ -34,6 +35,14 @@ begin
         write(GCloseMsg);
         Closegraph;
         GActive:=False;
+    end;
+end;
+
+procedure ClearGraph;
+begin
+    if GActive=False then write(GDisabledMsg) else begin
+        ClearDevice;
+        write('Cleared !');
     end;
 end;
 

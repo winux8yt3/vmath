@@ -10,13 +10,9 @@ procedure console(lang:String);
 begin
 	Window(1,1,120,255);
 	clrscr;
-	if lang='' then begin
-		writeln('Choose Your Language [Default is English]');
-		writeln('Chon ngon ngu [Mac dinh la Tieng Anh]');
-		write('(En | Vi) >> ');readln(tmpString);
-		ActiveLang(tmpString);
-	end
-	else ActiveLang(lang);
+	writeln('Choose Your Language [Default is English]');
+	writeln('Chon ngon ngu [Mac dinh la Tieng Anh]');
+	write('(En | Vi) >> ');ActiveLang(#0);
 	clrscr;
 	if ChkFile('vmath.cfg')=0 then ReadCfg;
 	write(LoadText);
@@ -47,7 +43,5 @@ begin
 		writeln('[VMath] >> Processing . . .');
 		RunFile(paramstr(1));
 	end 
-	else if (lowercase(Paramstr(1))='-en') then Console('en')
-	else if (lowercase(Paramstr(1))='-vi') then Console('vi')
 	else console('');
 end.

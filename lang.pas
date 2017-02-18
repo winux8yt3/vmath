@@ -2,7 +2,7 @@ unit lang;
 
 interface
 
-uses programStr,f;
+uses programStr,f,crt;
 
 //Switch to Const in 1.0
 var 
@@ -17,7 +17,7 @@ var
     ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:String;
     ErrorId7:String;
 
-procedure ActiveLang(s:String);
+procedure ActiveLang(c:char);
 procedure Help;
 procedure Info;
 
@@ -123,20 +123,21 @@ begin
     ErrorId7:='Expecting X';
 end;
 
-procedure ActiveLang(s:String);
+procedure ActiveLang(c:char);
 begin
-    case upcase(s) of
-        'VI','1'    :   LangVi;
-        'EN','0'    :   LangEn;
-    else if (s<>'') and (ChkFile(s)=0) then ReadLang(s) else LangEn;
+    if c=#0 then c:=readkey;
+    case upcase(c) of
+        'V','1'    :   LangVi;
+        'E','0'    :   LangEn;
+    else LangEn;
     end;
 end;
 
 procedure Help;
 begin
     writeln;
-	writeln('?,INFO     : ',HelpTextInfo);
-	writeln('CLEAR      : ',HelpTextClear);
+	writeln('INFO       : ',HelpTextInfo);
+	writeln('CLS        : ',HelpTextClear);
 	writeln('DATE       : ',HelpTextDate);
 	writeln('DP         : ',HelpTextDec);
 	writeln('EXIT       : ',HelpTextExit);
@@ -146,7 +147,6 @@ begin
 	writeln('LCM,BCNN   : ',HelpTextLcm);
 	writeln('HELP       : ',HelpTextHelp);
 	writeln('PTB2,EQN2  : ',HelpTexteqn2);
-	writeln('RUN        : ',HelpTextRun);
 	writeln('TIME       : ',HelpTextTime);
     writeln('VER        : ',HelpTextVer);
 	writeln;

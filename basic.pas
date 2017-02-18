@@ -40,6 +40,7 @@ function TrimRight(s:string):string;
 procedure Print(s:string);
 function IsInt(n:extended):boolean;
 procedure DoNothing;
+function ValidStr(S:string):boolean;
 
 implementation
 
@@ -191,6 +192,11 @@ end;
 
 procedure DoNothing;
 begin
+end;
+
+function ValidStr(S:string):boolean;
+begin
+	ValidStr:=True;
 end;
 
 end.

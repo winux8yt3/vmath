@@ -45,7 +45,8 @@ procedure CmdProcess(s:string);
 begin
 	ErrInp(s,0);
 	if s='' then DoNothing
-	else begin
+	// else if ChkFile(copy(syntax[0],3,length(s)-3))=0 then RunFile(s)
+	else if ValidStr(s) then begin
 		case Upcase(syntax[0]) of
 			'FPC'			:	write('Compiled With ',FPCInfo);
 		// syntaxNum=1
@@ -57,10 +58,9 @@ begin
 			'CLS'			:	clrscr;
 			'EXIT'			:	ExitProc;
 		// syntaxNum=2
-			'LANG'			:	ActiveLang(syntax[1]);
-			'RUN'			:	RunFile(syntax[1]);
 			'GRAPH'			:	if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
 									else if (Upcase(syntax[1])='EXIT') then ExitGraph
+									else if (Upcase(syntax[1])='CLEAR') then ClearGraph
 									else err.id:=1;
 			'DP'			:	if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
 									and (Str2Int(syntax[1]).value>=0)
