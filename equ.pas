@@ -50,7 +50,7 @@ procedure Equation(s:string);
 begin
 	if (not TrueFalse(s)) and EquChk(s) then begin
 		if IsInt(EquProcess(ClrSpace(s))) then write(EquProcess(ClrSpace(s)):0:0)
-			else write(EquProcess(ClrSpace(s)):0:dec);
+			else write(EquProcess(ClrSpace(s)):0:decn);
 	end;
 end;
 
@@ -187,15 +187,15 @@ begin
  		if a<>0 then begin
 		    delta:=(b*b-4*a*c);
 	    	if delta<0 then eqn2:=eqn0Text
-			else if delta=0 then eqn2:=eqn1Text+Num2Str((-b/2/a),dec)
+			else if delta=0 then eqn2:=eqn1Text+Num2Str((-b/2/a),decn)
     		else if delta>0 then begin
 				eqn2:=eqn2Text;
-				eqn2:=eqn2+'x1= '+Num2Str(((-b+sqrt(delta))/2/a),dec);
-				eqn2:=eqn2+' | x2= '+Num2Str(((-b-sqrt(delta))/2/a),dec);
+				eqn2:=eqn2+'x1= '+Num2Str(((-b+sqrt(delta))/2/a),decn);
+				eqn2:=eqn2+' | x2= '+Num2Str(((-b-sqrt(delta))/2/a),decn);
 			end;
     	end
     	else begin 
-			errinp(Num2Str(a,dec),1);
+			errinp(Num2Str(a,decn),1);
 		end;
 	end
 	else err.id:=1;

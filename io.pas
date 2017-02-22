@@ -3,7 +3,7 @@ unit io;
 interface
 
 uses
-	crt,dos,lang,basic,equ,programStr,f,plot;
+	crt,dos,lang,basic,equ,programStr,f,plot,exec;
 
 var
 	Num:tNum;
@@ -45,7 +45,7 @@ procedure CmdProcess(s:string);
 begin
 	ErrInp(s,0);
 	if s='' then DoNothing
-	// else if ChkFile(copy(syntax[0],3,length(s)-3))=0 then RunFile(s)
+	else if FileIO(copy(syntax[0],3,length(syntax[0])-3))=0 then RunFile(copy(s,3,length(s)-3))
 	else if ValidStr(s) then begin
 		case Upcase(syntax[0]) of
 			'FPC'			:	write('Compiled With ',FPCInfo);
@@ -65,8 +65,8 @@ begin
 			'DP'			:	if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
 									and (Str2Int(syntax[1]).value>=0)
 										then begin
-											dec:=Str2Int(syntax[1]).value;
-											write('Decimal Place(s)=',dec);
+											decn:=Str2Int(syntax[1]).value;
+											write('Decimal Place(s)=',decn);
 										end
 										else err.id:=4;
 		// syntaxNum=0
@@ -91,4 +91,27 @@ begin
 	end;
 	write(EReport);
 end;
+
+function InputChk(s:string):boolean;
+	function IsDual(c1,c2:Char):Boolean;
+	var 
+		Chk:boolean=True;
+		k:integer=0;
+	begin
+		IsDual:=True;
+		while IsDual and (i<length(s)) do begin
+			if s[i]=#34 then Chk:=not Chk;
+			if Chk then begin
+				if s[i]=c1 then inc(k);
+				if s[i]=c2 then dec(k);
+			end;
+			if k<0 then IsDual:=False;
+		end;
+		if k>0 then IsDual:=False;
+	end;
+begin
+	InputChk:=True;
+	if not IsDual('(',')') then InputChk:=False;
+end;
+
 end.

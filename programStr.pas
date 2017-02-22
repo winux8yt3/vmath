@@ -26,7 +26,7 @@ var
     CmdH:TStr;
     ErrHide:boolean=False;
     ans:extended;
-    dec:byte = 2;
+    decn:byte = 2;
     Err:TErr;
 
 function BuildNum():string;

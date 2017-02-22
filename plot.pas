@@ -2,15 +2,15 @@ unit plot;
     
 interface
     
-uses
-    graph,lang,programstr,basic;
-
 procedure ActiveGraph;
 procedure ExitGraph;
 procedure ClearGraph;
 procedure PlotFx1(a,b:integer);
 
 implementation
+
+uses
+    graph,lang,programstr,basic;
 
 var
     GActive:Boolean=False; 

@@ -2,13 +2,11 @@ unit lang;
 
 interface
 
-uses programStr,f,crt;
-
 //Switch to Const in 1.0
 var 
     WelcomeMsg,DoneMsg,TkMsg:String;
     LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
-    HelpTextClear,HelpTextDate,HelpTextDec,HelpTextExit:String;
+    HelpTextClear,HelpTextDate,HelpTextdecn,HelpTextExit:String;
     HelpTextHelp,HelpTextInfo:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
     HelpTextFact,HelpTextGraph,HelpTextVer:String;
@@ -23,7 +21,7 @@ procedure Info;
 
 implementation
 
-uses basic;
+uses programStr,f,crt,basic;
 
 procedure Info;
 begin
@@ -46,7 +44,7 @@ begin
     HelpTextInfo:='Thông tin ph'#7847'n m'#7873'm';
     HelpTextClear:='Xoá màn hình';
     HelpTextDate:='In ra ngày';
-    HelpTextDec:='Do dai phan thap phan trong ket qua toan hoc';
+    HelpTextdecn:='Do dai phan thap phan trong ket qua toan hoc';
     HelpTextExit:='Thoát';
     HelpTextHelp:='Huong dan su dung';
     HelpTextRun:='Chay File .vmath';
@@ -92,7 +90,7 @@ begin
     HelpTextInfo:='About the Program';
     HelpTextClear:='Clear screen';
     HelpTextDate:='Print date';
-    HelpTextDec:='Number of decimal place in math result';
+    HelpTextdecn:='Number of decimal place in math result';
     HelpTextExit:='Exit';
     HelpTextHelp:='This Help';
     HelpTextRun:='Run .vmath File';
@@ -124,11 +122,18 @@ begin
 end;
 
 procedure ActiveLang(c:char);
+    procedure Custom;
+    var s:string;
+    begin
+        write('Lang File Name:');readln(s);
+        if FileIO(s)=0 then ReadLang(s) else LangEn;
+    end;
 begin
     if c=#0 then c:=readkey;
     case upcase(c) of
-        'V','1'    :   LangVi;
-        'E','0'    :   LangEn;
+        'V' :   LangVi;
+        'E' :   LangEn;
+        'C' :   Custom;
     else LangEn;
     end;
 end;
@@ -139,7 +144,7 @@ begin
 	writeln('INFO       : ',HelpTextInfo);
 	writeln('CLS        : ',HelpTextClear);
 	writeln('DATE       : ',HelpTextDate);
-	writeln('DP         : ',HelpTextDec);
+	writeln('DP         : ',HelpTextdecn);
 	writeln('EXIT       : ',HelpTextExit);
 	writeln('FACT,PTNT  : ',HelpTextFact);
 	writeln('GCD,UCLN   : ',HelpTextGcd);
