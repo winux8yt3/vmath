@@ -12,13 +12,13 @@ var
     syntaxNum:byte;
 
 procedure CmdSyntax(s:string);
-procedure CmdProcess(s:string);
+function CmdProcess(s:string):string;
 
 implementation
 
 procedure ExitProc;
 begin
-    write(TkMsg,#13#10);
+    CmdProcess:=(TkMsg,#13#10);
     delay(1500);
     exit;
 end;
@@ -40,19 +40,20 @@ begin
     syntax[syntaxNum]:=copy(s,1,length(s));
 end;
 
-procedure CmdProcess(s:string);
+function CmdProcess(s:string):string;
 begin
     ErrInp(s,0);
+    CmdProcess:='';
     if s='' then DoNothing
     else if ValidStr(s) then begin
         case Upcase(syntax[0]) of
-            'FPC'			:	write('Compiled With ',FPCInfo);
+            'FPC'			:	CmdProcess:='Compiled With '+FPCInfo;
         // syntaxNum=1
             'INFO'			:	Info;
-            'VER'			:	write(ProgramInfo);
+            'VER'			:	CmdProcess:=ProgramInfo;
             'HELP'			:	Help;
-            'DATE'			:	write(Date);
-            'TIME'			:	write(Time);
+            'DATE'			:	CmdProcess:=Date;
+            'TIME'			:	CmdProcess:=Time;
             'CLS'			:	clrscr;
             'EXIT'			:	ExitProc;
         // syntaxNum=2
@@ -64,23 +65,23 @@ begin
                                     and (Str2Int(syntax[1]).value>=0)
                                         then begin
                                             decn:=Str2Int(syntax[1]).value;
-                                            write('Decimal Place(s)=',decn);
+                                            CmdProcess:='Decimal Place(s) = '+decn;
                                         end
                                         else err.id:=4;
         // syntaxNum=0
             'GCD','UCLN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
                                     for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
-                                    write(Arraygcd(Num,syntaxNum,1));
+                                    CmdProcess:=(Arraygcd(Num,syntaxNum,1));
                                 end else err.id:=1;
             'LCM','BCNN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
                                     for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
-                                    write(Arraylcm(Num,syntaxNum,1));
+                                    CmdProcess:=(Arraylcm(Num,syntaxNum,1));
                                 end else err.id:=1;	
             'FACT','PTNT'	:	if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=1)
-                                    then write(fact(Str2Int(syntax[1]).value)) else err.id:=4;
+                                    then CmdProcess:=(fact(Str2Int(syntax[1]).value)) else err.id:=4;
             'PTB2','EQN2'	:	if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
                                     and (Str2Num(syntax[3]).check=True) and (syntaxNum=3) then
-                                        write(eqn2(syntax[1],syntax[2],syntax[3])) else err.id:=4;
+                                        CmdProcess:=(eqn2(syntax[1],syntax[2],syntax[3])) else err.id:=4;
             'PLOT'			:	if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True) and (Str2Int(syntax[2]).check=True)
                                     and (syntaxNum=3) then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value)
                                         else err.id:=1;
@@ -88,7 +89,7 @@ begin
         else if (not Variable(s)) and (not TrueFalse(s)) then err.id:=1;
         end;
     end;
-    write(EReport);
+    CmdProcess:=(EReport);
 end;
 
 function ValidStr(s:string):boolean;
