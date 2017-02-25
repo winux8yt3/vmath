@@ -163,7 +163,7 @@ function EReport():string;
 	end;
 begin
 	EReport:='';
-	if (ErrHide=False) and (Err.ID<>0) then EReport:='<'+Err.str+'>:'+'Error ID '+Num2Str(err.id)+':'+errid(err.id);
+	if not ErrHide then EReport:='<'+Err.str+'>:'+ErrorTx+' ID '+Num2Str(err.id)+':'+errid(err.id);
 end;
 
 function Trim(s:string):string;

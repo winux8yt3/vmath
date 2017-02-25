@@ -12,7 +12,7 @@ var
     HelpTextFact,HelpTextGraph,HelpTextVer:String;
     eqn0Text,eqn1Text,eqn2Text:String;
     GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
-    ErrorId0,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:String;
+    ErrorTx,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:string;
     ErrorId7:String;
 
 procedure ActiveLang(c:char);
@@ -59,6 +59,7 @@ begin
     GLoadMsg:='Dang nap che do do hoa . . .';
     GCloseMsg:='Dang tat che do do hoa . . .';
 
+    ErrorTx:='LOI';
     ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
     ErrorId2:='Phep chia cho 0.';
     ErrorId3:='Tep khong ton tai.';
@@ -105,6 +106,7 @@ begin
     GLoadMsg:='Loading Graphic . . .';
     GCloseMsg:='Closing Graphic . . .';
 
+    ErrorTx:='ERROR';
     ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
@@ -133,22 +135,7 @@ end;
 
 procedure Help;
 begin
-    writeln;
-	writeln('INFO       : ',HelpTextInfo);
-	writeln('CLS        : ',HelpTextClear);
-	writeln('DATE       : ',HelpTextDate);
-	writeln('DP         : ',HelpTextdecn);
-	writeln('EXIT       : ',HelpTextExit);
-	writeln('FACT,PTNT  : ',HelpTextFact);
-	writeln('GCD,UCLN   : ',HelpTextGcd);
-	writeln('GRAPH      : ',HelpTextGraph);
-	writeln('LCM,BCNN   : ',HelpTextLcm);
-	writeln('HELP       : ',HelpTextHelp);
-	writeln('PTB2,EQN2  : ',HelpTexteqn2);
-	writeln('TIME       : ',HelpTextTime);
-    writeln('VER        : ',HelpTextVer);
-	writeln;
-	write('EQUATION    + | - | * | / | ^');
+
 end;
 
 end.

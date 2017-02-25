@@ -45,6 +45,23 @@ function CmdProcess(s:string):string;
         exit;
         // UI Form Close goes here
     end;
+    procedure HelpCmd;
+    begin
+        CmdProcess:=CmdProcess+#13#10+'INFO       : '+HelpTextInfo;
+        CmdProcess:=CmdProcess+#13#10+'CLS        : '+HelpTextClear;
+        CmdProcess:=CmdProcess+#13#10+'DATE       : '+HelpTextDate;
+        CmdProcess:=CmdProcess+#13#10+'DP         : '+HelpTextdecn;
+        CmdProcess:=CmdProcess+#13#10+'EXIT       : '+HelpTextExit;
+        CmdProcess:=CmdProcess+#13#10+'FACT,PTNT  : '+HelpTextFact;
+        CmdProcess:=CmdProcess+#13#10+'GCD,UCLN   : '+HelpTextGcd;
+        CmdProcess:=CmdProcess+#13#10+'GRAPH      : '+HelpTextGraph;
+        CmdProcess:=CmdProcess+#13#10+'LCM,BCNN   : '+HelpTextLcm;
+        CmdProcess:=CmdProcess+#13#10+'HELP       : '+HelpTextHelp;
+        CmdProcess:=CmdProcess+#13#10+'PTB2,EQN2  : '+HelpTexteqn2;
+        CmdProcess:=CmdProcess+#13#10+'TIME       : '+HelpTextTime;
+        CmdProcess:=CmdProcess+#13#10+'VER        : '+HelpTextVer;
+        CmdProcess:=CmdProcess+#13#10+'EQUATION    + | - | * | / | ^';
+    end;
 begin
     CmdSyntax(s);
     ErrInp(s,0);
@@ -56,7 +73,6 @@ begin
         // syntaxNum=1
             'INFO'			:	cmdProcess:=Info+#13#10+'Build Time: '+BuildTime;
             'VER'			:	CmdProcess:=ProgramName+' '+Version+' Build '+BuildNum;
-            'HELP'			:	Help;
             'DATE'			:	CmdProcess:=Date;
             'TIME'			:	CmdProcess:=Time;
             'CLS'			:	ClsProc;
@@ -94,7 +110,9 @@ begin
         else if (not Variable(s)) and (not TrueFalse(s)) then err.id:=1;
         end;
     end;
-    if err.id<>0 then CmdProcess:=(EReport);
+    
+    if err.id<>0 then CmdProcess:=EReport
+    else if (syntax[0]<>'cls') then CmdProcess:=#13#10+'[Ans] >> '+CmdProcess;
 end;
 
 end.
