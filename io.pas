@@ -16,13 +16,6 @@ function CmdProcess(s:string):string;
 
 implementation
 
-procedure ExitProc;
-begin
-    CmdProcess:=(TkMsg,#13#10);
-    delay(1500);
-    exit;
-end;
-
 procedure CmdSyntax(s:string);
 var 
     p:byte;  //Position of blank space
@@ -41,6 +34,12 @@ begin
 end;
 
 function CmdProcess(s:string):string;
+    procedure ExitProc;
+    begin
+        CmdProcess:=TkMsg;
+        delay(1500);
+        exit;
+    end;
 begin
     ErrInp(s,0);
     CmdProcess:='';
@@ -65,17 +64,17 @@ begin
                                     and (Str2Int(syntax[1]).value>=0)
                                         then begin
                                             decn:=Str2Int(syntax[1]).value;
-                                            CmdProcess:='Decimal Place(s) = '+decn;
+                                            CmdProcess:='Decimal Place(s) = '+Num2Str(decn);
                                         end
                                         else err.id:=4;
         // syntaxNum=0
             'GCD','UCLN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
                                     for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
-                                    CmdProcess:=(Arraygcd(Num,syntaxNum,1));
+                                    CmdProcess:=Num2Str(Arraygcd(Num,syntaxNum,1));
                                 end else err.id:=1;
             'LCM','BCNN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
                                     for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
-                                    CmdProcess:=(Arraylcm(Num,syntaxNum,1));
+                                    CmdProcess:=Num2Str(Arraylcm(Num,syntaxNum,1));
                                 end else err.id:=1;	
             'FACT','PTNT'	:	if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=1)
                                     then CmdProcess:=(fact(Str2Int(syntax[1]).value)) else err.id:=4;

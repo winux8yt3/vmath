@@ -14,7 +14,7 @@ function TrueFalse(s:string):boolean;
 function Variable(s:string):boolean;
 function EquProcess(s:string):extended;
 function VarPos(s:string):word;
-procedure VarProcess(s:shortstring);
+procedure VarProcess(s:string);
 function VarCheck(s:string):boolean;
 function Bool(s:string):boolean;
 function eqn2(x,y,z:string):string;
