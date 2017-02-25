@@ -21,7 +21,8 @@ type
 
 function ClrSpace (s:string):string;
 function CleanSpace(s:string):string;
-function Num2Str (v:extended;d:integer):String;
+function Num2Str (v:extended):String;
+function Num2Str (v:int64):String;
 function Str2Num (s:string):TStr2Num;
 function Str2Int (s:string):TStr2Int;
 function Str2Bool (s:string):TStr2Bool;
@@ -62,9 +63,15 @@ begin
 	CleanSpace:=s;
 end;
 
-function Num2Str (v:extended;d:integer):String;
+function Num2Str(v:extended):String;
 begin
-	Str(v:0:d,Num2Str);
+    if IsInt(v) then Str(v:0:0,Num2Str) 
+        else str(v:0:decn,Num2Str);
+end;
+
+function Num2Str(v:int64):String;
+begin
+	Str(v,Num2Str);
 end;
 
 function Str2Num(s:string):TStr2Num;
@@ -75,7 +82,7 @@ begin
 	if err=0 then Str2Num.Check:=True;
 end;
 
-function Str2Int (s:string):TStr2Int;
+function Str2Int(s:string):TStr2Int;
 var err:byte;
 begin
 	Str2Int.Check:=False;
@@ -104,7 +111,7 @@ function Date():string;
 		Year,Month,Day,Num : word;
 	begin
 		GetDate(Year,Month,Day,Num);
-		Date:=Num2Str(Day,0)+'/'+Num2Str(Month,0)+'/'+Num2Str(Year,0)+'.';
+		Date:=Num2Str(Day)+'/'+Num2Str(Month)+'/'+Num2Str(Year)+'.';
 	end;
 	
 function Time():string;
@@ -112,7 +119,7 @@ function Time():string;
 		Hr,Min,Sec,Milisec : word;
 	begin
 		GetTime(Hr,Min,Sec,Milisec);
-        Time:=Num2Str(Hr,0)+':'+Num2Str(Min,0)+':'+Num2Str(Sec,0)+'.'+Num2Str(Milisec,0);
+        Time:=Num2Str(Hr)+':'+Num2Str(Min)+':'+Num2Str(Sec)+'.'+Num2Str(Milisec);
 	end;
 
 procedure TxColor(TColor:byte);
@@ -156,7 +163,7 @@ function EReport():string;
 	end;
 begin
 	EReport:='';
-	if (ErrHide=False) and (Err.ID<>0) then EReport:='<'+Err.str+'>:'+'Error ID '+Num2Str(err.id,0)+':'+errid(err.id);
+	if (ErrHide=False) and (Err.ID<>0) then EReport:='<'+Err.str+'>:'+'Error ID '+Num2Str(err.id)+':'+errid(err.id);
 end;
 
 function Trim(s:string):string;
@@ -186,8 +193,7 @@ end;
 
 function IsInt(n:extended):boolean;
 begin
-	IsInt:=False;
-	if Trunc(n)=n then IsInt:=True;
+	IsInt:=Trunc(n)=n;
 end;
 
 procedure DoNothing;

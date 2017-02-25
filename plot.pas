@@ -14,7 +14,7 @@ uses
 
 var
     GActive:Boolean=False; 
-    gd,gm:integer;
+    gd,gm:smallint;
 
 procedure ActiveGraph;
 begin
@@ -24,7 +24,7 @@ begin
 	    gd:=Detect;
         gm:=0;
         InitGraph(gd,gm,'C:\PP\BGI');
-        if GraphResult<>grok then ErrInp(Num2Str(GraphResult,0),6)
+        if GraphResult<>grok then ErrInp(Num2Str(GraphResult),6)
         else GActive:=True;
     end;
 end;
