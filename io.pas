@@ -41,6 +41,7 @@ function CmdProcess(s:string):string;
         exit;
     end;
 begin
+    CmdSyntax(s);
     ErrInp(s,0);
     CmdProcess:='';
     if s='' then DoNothing
@@ -88,7 +89,7 @@ begin
         else if (not Variable(s)) and (not TrueFalse(s)) then err.id:=1;
         end;
     end;
-    CmdProcess:=(EReport);
+    if err.id<>0 then CmdProcess:=(EReport);
 end;
 
 function ValidStr(s:string):boolean;

@@ -98,7 +98,7 @@ begin
 			else Str2Bool.Check:=False;
 end;
 
-function PosLast (ch,s:string):word;
+function PosLast(ch,s:string):word;
 var k:word;
 begin
 	PosLast:=0;k:=1;
