@@ -17,17 +17,10 @@ var
 
 procedure ActiveLang(c:char);
 procedure Help;
-procedure Info;
 
 implementation
 
 uses programStr,f,crt,basic;
-
-procedure Info;
-begin
-    write(#13#10,CopyrightInfo,#13#10,ProgramInfo,' Build Time:',BuildTime,#13#10,InfoText);
-end;
-
 
 procedure LangVi;
 begin

@@ -13,7 +13,7 @@ Chỉ được phép sao lưu, tái phân phối lại phần mềm hay mã ngu�
 **VMath** is a free math program for everyone.
 Redistribution and copying of this program and its source code is allowed only for non-commercial purposes.
 *Featuring:*
-- Command-Line Interface
+- CLI & GUI
 - Math Functions
 - 2 Lauguages: Vietnamese & English
 
@@ -35,8 +35,9 @@ Redistribution and copying of this program and its source code is allowed only f
 ### Version 1.0 *Build 170xxx*
 
 ### Version 0.9.5 *Build 170105*
+- **Added** VMath Graphic UI (Thanks @cuongeddy02 for the UI Design)
 - **Added** Graph Mode **Include** `Plot`
-- **Support** Dual Language Mode
+- **Support** Custom Language
 - **Remake** Start-up screen
 - **Optimized** `GCD`,`LCD`
 - **Fixed** Error Message

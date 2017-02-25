@@ -41,7 +41,7 @@ function TrimRight(s:string):string;
 procedure Print(s:string);
 function IsInt(n:extended):boolean;
 procedure DoNothing;
-function ValidStr(S:string):boolean;
+function ValidStr(s:string):boolean;
 
 implementation
 
@@ -196,13 +196,31 @@ begin
 	IsInt:=Trunc(n)=n;
 end;
 
-procedure DoNothing;
+function ValidStr(s:string):boolean;
+    function IsDual(c1,c2:Char):Boolean;
+    var 
+        Chk:boolean=True;
+        k:integer=0;
+		i:byte=0;
+    begin
+        IsDual:=True;
+        while IsDual and (i<length(s)) do begin
+			inc(i);
+            if s[i]=#34 then Chk:=not Chk;
+            if Chk then begin
+                if s[i]=c1 then inc(k);
+                if s[i]=c2 then dec(k);
+            end;
+            if k<0 then IsDual:=False;
+        end;
+        if k>0 then IsDual:=False;
+    end;
 begin
+    ValidStr:=IsDual('(',')') and IsDual('[',']');
 end;
 
-function ValidStr(S:string):boolean;
+procedure DoNothing;
 begin
-	ValidStr:=True;
 end;
 
 end.

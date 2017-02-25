@@ -61,7 +61,7 @@ procedure ReadLangVar(s,val:string);
 begin
     case Upcase(s) of
         'DONEMSG'		:	DoneMsg:=val;
-        'WELCOMEMSG'	:	WelcomeMsg:=val+' '+ProgramInfo;
+        'WELCOMEMSG'	:	WelcomeMsg:=val+' '+ProgramName;
         'LOADTEXT'		:	LoadText:=val;
         'INPUTTEXT'		:	InputText:=val;
         'OUTPUTTEXT'	:	OutputText:=val;

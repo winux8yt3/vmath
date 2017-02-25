@@ -15,19 +15,19 @@ type
         str:string;
     end;
 const 
-    CopyrightInfo: string = 'Copyright (c) 2016 Nguyen Tuan Dung (Winux8yt3)';
+    CopyrightInfo: string = 'Copyright (c) 2016 Nguyen Tuan Dung (Winux8yt3).';
     ProgramName: string = 'VMath Xplorer';
     Version: string = '0.9.5';
     BuildTime: string = {$I %DATE%}+'-'+{$I %TIME%};
     VersionInfo: string = 'Beta';
     FPCInfo = 'Free Pascal '+{$I %FPCVERSION%}+' For '+{$I %FPCTARGETOS%}+'-'+{$I %FPCTARGETCPU%};
-var
-    ProgramInfo:string;   
+var 
     CmdH:TStr;
     ErrHide:boolean=False;
     ans:extended;
     decn:0..20 = 2;
     Err:TErr;
+    Info:string;
 
 function BuildNum():string;
 
@@ -44,5 +44,5 @@ begin
 end;
 
 begin
-    ProgramInfo:=ProgramName+' '+VersionInfo+' '+Version+' Build '+BuildNum+'.';
+    Info:=ProgramName+' '+VersionInfo+' '+Version+' Build '+BuildNum+'.'+#13#10+CopyrightInfo;
 end.
