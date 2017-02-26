@@ -34,7 +34,7 @@ Redistribution and copying of this program and its source code is allowed only f
 
 ### Version 1.0 *Build 170xxx*
 
-### Version 0.9.5 *Build 170105*
+### Version 0.9.5 *Build 170302*
 - **Added** VMath Graphic UI (Thanks @cuongeddy02 for the UI Design)
 - **Added** Graph Mode **Include** `Plot`
 - **Support** Custom Language

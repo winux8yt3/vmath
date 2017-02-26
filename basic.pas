@@ -26,6 +26,7 @@ function Num2Str (v:int64):String;
 function Str2Num (s:string):TStr2Num;
 function Str2Int (s:string):TStr2Int;
 function Str2Bool (s:string):TStr2Bool;
+function Bool2Str(b:boolean):string;
 function PosLast (ch,s:string):word;
 function Date():string;
 function Time():string;
@@ -40,7 +41,6 @@ function TrimLeft(s:string):string;
 function TrimRight(s:string):string;
 procedure Print(s:string);
 function IsInt(n:extended):boolean;
-procedure DoNothing;
 function ValidStr(s:string):boolean;
 
 implementation
@@ -96,6 +96,11 @@ begin
 	if upcase(s)='TRUE' then Str2Bool.val:=True
 		else if upcase(s)='FALSE' then Str2Bool.val:=False
 			else Str2Bool.chk:=False;
+end;
+
+function Bool2Str(b:boolean):string;
+begin
+	if b then Bool2Str:='TRUE' else Bool2Str:='FALSE';
 end;
 
 function PosLast(ch,s:string):word;
@@ -217,10 +222,6 @@ function ValidStr(s:string):boolean;
     end;
 begin
     ValidStr:=IsDual('(',')') and IsDual('[',']') and IsDual('\','\');
-end;
-
-procedure DoNothing;
-begin
 end;
 
 end.

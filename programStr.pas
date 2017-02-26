@@ -7,14 +7,14 @@ type
 	TNum = array[1..256]of longword;
     RVar = record
         VName:shortstring;
-        Val:string;
+        Val:extended;
     end;
 	TVar = array[1..35565]of Rvar;
     TErr = record
         id:byte;
         str:string;
     end;
-const 
+const
     CopyrightInfo: string = 'Copyright (c) 2016 Nguyen Tuan Dung (Winux8yt3).';
     ProgramName: string = 'VMath Xplorer';
     Version: string = '0.9.5';

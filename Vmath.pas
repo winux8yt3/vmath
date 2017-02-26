@@ -8,7 +8,7 @@ var
 
 procedure console(lang:String);
 begin
-	Window(1,1,120,255);
+	Window(1,1,WindMaxX,WindMaxY);
 	clrscr;
 	writeln('Choose Your Language [Default is English]');
 	writeln('Chon ngon ngu [Mac dinh la Tieng Anh]');
@@ -35,7 +35,8 @@ begin
 			c:=4;
 		end;
 		for i:=c to ParamCount do tmpstr:=tmpstr+paramstr(i);
-		write('[VMath] >> ');Equation(tmpstr);
+		Equation(tmpstr,tmpstr);
+		write('[VMath] >> ',tmpstr);
 	end else
 	if (Paramstr(1)<>'') and (FileIO(paramstr(1))=0) then begin
 		writeln('[VMath] >> Processing . . .');

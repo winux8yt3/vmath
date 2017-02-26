@@ -128,7 +128,6 @@ begin
     case upcase(c) of
         'V' :   LangVi;
         'E' :   LangEn;
-        'C' :   Custom;
     else LangEn;
     end;
 end;

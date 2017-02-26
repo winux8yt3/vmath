@@ -9,12 +9,12 @@ var
     Vars:TVar;
     VarNum:word = 0;
 
-procedure Equation(s:string);
-function TrueFalse(s:string):boolean;
-function Variable(s:string):boolean;
+function Variable(s:string;var c:string):boolean;
+function Equation(s:string;var c:string):boolean;
+function TrueFalse(s:string;var c:string):boolean;
 function EquProcess(s:string):extended;
 function VarPos(s:string):word;
-procedure VarProcess(s:string);
+procedure VarProcess(s:string;var c:string);
 function VarCheck(s:string):boolean;
 function Bool(s:string):boolean;
 function eqn2(x,y,z:string):string;
@@ -25,39 +25,33 @@ function ArrayLcm(a:tNum;n,p:word):longword;
 
 implementation
 
-function Variable(s:string):boolean;
+function Variable(s:string;var c:string):boolean;
 begin
     Variable:=True;
     if (pos('==',s)<>0) and (pos('==',s)=poslast('==',s))
-        then VarProcess(ClrSpace(s)) else Variable:=False;
+        then VarProcess(CleanSpace(s),c) else Variable:=False;
 end;
 
 function EquChk(s:string):boolean;
-var i,c:integer;
 begin
-    c:=0;i:=0;
-    while (c>=0) and (i<length(s)) do begin
-        inc(i);
-        case s[i] of
-            #40	:	inc(c);
-            #41	:	dec(c);
-        end;
-    end;
-    if c>0 then EquChk:=True;	
+    EquChk:=False;
+    if pos(' ',s)<>0 then EquChk:=False;
+    if (pos('*',s)<>0) or (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('/',s)<>0) or (pos('^',s)<>0) then EquChk:=True;
 end;
 
-procedure Equation(s:string);
+function Equation(s:string;var c:string):boolean;
 begin
-    if EquChk(s) then write(Num2Str(EquProcess(ClrSpace(s))));
+    Equation:=EquChk(s);
+    if Equation then c:=Num2Str(EquProcess(CleanSpace(s)));
 end;
 
-function TrueFalse(s:string):boolean;
+function TrueFalse(s:string;var c:string):boolean;
 begin
     TrueFalse:=True;
     if (pos('=',s)<>0) and (pos('=',s)=poslast('=',s)) 
         or (pos('<',s)<>0) and (pos('<',s)=poslast('<',s)) 
         or (pos('>',s)<>0) and (pos('>',s)=poslast('>',s)) 
-            then write(bool(ClrSpace(s)))
+            then c:=Bool2Str(bool(ClrSpace(s)))
     else TrueFalse:=False;
 end;
 
@@ -136,30 +130,36 @@ begin
     end;
 end;
 
-procedure VarProcess(s:string);
+procedure VarProcess(s:string;var c:string);
 var 
     str:shortstring;
     k:word;
-    Bool:boolean;
+    B:boolean;
     eq:Extended;
 begin
-    k:=pos('==',s);
+    k:=pos(':',s);
     str:=UPCASE(copy(s,1,k-1));
     delete(s,1,k+1);
-    if Str2Num(str).chk=True then Bool:=False;
-    for k:=1 to length(str) do if not (s[k] in ['1'..'9']) or not (s[k] in ['A'..'Z']) then Bool:=False;
-    if (Upcase(s[1]) in ['A'..'Z']) then Bool:=True;
-    write(str,' = ');
-    if (Bool) and (EquChk(s)) then begin
+    b:=False;
+    if str[1]='_' then b:=True;
+    delete(str,1,1);
+    if Str2Num(str).chk=True then B:=False;
+    k:=0;
+    while b and (k<length(str)) do begin
+        inc(k);
+        B:=(str[k] in ['1'..'9']) or (str[k] in ['A'..'Z']);
+    end;
+    c:=str+' = ';
+    if B and EquChk(s) then begin
         eq:=EquProcess(s);
-        ans:=eq;
         if VarPos(str)=0 then
         begin
             inc(VarNum);
             Vars[VarNum].vname:=str;
         end;
-        Vars[VarPos(str)].val:=Num2Str(eq);
-    end else errinp(str,4);
+        Vars[VarPos(str)].val:=eq;
+        c:=c+Num2Str(eq);
+    end else errinp(str,1);
 end;
 
 function VarCheck(s:string):boolean;
@@ -222,7 +222,7 @@ begin
 end;
 
 function NumInCheck(t:tStr;endNum:word):boolean;
-var i:word;
+var i:word=0;
 begin
     NumInCheck:=true;
     while i<endNum do begin
