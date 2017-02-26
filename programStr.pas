@@ -7,7 +7,7 @@ type
 	TNum = array[1..256]of longword;
     RVar = record
         VName:shortstring;
-        Value:Extended;
+        Val:string;
     end;
 	TVar = array[1..35565]of Rvar;
     TErr = record

@@ -36,7 +36,7 @@ begin
         readln(f,str);
         CmdSyntax(str);
         case syntax[0] of
-            'DELAY'		:	Delay(Str2Int(syntax[1]).value);
+            'DELAY'		:	Delay(Str2Int(syntax[1]).val);
             'PRINT'		:	Print(str);
         else CmdProcess(str);
         end; 

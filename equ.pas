@@ -48,7 +48,7 @@ end;
 
 procedure Equation(s:string);
 begin
-    if (not TrueFalse(s)) and EquChk(s) then write(Num2Str(EquProcess(ClrSpace(s))));
+    if EquChk(s) then write(Num2Str(EquProcess(ClrSpace(s))));
 end;
 
 function TrueFalse(s:string):boolean;
@@ -101,8 +101,8 @@ begin
     end
     else if (pos('(',s)<>0) and (pos(')',s)<>0) and (pos(')',s)-pos('(',s)>0) then 
         EquProcess:=EquProcess(copy(s,2,length(s)-2))
-    else if (VarPos(s)<>0) then EquProcess:=Vars[VarPos(s)].value
-    else if (Str2Num(s).Check=True) and (s<>'') then EquProcess:=Str2Num(s).value
+    else if (VarPos(s)<>0) then EquProcess:=Vars[VarPos(s)].val
+    else if (Str2Num(s).chk=True) and (s<>'') then EquProcess:=Str2Num(s).val
     else if err.id<>0 then exit;
 end;
 // Loop back EquProcess function if there is a complex Equation
@@ -146,26 +146,26 @@ begin
     k:=pos('==',s);
     str:=UPCASE(copy(s,1,k-1));
     delete(s,1,k+1);
-    if Str2Num(str).check=True then Bool:=False;
+    if Str2Num(str).chk=True then Bool:=False;
     for k:=1 to length(str) do if not (s[k] in ['1'..'9']) or not (s[k] in ['A'..'Z']) then Bool:=False;
     if (Upcase(s[1]) in ['A'..'Z']) then Bool:=True;
     write(str,' = ');
     if (Bool) and (EquChk(s)) then begin
         eq:=EquProcess(s);
         ans:=eq;
-        if VarPos(str)=0 then	
+        if VarPos(str)=0 then
         begin
             inc(VarNum);
             Vars[VarNum].vname:=str;
         end;
-        Vars[VarPos(str)].value:=eq;
+        Vars[VarPos(str)].val:=Num2Str(eq);
     end else errinp(str,4);
 end;
 
 function VarCheck(s:string):boolean;
 var i:word;
 begin
-    if Str2Num(s).check=True then VarCheck:=True
+    if Str2Num(s).chk=True then VarCheck:=True
         else VarCheck:=False;
     for i:=0 to VarNum do
         if s=Vars[i].vname then VarCheck:=True;
@@ -175,12 +175,12 @@ function eqn2(x,y,z:string):string;
 var 
     a,b,c,delta:extended;
 begin
-    if (Str2Num(x).check=True) and (Str2Num(y).check=True) 
-        and (Str2Num(z).check=True) then 
+    if (Str2Num(x).chk=True) and (Str2Num(y).chk=True) 
+        and (Str2Num(z).chk=True) then 
     begin
-        a:=Str2Num(x).value;
-        b:=Str2Num(y).value;
-        c:=Str2Num(z).value;
+        a:=Str2Num(x).val;
+        b:=Str2Num(y).val;
+        c:=Str2Num(z).val;
          if a<>0 then begin
             delta:=(b*b-4*a*c);
             if delta<0 then eqn2:=eqn0Text
@@ -225,9 +225,10 @@ function NumInCheck(t:tStr;endNum:word):boolean;
 var i:word;
 begin
     NumInCheck:=true;
-    for i:=1 to endNum do 
-        if (Str2Int(t[i]).check=false) or (Str2Int(t[i]).value<=0) or (t[i]=' ')
+    while i<endNum do begin
+        if not (Str2Int(t[i]).chk) or (Str2Int(t[i]).val<=0) or (t[i]=' ')
             then NumInCheck:=false;
+    end;
     if NumInCheck=False then err.id:=4;
 end;
 

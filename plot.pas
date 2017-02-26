@@ -5,6 +5,7 @@ interface
 procedure ActiveGraph;
 procedure ExitGraph;
 procedure ClearGraph;
+procedure XYPlot;
 procedure PlotFx1(a,b:integer);
 
 implementation

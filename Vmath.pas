@@ -29,9 +29,9 @@ begin
 	writeln(Info);
 	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
 		c:=2;
-		if (paramstr(2)='-d') and (Str2Num(paramstr(3)).check=True) then
+		if (paramstr(2)='-d') and (Str2Num(paramstr(3)).chk=True) then
 		begin
-			decn:=Str2Int(paramstr(3)).value;
+			decn:=Str2Int(paramstr(3)).val;
 			c:=4;
 		end;
 		for i:=c to ParamCount do tmpstr:=tmpstr+paramstr(i);

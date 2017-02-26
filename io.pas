@@ -20,7 +20,7 @@ var
     p:byte;  //Position of blank space
 begin
     fillchar(syntax,sizeof(syntax),0);
-    s:=trim(s);
+    s:=CleanSpace(s);
     syntaxNum:=0;
     p:=pos(' ',s);
     while p<>0 do begin
@@ -33,13 +33,21 @@ begin
 end;
 
 function CmdProcess(s:string):string;
+var Out:boolean=True;
+    procedure NoOut;
+    begin
+        Out:=False;
+        CmdProcess:='';
+    end;
     procedure ClsProc;
     begin
         clrscr;
+        NoOut;
         // UI Screen Clear Goes Here
     end;
     procedure ExitProc;
     begin
+        NoOut;
         CmdProcess:=TkMsg;
         delay(1500);
         exit;
@@ -47,27 +55,36 @@ function CmdProcess(s:string):string;
     end;
     procedure HelpCmd;
     begin
-        CmdProcess:=CmdProcess+#13#10+'INFO       : '+HelpTextInfo;
-        CmdProcess:=CmdProcess+#13#10+'CLS        : '+HelpTextClear;
-        CmdProcess:=CmdProcess+#13#10+'DATE       : '+HelpTextDate;
-        CmdProcess:=CmdProcess+#13#10+'DP         : '+HelpTextdecn;
-        CmdProcess:=CmdProcess+#13#10+'EXIT       : '+HelpTextExit;
-        CmdProcess:=CmdProcess+#13#10+'FACT,PTNT  : '+HelpTextFact;
-        CmdProcess:=CmdProcess+#13#10+'GCD,UCLN   : '+HelpTextGcd;
-        CmdProcess:=CmdProcess+#13#10+'GRAPH      : '+HelpTextGraph;
-        CmdProcess:=CmdProcess+#13#10+'LCM,BCNN   : '+HelpTextLcm;
-        CmdProcess:=CmdProcess+#13#10+'HELP       : '+HelpTextHelp;
-        CmdProcess:=CmdProcess+#13#10+'PTB2,EQN2  : '+HelpTexteqn2;
-        CmdProcess:=CmdProcess+#13#10+'TIME       : '+HelpTextTime;
-        CmdProcess:=CmdProcess+#13#10+'VER        : '+HelpTextVer;
-        CmdProcess:=CmdProcess+#13#10+'EQUATION    + | - | * | / | ^';
+        writeln('INFO       : '+HelpTextInfo);
+        writeln('CLS        : '+HelpTextClear);
+        writeln('DATE       : '+HelpTextDate);
+        writeln('DP         : '+HelpTextdecn);
+        writeln('EXIT       : '+HelpTextExit);
+        writeln('FACT,PTNT  : '+HelpTextFact);
+        writeln('GCD,UCLN   : '+HelpTextGcd);
+        writeln('GRAPH      : '+HelpTextGraph);
+        writeln('LCM,BCNN   : '+HelpTextLcm);
+        writeln('HELP       : '+HelpTextHelp);
+        writeln('PTB2,EQN2  : '+HelpTexteqn2);
+        writeln('TIME       : '+HelpTextTime);
+        writeln('VER        : '+HelpTextVer);
+        writeln('EQUATION    + | - | * | / | ^');
+        NoOut;
+    end;
+    procedure PlotProc;
+    begin
+        case syntax[1] of
+            'fx'    :   if (Str2Int(syntax[2]).chk) and (Str2Int(syntax[2]).chk) and (syntaxNum=3)
+                        then PlotFx1(Str2Int(syntax[2]).val,Str2Int(syntax[3]).val)
+                            else err.id:=4;
+            'xy'    :   if syntaxNum=1 then XYPlot else err.id:=1;
+        else err.id:=1;
     end;
 begin
     CmdSyntax(s);
     ErrInp(s,0);
     CmdProcess:='';
-    if s='' then DoNothing
-    else if ValidStr(s) then begin
+    if ValidStr(s) then begin
         case Upcase(syntax[0]) of
             'FPC'			:	CmdProcess:='Compiled With '+FPCInfo;
         // syntaxNum=1
@@ -77,42 +94,42 @@ begin
             'TIME'			:	CmdProcess:=Time;
             'CLS'			:	ClsProc;
             'EXIT'			:	ExitProc;
+            'HELP'          :   HelpCmd;
         // syntaxNum=2
             'GRAPH'			:	if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
                                     else if (Upcase(syntax[1])='EXIT') then ExitGraph
                                     else if (Upcase(syntax[1])='CLEAR') then ClearGraph
                                     else err.id:=1;
-            'DP'			:	if (Str2Int(syntax[1]).check=True) and (Str2Int(syntax[1]).value<=20)
-                                    and (Str2Int(syntax[1]).value>=0)
+            'DP'			:	if (Str2Int(syntax[1]).chk=True) and (Str2Int(syntax[1]).val<=20)
+                                    and (Str2Int(syntax[1]).val>=0)
                                         then begin
-                                            decn:=Str2Int(syntax[1]).value;
+                                            decn:=Str2Int(syntax[1]).val;
                                             CmdProcess:='Decimal Place(s) = '+Num2Str(decn);
                                         end
                                         else err.id:=4;
         // syntaxNum=0
             'GCD','UCLN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
-                                    for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
+                                    for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).val;
                                     CmdProcess:=Num2Str(Arraygcd(Num,syntaxNum,1));
                                 end else err.id:=4;
             'LCM','BCNN'	:	if (NumInCheck(syntax,syntaxNum)=true) and (syntaxNum>1) then begin
-                                    for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).value;
+                                    for i:=1 to syntaxNum do Num[i]:=Str2Int(syntax[i]).val;
                                     CmdProcess:=Num2Str(Arraylcm(Num,syntaxNum,1));
                                 end else err.id:=4;	
-            'FACT','PTNT'	:	if (Str2Int(syntax[1]).check=True) and (Str2Num(syntax[1]).value>0) and (syntaxNum=1)
-                                    then CmdProcess:=(fact(Str2Int(syntax[1]).value)) else err.id:=4;
-            'PTB2','EQN2'	:	if (Str2Num(syntax[1]).check=True) and (Str2Num(syntax[2]).check=True)
-                                    and (Str2Num(syntax[3]).check=True) and (syntaxNum=3) then
+            'FACT','PTNT'	:	if (Str2Int(syntax[1]).chk=True) and (Str2Num(syntax[1]).val>0) and (syntaxNum=1)
+                                    then CmdProcess:=(fact(Str2Int(syntax[1]).val)) else err.id:=4;
+            'PTB2','EQN2'	:	if (Str2Num(syntax[1]).chk=True) and (Str2Num(syntax[2]).chk=True)
+                                    and (Str2Num(syntax[3]).chk=True) and (syntaxNum=3) then
                                         CmdProcess:=(eqn2(syntax[1],syntax[2],syntax[3])) else err.id:=4;
-            'PLOT'			:	if (syntax[1]='fx') and (Str2Int(syntax[2]).check=True) and (Str2Int(syntax[2]).check=True)
-                                    and (syntaxNum=3) then PlotFx1(Str2Int(syntax[2]).value,Str2Int(syntax[3]).value)
-                                        else err.id:=4;
+            'PLOT'			:	PlotProc;
         // else if (syntax[0][1]='.') and (syntax[0][2]='\') and FileExist(copy(syntax[0],3,length(syntax[0])-3)) then RunFile();
-        else if (not Variable(s)) and (not TrueFalse(s)) then err.id:=1;
+        else if not Variable(s) then
+                if not TrueFalse(s) then
+                    if not Equation(s) then err.id:=1;
         end;
     end;
-    
     if err.id<>0 then CmdProcess:=EReport
-    else if (syntax[0]<>'cls') then CmdProcess:=#13#10+'[Ans] >> '+CmdProcess;
+    else if (Out) then CmdProcess:=#13#10+'[Ans] >> '+CmdProcess;
 end;
 
 end.

@@ -49,11 +49,11 @@ end;
 procedure ReadCfgVar(s,val:string);
 begin
     case Upcase(s) of
-        'BGCOLOR'	:	if (Str2Int(val).check=True) and (Str2Int(val).value>=0) then bgcolor(Str2Int(val).value);
-        'TXCOLOR'	:	if (Str2Int(val).check=True) and (Str2Int(val).value>=0) then txColor(Str2Int(val).value);
-        'ERRHIDE'	:	if Str2Bool(val).check=True then ErrHide:=Str2Bool(val).value;
-        'DEC'		:	if (Str2Int(val).check=True) and (Str2Int(val).value>=0) and (Str2Int(val).value<=20)
-                        then decn:=Str2Int(val).value;
+        'BGCOLOR'	:	if (Str2Int(val).chk=True) and (Str2Int(val).val>=0) then bgcolor(Str2Int(val).val);
+        'TXCOLOR'	:	if (Str2Int(val).chk=True) and (Str2Int(val).val>=0) then txColor(Str2Int(val).val);
+        'ERRHIDE'	:	if Str2Bool(val).chk=True then ErrHide:=Str2Bool(val).val;
+        'DEC'		:	if (Str2Int(val).chk=True) and (Str2Int(val).val>=0) and (Str2Int(val).val<=20)
+                        then decn:=Str2Int(val).val;
     end;
 end;
 

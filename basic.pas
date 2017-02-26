@@ -7,16 +7,16 @@ uses
 
 type 
 	TStr2Num = record
-		Check:boolean;
-		Value:extended;
+		Chk:boolean;
+		Val:extended;
 	end;
 	TStr2Int = record
-		Check:boolean;
-		Value:longint;
+		Chk:boolean;
+		Val:longint;
 	end;
 	TStr2Bool = record
-		Check:boolean;
-		Value:boolean;
+		Chk:boolean;
+		Val:boolean;
 	end;	
 
 function ClrSpace (s:string):string;
@@ -77,25 +77,25 @@ end;
 function Str2Num(s:string):TStr2Num;
 var err:byte;
 begin
-	Str2Num.Check:=False;
- 	val(s,Str2Num.value,err);
-	if err=0 then Str2Num.Check:=True;
+	Str2Num.chk:=False;
+ 	val(s,Str2Num.val,err);
+	if err=0 then Str2Num.chk:=True;
 end;
 
 function Str2Int(s:string):TStr2Int;
 var err:byte;
 begin
-	Str2Int.Check:=False;
- 	val(s,Str2Int.value,err);
-	if (err=0) and (Str2Int.value=trunc(Str2Int.value)) then Str2Int.Check:=True;
+	Str2Int.chk:=False;
+ 	val(s,Str2Int.val,err);
+	if (err=0) and (Str2Int.val=trunc(Str2Int.val)) then Str2Int.chk:=True;
 end;
 
 function Str2Bool (s:string):TStr2Bool;
 begin
-	Str2Bool.Check:=True;
-	if upcase(s)='TRUE' then Str2Bool.value:=True
-		else if upcase(s)='FALSE' then Str2Bool.value:=False
-			else Str2Bool.Check:=False;
+	Str2Bool.chk:=True;
+	if upcase(s)='TRUE' then Str2Bool.val:=True
+		else if upcase(s)='FALSE' then Str2Bool.val:=False
+			else Str2Bool.chk:=False;
 end;
 
 function PosLast(ch,s:string):word;
@@ -216,7 +216,7 @@ function ValidStr(s:string):boolean;
         if k>0 then IsDual:=False;
     end;
 begin
-    ValidStr:=IsDual('(',')') and IsDual('[',']');
+    ValidStr:=IsDual('(',')') and IsDual('[',']') and IsDual('\','\');
 end;
 
 procedure DoNothing;
