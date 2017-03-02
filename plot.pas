@@ -1,3 +1,7 @@
+{
+	Copyright (c) Winux8YT3.
+	License Under MIT License. See LICENSE in root folder for license. 
+}
 unit plot;
     
 interface

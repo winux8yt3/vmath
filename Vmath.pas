@@ -1,3 +1,7 @@
+{
+	Copyright (c) Winux8YT3.
+	License Under MIT License. See LICENSE in root folder for license. 
+}
 program Vmath;
 
 uses sysutils,crt,io,lang,programStr,basic,equ,f,exec;
