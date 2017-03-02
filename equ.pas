@@ -55,10 +55,11 @@ begin
     else TrueFalse:=False;
 end;
 
-procedure NumProcess(s:string;k:word; var n1,n2:extended);
+function NumProcess(s:string;k:word; var n1,n2:extended):boolean;
 begin
-    n1:=EquProcess(copy(s,1,k-1));
-    n2:=EquProcess(copy(s,k+1,(length(s)-k)));
+    NumProcess:=True;
+    if k>1 then n1:=EquProcess(copy(s,1,k-1)) else NumProcess:=False;
+    if k<length(s) then n2:=EquProcess(copy(s,k+1,(length(s)-k))) else NumProcess:=False;
 end;
 
 procedure BoolProcess(s:string;k:word; var n1,n2:boolean);
@@ -72,22 +73,22 @@ var
     n1,n2:extended;
 begin
     if err.id>0 then exit
+    else if (Str2Num(s).chk=True) and (s<>'') then EquProcess:=Str2Num(s).val
     else if (pos('+',s)<>0) and ((pos('+',s)<pos('(',s)) or (pos('+',s)>pos(')',s))) then begin
-        NumProcess(s,pos('+',s),n1,n2);
-        EquProcess:=n1+n2;
+        s:='0'+s;
+        if NumProcess(s,pos('+',s),n1,n2) then EquProcess:=n1+n2;
     end
     else if (pos('-',s)<>0) and ((pos('-',s)<pos('(',s)) or (pos('-',s)>pos(')',s))) then begin
-        NumProcess(s,poslast('-',s),n1,n2);
-        EquProcess:=n1-n2;
+        s:='0'+s;
+        if NumProcess(s,pos('-',s),n1,n2) then EquProcess:=n1-n2;
     end
     else if (pos('*',s)<>0) and (s<>'') and ((pos('*',s)<pos('(',s)) or (pos('*',s)>pos(')',s))) then begin
-        NumProcess(s,pos('*',s),n1,n2);
-        EquProcess:=n1*n2;
+        if NumProcess(s,pos('*',s),n1,n2) then EquProcess:=n1*n2 else errinp(s,1);
     end	
     else if (pos('/',s)<>0) and (s<>'') and ((pos('/',s)<pos('(',s)) or (pos('/',s)>pos(')',s))) then begin
-        NumProcess(s,poslast('/',s),n1,n2);
-        if (n2=0) then errinp(s,2)
-        else EquProcess:=n1/n2;
+        if (NumProcess(s,poslast('/',s),n1,n2)) then begin
+            if (n2=0) then errinp(s,2) else EquProcess:=n1/n2;
+        end else errinp(s,1)
     end
     else if (pos('^',s)<>0) and (s<>'') and ((pos('^',s)<pos('(',s)) or (pos('^',s)>pos(')',s))) then begin
         NumProcess(s,pos('^',s),n1,n2);
@@ -96,7 +97,6 @@ begin
     else if (pos('(',s)<>0) and (pos(')',s)<>0) and (pos(')',s)-pos('(',s)>0) then 
         EquProcess:=EquProcess(copy(s,2,length(s)-2))
     else if (VarPos(s)<>0) then EquProcess:=Vars[VarPos(s)].val
-    else if (Str2Num(s).chk=True) and (s<>'') then EquProcess:=Str2Num(s).val
     else if err.id<>0 then exit;
 end;
 // Loop back EquProcess function if there is a complex Equation
@@ -225,7 +225,8 @@ function NumInCheck(t:tStr;endNum:word):boolean;
 var i:word=0;
 begin
     NumInCheck:=true;
-    while i<endNum do begin
+    while NumInCheck and (i<endNum) do begin
+        inc(i);
         if not (Str2Int(t[i]).chk) or (Str2Int(t[i]).val<=0) or (t[i]=' ')
             then NumInCheck:=false;
     end;
