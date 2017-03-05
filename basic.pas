@@ -46,6 +46,10 @@ function TrimRight(s:string):string;
 procedure Print(s:string);
 function IsInt(n:extended):boolean;
 function ValidStr(s:string):boolean;
+function PosEqu(ch,s:string):word;
+function PosLastEqu(ch,s:string):word;
+function IsWord(s:string):boolean;
+function IsVar(s:string):boolean;
 
 implementation
 
@@ -89,9 +93,8 @@ end;
 function Str2Int(s:string):TStr2Int;
 var err:byte;
 begin
-	Str2Int.chk:=False;
  	val(s,Str2Int.val,err);
-	if (err=0) and (Str2Int.val=trunc(Str2Int.val)) then Str2Int.chk:=True;
+	Str2Int.chk:=(err=0) and IsInt(Str2Int.val);
 end;
 
 function Str2Bool (s:string):TStr2Bool;
@@ -111,7 +114,7 @@ function PosLast(ch,s:string):word;
 var k:word;
 begin
 	PosLast:=0;k:=1;
-	for k:=1 to length(s)-length(ch) do
+	for k:=1 to length(s)+1-length(ch) do
 		if ch=copy(s,k,length(ch)) then PosLast:=k;
 end;
 
@@ -166,8 +169,6 @@ function EReport():string;
 			3	:	errid:=ErrorID3;
 			4	:	errid:=ErrorID4;
 			5	:	errid:=ErrorID5;
-			6	:	errid:=ErrorID6;
-			7	:	errid:=ErrorID7;
 		end;
 	end;
 begin
@@ -212,7 +213,7 @@ function ValidStr(s:string):boolean;
         k:integer=0;
 		i:byte=0;
     begin
-        IsDual:=True;
+        IsDual:=s<>'';
         while IsDual and (i<length(s)) do begin
 			inc(i);
             if s[i]=#34 then Chk:=not Chk;
@@ -225,7 +226,47 @@ function ValidStr(s:string):boolean;
         if k>0 then IsDual:=False;
     end;
 begin
-    ValidStr:=IsDual('(',')') and IsDual('[',']') and IsDual('\','\');
+    ValidStr:=(s<>'') and IsDual('(',')') and IsDual('[',']');
+end;
+
+function PosEqu(ch,s:string):word;
+var k:word=0;
+	t:byte=0;
+begin
+	PosEqu:=0;
+	while (PosEqu=0) and (k<length(s)+1-length(ch)) do begin
+		inc(k);
+		if s[k]='(' then inc(t);
+		if s[k]=')' then dec(t);
+		if (t=0) and (ch=copy(s,k,length(ch))) then posEqu:=k;
+	end;
+end;
+
+function PosLastEqu(ch,s:string):word;
+var k:word=0;
+	t:byte=0;
+begin
+	PosLastEqu:=0;
+	for k:=1 to length(s)+1-length(ch) do begin
+		if s[k]='(' then inc(t);
+		if s[k]=')' then dec(t);
+		if (t=0) and (ch=copy(s,k,length(ch))) then posLastEqu:=k;
+	end;
+end;
+
+function IsWord(s:string):boolean;
+var i:byte;
+begin
+	IsWord:=True;
+	for i:=1 to length(s) do
+		IsWord:=IsWord and (s[i] in ['a'..'z']);
+end;
+
+function IsVar(s:string):boolean;
+var i:byte;
+begin
+	IsVar:=True;
+	for i:=1 to length(s) do IsVar:=IsVar and (IsWord(s[i]) or (Str2Int(s[i]).chk));
 end;
 
 end.

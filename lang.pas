@@ -4,23 +4,25 @@
 }
 unit lang;
 
+{$CODEPAGE UTF8}
+
 interface
 
 //Switch to Const in 1.0
 var 
     WelcomeMsg,DoneMsg,TkMsg:String;
-    LoadText,DateText,TimeText,InputText,OutputText,InfoText,ExitText:String;
+    LoadText,DateText,TimeText,InputText,OutputText,ExitText:String;
     HelpTextClear,HelpTextDate,HelpTextdecn,HelpTextExit:String;
     HelpTextHelp,HelpTextInfo:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
     HelpTextFact,HelpTextGraph,HelpTextVer:String;
     eqn0Text,eqn1Text,eqn2Text:String;
     GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
-    ErrorTx,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:string;
-    ErrorId7:String;
+    ErrorTx,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5:String;
+    MenuCmd,MenuPlot,MenuAdvMath,MenuExit,MenuOption,MenuAns:string;
+    MenuOptionLang,MenuOptionLog,MenuAdvMathInfo,MenuCmdInfo,MenuPlotInfo:string;
 
 procedure ActiveLang(c:char);
-procedure Help;
 
 implementation
 
@@ -28,49 +30,59 @@ uses programStr,f,crt,basic;
 
 procedure LangVi;
 begin
-    write(#208'ang T'#229'i Gói Ng'#244'n Ng'#252'. . .');
+    write('Đang Tải Gói Ngôn Ngữ . . .');
 
     DoneMsg:='Xong!';
-    WelcomeMsg:='Chao mung ban den voi VMath Xplorer';
-    TkMsg:='Cam on ban da tham gia chuong trinh thu nghiem VMath BETA';
+    WelcomeMsg:='Chào mừng bạn đến với VMath Xplorer';
 
-    LoadText:='Dang Tai...';
-    InfoText:='Lap Trinh Boi Winux8yt3. Website Du An: bit.ly/vmath-io';
-    ExitText:='Thoat chuong trinh ?';
+    LoadText:='Đang Tải...';
+    ExitText:='Thoát chương trình ?';
 
-    HelpTextInfo:='Thông tin ph'#7847'n m'#7873'm';
+    HelpTextInfo:='Thông tin phần mềm';
     HelpTextClear:='Xoá màn hình';
     HelpTextDate:='In ra ngày';
-    HelpTextdecn:='Do dai phan thap phan trong ket qua toan hoc';
+    HelpTextdecn:='Độ dài thập phân';
     HelpTextExit:='Thoát';
-    HelpTextHelp:='Huong dan su dung';
-    HelpTextRun:='Chay File .vmath';
-    HelpTextTime:='In ra thoi gian';
-    HelpTexteqn2:='Tinh phuong trinh bac 2';
-    HelpTextGcd:='Uoc chung lon nhat';
-    HelpTextLcm:='Boi chung nho nhat';
-    HelpTextFact:='Phan tich thanh cac thua so nguyen to';
-    HelpTextGraph:='BAT/TAT che do do hoa';
-    HelpTextVer:='Phiên ban phan mem';
+    HelpTextHelp:='In ra hướng dẫn này';
+    HelpTextRun:='Chạy File .vmath';
+    HelpTextTime:='In ra thời gian';
+    HelpTexteqn2:='Tính phuơng trình bậc 2';
+    HelpTextGcd:='Ước chung lớn nhất';
+    HelpTextLcm:='Bội chung nhỏ nhất';
+    HelpTextFact:='Phân tích thành các thừa số nguyên tố';
+    HelpTextGraph:='BẬT/TẮT chế độ đồ họa';
+    HelpTextVer:='Phiên bản phần mềm';
 
-    eqn0Text:='Khong co nghiem';
-    eqn1Text:='1 nghiem: ';
-    eqn2Text:='2 nghiem: ';
+    eqn0Text:='Không có nghiệm';
+    eqn1Text:='1 nghiệm: ';
+    eqn2Text:='2 nghiệm: ';
 
-    GNotEnabledMsg:='Do hoa chua duoc kich hoat';
-    GEnabledMsg:='Do hoa da duoc kich hoat.';
-    GDisabledMsg:='Do hoa da bi tat.';
-    GLoadMsg:='Dang nap che do do hoa . . .';
-    GCloseMsg:='Dang tat che do do hoa . . .';
+    GNotEnabledMsg:='Đồ họa chưa được kích hoạt';
+    GEnabledMsg:='Đồ họa đã được kích hoạt.';
+    GDisabledMsg:='Dồ họa đã bị tắt.';
+    GLoadMsg:='Đang nạp chế độ đồ họa . . .';
+    GCloseMsg:='Đang tắt chế độ đồ họa . . .';
 
-    ErrorTx:='LOI';
-    ErrorId1:='Sai cau truc hoac sai cau lenh. Go `help` de co danh sach cac cau lenh.';
-    ErrorId2:='Phep chia cho 0.';
-    ErrorId3:='Tep khong ton tai.';
-    ErrorId4:='Cho Nhap So';
-    ErrorId5:='Bien chua xac dinh';
-    ErrorId6:='Loi do hoa';
-    ErrorId7:='Khong co X';
+    ErrorTx:='LỖI';
+    ErrorId1:='Sai cấu trúc hoặc câu lện. Gõ `help` để trợ giúp.';
+    ErrorId2:='Phép chia cho 0.';
+    ErrorId3:='Tệp không tồn tại.';
+    ErrorId4:='Chờ Nhập Số';
+    ErrorId5:='Lỗi đồ họa';
+
+    MenuCmd:='Chạy lệnh';
+    MenuPlot:='Vẽ đồ thị';
+    MenuAdvMath:='Toán nâng cao';
+    MenuExit:='Thoát';
+    MenuOption:='Tùy chọn';
+    MenuAns:='Kết quả';
+
+    MenuCmdInfo:='Cho phép bạn tính toán, tùy chỉnh tính năng phần mềm';
+    MenuPlotInfo:='Cho phép bạn vẽ đồ thị hàm số, hình học';
+    MenuAdvMathInfo:='Cho phép bạn tính công thức, hàm toán học';
+
+    MenuOptionLang:='Ngôn ngữ';
+    MenuOptionLog:='Ghi nhật kí';
 end;
 
 procedure LangEn;
@@ -79,10 +91,8 @@ begin
 
     DoneMsg:='Done!';    
     WelcomeMsg:='Welcome you to VMath Xplorer';
-    TkMsg:='Thanks for participating VMath BETA Program';
 
     LoadText:='Loading...';
-    InfoText:='Programmed by Winux8yt3. Project Website: bit.ly/vmath-io';
     ExitText:='Exit program ?';
 
     HelpTextInfo:='About the Program';
@@ -115,9 +125,22 @@ begin
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
     ErrorId4:='Expecting Number.';
-    ErrorId5:='String not exist';
-    ErrorId6:='Graphic Error';
-    ErrorId7:='Expecting X';
+    ErrorId5:='Graphic Error';
+
+    MenuCmd:='Command';
+    MenuPlot:='Draw graph';
+    MenuAdvMath:='Advanced Math';
+    MenuExit:='Exit';
+    MenuOption:='Settings';
+    MenuAns:='Answer';
+
+    MenuCmdInfo:='Allow you to calculate, configure feature of program';
+    MenuPlotInfo:='Allow you to draw linear equations, shapes';
+    MenuAdvMathInfo:='Allow you to calculate math formula, function';
+
+    MenuOptionLang:='Languages';
+    MenuOptionLog:='Logging';
+
 end;
 
 procedure ActiveLang(c:char);
@@ -135,10 +158,4 @@ begin
     else LangEn;
     end;
 end;
-
-procedure Help;
-begin
-
-end;
-
 end.

@@ -20,23 +20,27 @@ uses
 var
     GActive:Boolean=False; 
     gd,gm:smallint;
+    RootX,RootY:word;
 
 procedure ActiveGraph;
 begin
-    if GActive=True then write(GEnabledMsg) else
+    if GActive then write(GEnabledMsg) else
     begin
 	    write(GLoadMsg);
 	    gd:=Detect;
         gm:=0;
         InitGraph(gd,gm,'C:\PP\BGI');
+        GActive:=GraphResult=grok;
+        RootX:=GetMaxX div 2;
+        RootY:=GetMaxY div 2;
         if GraphResult<>grok then ErrInp(Num2Str(GraphResult),6)
-        else GActive:=True;
+        else 
     end;
 end;
 
 procedure ExitGraph;
 begin
-    if GActive=False then write(GDisabledMsg) else begin
+    if not GActive then write(GDisabledMsg) else begin
         write(GCloseMsg);
         Closegraph;
         GActive:=False;
@@ -45,7 +49,7 @@ end;
 
 procedure ClearGraph;
 begin
-    if GActive=False then write(GDisabledMsg) else begin
+    if not GActive then write(GDisabledMsg) else begin
         ClearDevice;
         write('Cleared !');
     end;

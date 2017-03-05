@@ -69,7 +69,7 @@ var Out:boolean=True;
     end;
     procedure HelpCmd;
     begin
-        writeln('INFO       : '+HelpTextInfo);
+        writeln('INFO       : '+Utf8ToAnsi(HelpTextInfo));
         writeln('CLS        : '+HelpTextClear);
         writeln('DATE       : '+HelpTextDate);
         writeln('DP         : '+HelpTextdecn);
@@ -87,6 +87,7 @@ var Out:boolean=True;
     end;
     procedure PlotProc;
     begin
+        NoOut;
         case syntax[1] of
             'fx'    :   if (Str2Int(syntax[2]).chk) and (Str2Int(syntax[2]).chk) and (syntaxNum=3)
                         then PlotFx1(Str2Int(syntax[2]).val,Str2Int(syntax[3]).val)
@@ -111,10 +112,13 @@ begin
             'EXIT'			:	ExitProc;
             'HELP'          :   HelpCmd;
         // syntaxNum=2
-            'GRAPH'			:	if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
-                                    else if (Upcase(syntax[1])='EXIT') then ExitGraph
-                                    else if (Upcase(syntax[1])='CLEAR') then ClearGraph
-                                    else err.id:=1;
+            'GRAPH'			:	begin
+                                    NoOut;
+                                    if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
+                                        else if (Upcase(syntax[1])='EXIT') then ExitGraph
+                                        else if (Upcase(syntax[1])='CLEAR') then ClearGraph
+                                        else err.id:=1;
+                                end;
             'DP'			:	if (Str2Int(syntax[1]).chk) and (Str2Int(syntax[1]).val<=20)
                                     and (Str2Int(syntax[1]).val>=0)
                                         then begin
@@ -140,10 +144,11 @@ begin
         // else if (syntax[0][1]='.') and (syntax[0][2]='\') and FileExist(copy(syntax[0],3,length(syntax[0])-3)) then RunFile();
         else if not Variable(s,CmdProcess) then
                 if not TrueFalse(s,CmdProcess) then
-                    if not Equation(s,CmdProcess) then err.id:=1;
+                    if not Equation(s,CmdProcess) then errinp(syntax[0],1);
         end;
-    end;
-    if err.id<>0 then CmdProcess:=EReport
+    end else err.id:=1;
+    if Str2Int(CmdProcess).chk then CmdProcess:=Num2Str(Trunc(Str2Int(CmdProcess).val));
+    if err.id>0 then CmdProcess:=EReport
     else if Out then CmdProcess:=#13#10+'[Ans] >> '+CmdProcess;
 end;
 
