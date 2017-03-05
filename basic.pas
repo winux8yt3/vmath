@@ -48,12 +48,13 @@ function IsInt(n:extended):boolean;
 function ValidStr(s:string):boolean;
 function PosEqu(ch,s:string):word;
 function PosLastEqu(ch,s:string):word;
+function PosC(ch,s:string):word;
 function IsWord(s:string):boolean;
 function IsVar(s:string):boolean;
 
 implementation
 
-uses lang;
+uses lang,equ;
 
 function ClrSpace (s:string):string;
 begin
@@ -195,10 +196,28 @@ begin
 end;
 
 procedure Print(s:string);
+var i:byte=0;
+	st:string='';
 begin
-	delete(s,1,5);
+	delete(s,1,pos(' ',s));
 	s:=trimleft(s);
-	write(s);
+	if s<>'.' then begin
+		while i<length(s) do begin
+			inc(i);
+			if s[i]='_' then
+				while (s[i]<>' ') and (i<length(s)) do begin
+					inc(i);
+					st:=st+s[i];
+				end;
+			if (st<>'') and IsVar(st) then begin
+				i:=i-length(st);
+				delete(s,i,length(st)+1);
+				insert(Num2Str(Vars[VarPos(st)].val),s,i);
+				st:='';
+			end;
+		end;
+		write(s);
+	end else writeln;
 end;
 
 function IsInt(n:extended):boolean;
@@ -254,12 +273,22 @@ begin
 	end;
 end;
 
+function PosC(ch,s:string):word;
+var k:word=0;
+begin
+	PosC:=0;
+	while (k<length(s)+1-length(ch)) and (posC=0) do begin
+		inc(k);
+		if upcase(ch)=upcase(copy(s,k,length(ch))) then posC:=k;
+	end;
+end;
+
 function IsWord(s:string):boolean;
 var i:byte;
 begin
 	IsWord:=True;
 	for i:=1 to length(s) do
-		IsWord:=IsWord and (s[i] in ['a'..'z']);
+		IsWord:=IsWord and (Upcase(s[i]) in ['A'..'Z']);
 end;
 
 function IsVar(s:string):boolean;

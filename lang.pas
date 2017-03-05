@@ -11,14 +11,14 @@ interface
 //Switch to Const in 1.0
 var 
     WelcomeMsg,DoneMsg,TkMsg:String;
-    LoadText,DateText,TimeText,InputText,OutputText,ExitText:String;
+    LoadText,DateText,TimeText,InputText,OutputText,ExitText,DPText:String;
     HelpTextClear,HelpTextDate,HelpTextdecn,HelpTextExit:String;
     HelpTextHelp,HelpTextInfo:String;
     HelpTextRun,HelpTextTime,HelpTextEqn2,HelpTextGcd,HelpTextLcm:String;
     HelpTextFact,HelpTextGraph,HelpTextVer:String;
     eqn0Text,eqn1Text,eqn2Text:String;
     GNotEnabledMsg,GEnabledMsg,GDisabledMsg,GLoadMsg,GCloseMsg:string;
-    ErrorTx,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5:String;
+    ErrorTx,ErrorId1,ErrorId2,ErrorId3,ErrorId4,ErrorId5,ErrorId6:String;
     MenuCmd,MenuPlot,MenuAdvMath,MenuExit,MenuOption,MenuAns:string;
     MenuOptionLang,MenuOptionLog,MenuAdvMathInfo,MenuCmdInfo,MenuPlotInfo:string;
 
@@ -37,6 +37,7 @@ begin
 
     LoadText:='Đang Tải...';
     ExitText:='Thoát chương trình ?';
+    DPText:='Vị trí thập phân';
 
     HelpTextInfo:='Thông tin phần mềm';
     HelpTextClear:='Xoá màn hình';
@@ -64,11 +65,12 @@ begin
     GCloseMsg:='Đang tắt chế độ đồ họa . . .';
 
     ErrorTx:='LỖI';
-    ErrorId1:='Sai cấu trúc hoặc câu lện. Gõ `help` để trợ giúp.';
+    ErrorId1:='Sai cấu trúc hoặc câu lệnh. Gõ `help`/`giup` để trợ giúp.';
     ErrorId2:='Phép chia cho 0.';
     ErrorId3:='Tệp không tồn tại.';
     ErrorId4:='Chờ Nhập Số';
     ErrorId5:='Lỗi đồ họa';
+    ErrorId6:='Lỗi ngữ pháp';
 
     MenuCmd:='Chạy lệnh';
     MenuPlot:='Vẽ đồ thị';
@@ -94,6 +96,7 @@ begin
 
     LoadText:='Loading...';
     ExitText:='Exit program ?';
+    DPText:='Decimal Place(s)';
 
     HelpTextInfo:='About the Program';
     HelpTextClear:='Clear screen';
@@ -121,11 +124,12 @@ begin
     GCloseMsg:='Closing Graphic . . .';
 
     ErrorTx:='ERROR';
-    ErrorId1:='Syntax Error or Input Error. Enter `help` for commands list';
+    ErrorId1:='Syntax Error or Input Error. Enter `help`/`giup` for commands list';
     ErrorId2:='Division By Zero.';
     ErrorId3:='Invalid File.';
     ErrorId4:='Expecting Number.';
     ErrorId5:='Graphic Error';
+    ErrorId6:='Grammar Error';
 
     MenuCmd:='Command';
     MenuPlot:='Draw graph';

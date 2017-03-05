@@ -18,6 +18,7 @@ function Equation(s:string;var c:string):boolean;
 function TrueFalse(s:string;var c:string):boolean;
 function EquProcess(s:string):extended;
 function VarPos(s:string):word;
+function AssignVar(s:string;k:extended):extended;
 procedure VarProcess(s:string;var c:string);
 function VarCheck(s:string):boolean;
 function Bool(s:string):boolean;
@@ -39,7 +40,11 @@ end;
 
 function EquChk(s:string):boolean;
 begin
-    EquChk:=((pos('*',s)<>0) or (pos('+',s)<>0) or (pos('-',s)<>0) or (pos('/',s)<>0) or (pos('^',s)<>0)) or (Str2Num(s).chk);
+    EquChk:=Str2Num(s).chk;
+    if not EquChk then begin
+        EquChk:=(pos('*',s)>0) or (pos('+',s)>0) or (pos('-',s)>0) or (pos('/',s)>0) or (pos('^',s)>0) or (posC('abs(',s)>0);
+        EquChk:=EquChk or (posC('cos(',s)>0) or (posC('sin(',s)>0) or (posC('tan(',s)>0) or (posC('cot(',s)>0) or (posC('log10(',s)>0);
+    end;
 end;
 
 function Equation(s:string;var c:string):boolean;
@@ -82,7 +87,7 @@ begin
     if (s[1]='(') and (s[length(s)]=')') and (pos(')',s)=poslast(')',s)) and (pos('(',s)=poslast('(',s)) then s:=copy(s,2,length(s)-2);
     if err.id=0 then begin
         if Str2Num(s).chk and (s<>'') then EquProcess:=Str2Num(s).val
-        else if IsVar(s) then EquProcess:=Vars[VarPos(s)].val
+        else if IsVar(copy(s,2,length(s)-1)) then EquProcess:=Vars[VarPos(copy(s,2,length(s)-1))].val
         else if posequ('+',s)>0 then begin
             if NumProcess(s,posequ('+',s),n1,n2) then EquProcess:=n1+n2
         end
@@ -99,7 +104,32 @@ begin
         end
         else if (pos('^',s)>0) and (s<>'') then begin
             if NumProcess(s,posequ('^',s),n1,n2) then EquProcess:=Power(n1,n2)
-        end else errinp(s,1);
+        end 
+        else if UPCASE(copy(s,1,4))='COS(' then begin
+            delete(s,1,3);
+            EquProcess:=Cos(EquProcess(s));
+        end
+        else if UPCASE(copy(s,1,4))='SIN(' then begin
+            delete(s,1,3);
+            EquProcess:=Sin(EquProcess(s));
+        end
+        else if UPCASE(copy(s,1,4))='TAN(' then begin
+            delete(s,1,3);
+            EquProcess:=Tan(EquProcess(s));
+        end
+        else if UPCASE(copy(s,1,4))='COT(' then begin
+            delete(s,1,3);
+            EquProcess:=COT(EquProcess(s));
+        end
+        else if UPCASE(copy(s,1,4))='ABS(' then begin
+            delete(s,1,3);
+            EquProcess:=Abs(EquProcess(s));
+        end
+        else if UPCASE(copy(s,1,4))='LOG10(' then begin
+            delete(s,1,5);
+            EquProcess:=Log10(EquProcess(s));
+        end
+        else errinp(s,1);
     end;
     if err.id<>0 then exit;
 end;
@@ -144,6 +174,17 @@ begin
     end;
 end;
 
+function AssignVar(s:string;k:extended):extended;
+begin
+    if VarPos(s)=0 then
+        begin
+            inc(VarNum);
+            Vars[VarNum].vname:=s;
+        end;
+        Vars[VarPos(s)].val:=k;
+    AssignVar:=k;
+end;
+
 procedure VarProcess(s:string;var c:string);
 var 
     str:shortstring;
@@ -157,13 +198,7 @@ begin
     c:=str+' = ';
     s:=Trim(s);
     if IsVar(str) and EquChk(s) then begin
-        if VarPos(str)=0 then
-        begin
-            inc(VarNum);
-            Vars[VarNum].vname:=str;
-            Vars[VarNum].val:=0;
-        end;
-        Vars[VarPos(str)].val:=EquProcess(s);
+        AssignVar(str,EquProcess(s));
         c:=c+Num2Str(EquProcess(s));
     end else errinp(str,1);
 end;

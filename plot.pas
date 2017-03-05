@@ -93,6 +93,7 @@ end;
 procedure XYPlot(lX,lY:byte);
 Begin
     if not GActive then write(GDisabledMsg) else begin
+        if XYPlotted then ClearGraph;
         XYPlotted:=True;
         SetFillStyle(SolidFill,Blue);
         SetViewPort(RootX,RootY,GetMaxX,GetMaxY,False);
@@ -141,7 +142,7 @@ var x,y:Extended;
     end;
 begin
     if not GActive then write(GNotEnabledMsg) else begin
-        if not XYPlotted then XYPlot(0,0);
+        if not XYPlotted then XYPlot(0,0); 
         x:=-RootX div SizeX;
         while x<(RootX div SizeX) do begin
             x:=x+0.0005;

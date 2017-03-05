@@ -1,4 +1,4 @@
-![VMath](/logo.ico) VMath Beta
+![VMath](/icon.ico) VMath Beta
 ==============================
 
 #### VIETNAMESE
