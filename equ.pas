@@ -26,6 +26,8 @@ function fact(num:int64):string;
 function NumInCheck(t:tStr;endNum:word):boolean;
 function ArrayGcd(a:tNum;n,p:word):longword;
 function ArrayLcm(a:tNum;n,p:word):longword;
+function Mu(x,i:int64):extended;
+function Mu(x,i:extended):extended;
 
 implementation
 
@@ -258,6 +260,16 @@ function ArrayGCD(a:tNum;n,p:word):longword;
 begin
     if p<n-2 then ArrayGCD:=GCD(a[p],ArrayGCD(a,n,p+1))
         else ArrayGCD:=GCD(a[p],a[p+1]);
+end;
+
+function Mu(x,i:int64):extended;
+begin
+    Mu:=Power(x,i);
+end;
+
+function Mu(x,i:extended):extended;
+begin
+    Mu:=Power(x,i);
 end;
 
 end.

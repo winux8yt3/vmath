@@ -23,7 +23,7 @@ procedure CmdSyntax(s:string);
 var 
     p:byte;  //Position of blank space
 begin
-    fillchar(syntax,sizeof(syntax),0);
+    fillchar(syntax,sizeof(syntax),#0);
     s:=CleanSpace(s);
     syntaxNum:=0;
     p:=pos(' ',s);
@@ -86,13 +86,21 @@ var Out:boolean=True;
         NoOut;
     end;
     procedure PlotProc;
+    var v:tStr;
+        b:boolean=True;
     begin
         NoOut;
         case syntax[1] of
-            'fx'    :   if (Str2Int(syntax[2]).chk) and (Str2Int(syntax[2]).chk) and (syntaxNum=3)
-                        then PlotFx1(Str2Int(syntax[2]).val,Str2Int(syntax[3]).val)
-                            else err.id:=4;
-            'xy'    :   if syntaxNum=1 then XYPlot else err.id:=1;
+            'fx'    :   begin
+                            for i:=2 to syntaxNum do begin
+                                b:=b and Str2Num(syntax[i]).chk;
+                                if b then v[i-1]:=syntax[i];
+                            end;
+                            if b and (syntaxNum<8) then PlotFx2(v,syntaxNum-1) else err.id:=4;
+                        end;
+            'xy'    :   if (syntaxNum=1) then XYPlot(0,0)
+                        else if (syntaxNum=3) and (Str2Int(syntax[2]).chk) and (Str2Int(syntax[3]).chk) 
+                        then XYPlot(Str2Int(syntax[2]).val,Str2Int(syntax[3]).val) else err.id:=1;
         else err.id:=1;
         end;
     end;
@@ -114,10 +122,13 @@ begin
         // syntaxNum=2
             'GRAPH'			:	begin
                                     NoOut;
-                                    if (Upcase(syntax[1])='ACTIVE') then ActiveGraph
-                                        else if (Upcase(syntax[1])='EXIT') then ExitGraph
-                                        else if (Upcase(syntax[1])='CLEAR') then ClearGraph
-                                        else err.id:=1;
+                                    case Upcase(syntax[1]) of 
+                                        'START'     :   ActiveGraph;
+                                        'EXIT'      :   ExitGraph;
+                                        'CLEAR'     :   ClearGraph;
+                                        'RESTART'   :   RestartGraph;
+                                    else err.id:=1;
+                                    end;
                                 end;
             'DP'			:	if (Str2Int(syntax[1]).chk) and (Str2Int(syntax[1]).val<=20)
                                     and (Str2Int(syntax[1]).val>=0)

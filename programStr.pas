@@ -26,7 +26,6 @@ const
     VersionInfo: string = 'Beta';
     FPCInfo = 'Free Pascal '+{$I %FPCVERSION%}+' For '+{$I %FPCTARGETOS%}+'-'+{$I %FPCTARGETCPU%};
 var 
-    CmdH:TStr;
     ErrHide:boolean=False;
     ans:extended;
     decn:0..20 = 2;

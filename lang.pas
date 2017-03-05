@@ -59,7 +59,7 @@ begin
 
     GNotEnabledMsg:='Đồ họa chưa được kích hoạt';
     GEnabledMsg:='Đồ họa đã được kích hoạt.';
-    GDisabledMsg:='Dồ họa đã bị tắt.';
+    GDisabledMsg:='Đồ họa đã bị tắt.';
     GLoadMsg:='Đang nạp chế độ đồ họa . . .';
     GCloseMsg:='Đang tắt chế độ đồ họa . . .';
 
