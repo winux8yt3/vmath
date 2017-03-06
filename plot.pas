@@ -14,7 +14,6 @@ procedure ClearGraph;
 procedure RestartGraph;
 procedure Grid(lx,ly:byte);
 procedure XYPlot(lx,lY:Byte);
-// procedure PlotFx1(a,b:integer); deprecated
 procedure PlotFx2(a:TStr;p:byte);   // p for last entry
 
 implementation
@@ -109,27 +108,6 @@ Begin
         OutTextXY(10,10,'O');
     end;
 End;
-
-// Old, deprecated
-// procedure PlotFx1(a,b:integer); 
-// var x1,y1,x2,y2:integer;
-// begin
-//     if not GActive then write(GNotEnabledMsg) else
-//     begin
-//         x1:=-20;
-// 	    y1:=(a*x1)+b;
-//         x2:=20;
-//         y2:=(a*x2)+b;
-//         XYPlot;
-//         SetColor(Yellow);
-//         x1:=(GetMaxX div 2)-x1*20;
-//         x2:=(GetMaxX div 2)-x2*20;
-//         y1:=(GetMaxY div 2)-y1*20;
-//         y2:=(GetMaxY div 2)-y2*20;
-//         Line(x2,y1,x1,y2);
-//         write(DoneMsg);
-//     end;
-// end;
 
 procedure PlotFx2(a:TStr;p:byte);   // Plot Gen 2, more reliable
 var x,y:Extended;
