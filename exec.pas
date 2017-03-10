@@ -62,9 +62,7 @@ begin
         case upcase(syntax[0]) of
             'IN.'       :   writeln;
             'DELAY'		:	Delay(Str2Int(syntax[1]).val);
-            'PAUSE'     :   begin
-                                write('Press any key to continue.');readkey;
-                            end;
+            'PAUSE'     :   msg('Press any key to continue.');
         else CmdProcess(str);
         end; 
     end;

@@ -18,16 +18,17 @@ type
         id:byte;
         str:string;
     end;
+
 const
     CopyrightInfo: string = 'Copyright (c) 2016 Nguyen Tuan Dung (Winux8yt3).';
-    ProgramName: string = 'VMath Xplorer';
+    ProgramName: string = 'VMath';
     Version: string = '0.9.5';
     BuildTime: string = {$I %DATE%}+'-'+{$I %TIME%};
-    VersionInfo: string = 'Beta';
+    VersionInfo: string = 'Closed Beta';
     FPCInfo = 'Free Pascal '+{$I %FPCVERSION%}+' For '+{$I %FPCTARGETOS%}+'-'+{$I %FPCTARGETCPU%};
 var 
     ErrHide:boolean=False;
-    ans:extended;
+    // ans:extended;
     decn:0..20 = 2;
     Err:TErr;
     Info:string;

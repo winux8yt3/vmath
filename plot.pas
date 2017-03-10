@@ -50,6 +50,7 @@ begin
     if not GActive then write(GDisabledMsg) else begin
         write(GCloseMsg);
         Closegraph;
+        XYPlotted:=False;
         GActive:=False;
     end;
 end;

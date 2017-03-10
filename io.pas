@@ -64,7 +64,6 @@ var Out:boolean=True;
     begin
         NoOut;
         CmdProcess:=TkMsg;
-        delay(1500);
         exit;
         // UI Form Close goes here
     end;
@@ -160,7 +159,7 @@ begin
             'PTB2','EQN2'	:	if (Str2Num(syntax[1]).chk) and (Str2Num(syntax[2]).chk=True)
                                 and (Str2Num(syntax[3]).chk) and (syntaxNum=3) then
                                     CmdProcess:=(eqn2(syntax[1],syntax[2],syntax[3])) else err.id:=4;
-            'PLOT','VE'     :   PlotProc;
+            'PLOT','VE'     :   if syntaxNum<7 then PlotProc;
         // else if (syntax[0][1]='.') and (syntax[0][2]='\') and FileExist(copy(syntax[0],3,length(syntax[0])-3)) then RunFile();
         else if not Variable(s,CmdProcess) then
                 if not TrueFalse(s,CmdProcess) then

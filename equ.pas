@@ -11,7 +11,7 @@ uses
 
 var
     Vars:TVar;
-    VarNum:word = 0;
+    VarNum:word;
 
 function Variable(s:string;var c:string):boolean;
 function Equation(s:string;var c:string):boolean;
@@ -40,11 +40,16 @@ end;
 
 function EquChk(s:string):boolean;
 begin
-    EquChk:=Str2Num(s).chk;
-    if not EquChk then begin
-        EquChk:=(pos('*',s)>0) or (pos('+',s)>0) or (pos('-',s)>0) or (pos('/',s)>0) or (pos('^',s)>0) or (posC('abs(',s)>0);
-        EquChk:=EquChk or (posC('cos(',s)>0) or (posC('sin(',s)>0) or (posC('tan(',s)>0) or (posC('cot(',s)>0) or (posC('log10(',s)>0);
+    if s='' then EquChk:=False
+    else begin
+        EquChk:=Str2Num(s).chk or IsVar(s);
+        if not EquChk then begin
+            EquChk:=(pos('*',s)>1) or (pos('+',s)>0) or (pos('-',s)>0) or (pos('/',s)>1) or (pos('^',s)>1);
+            EquChk:=EquChk or (posC('cos(',s)>0) or (posC('sin(',s)>0) or (posC('tan(',s)>0) or (posC('cot(',s)>0);
+            EquChk:=EquChk or (posC('log10(',s)>0) or (posC('abs(',s)>0) or (posC('trunc(',s)>0) or (posC('int(',s)>0);
+        end;
     end;
+    if not EquChk then errinp(s,1);
 end;
 
 function Equation(s:string;var c:string):boolean;
@@ -56,17 +61,19 @@ end;
 function TrueFalse(s:string;var c:string):boolean;
 begin
     TrueFalse:=((pos('=',s)>0) or (pos('<',s)>0) or (pos('>',s)>0) or (pos('!',s)>0) or (pos('&',s)>0) or (pos('|',s)>0)) or Str2Bool(s).chk;
-    if TrueFalse then c:=Bool2Str(bool(ClrSpace(s)));
+    if TrueFalse then c:=Bool2Str(bool(CleanSpace(s)));
 end;
 
 function NumProcess(s:string;k:byte; var n1,n2:extended):boolean;
 begin
-    NumProcess:=(k>1) and (k<length(s));
+    NumProcess:=(k>0) and (k<length(s));
     if NumProcess then begin
         n1:=EquProcess(Trim(copy(s,1,k-1)));
         delete(s,1,k);
-        n2:=EquProcess(Trim(copy(s,1,length(s))));
-    end else errinp(s,1);
+        n2:=EquProcess(Trim(s));
+        NumProcess:=True and EquChk(Num2Str(n1)) and EquChk(Num2Str(n2));
+    end;
+    if not NumProcess then errinp(s,1);
 end;
 
 function BoolProcess(s:string;k:byte; var n1,n2:boolean):boolean;
@@ -75,34 +82,38 @@ begin
     if BoolProcess then begin
         n1:=Bool(Trim(copy(s,1,k-1)));
         delete(s,1,k);
-        n2:=Bool(Trim(copy(s,1,length(s))));
+        n2:=Bool(Trim(s));
+        BoolProcess:=EquChk(Bool2Str(n1)) and EquChk(Bool2Str(n2));
     end;
+    if not BoolProcess then errinp(s,1);
 end;
 
 function EquProcess(s:string):extended;
 var 
     n1,n2:extended;
 begin
-    if ((length(s)>0) and ((s[1]='/') or (s[1]='*'))) or not ValidStr(s) then errinp(s,1);
     if (s[1]='(') and (s[length(s)]=')') and (pos(')',s)=poslast(')',s)) and (pos('(',s)=poslast('(',s)) then s:=copy(s,2,length(s)-2);
-    if err.id=0 then begin
-        if Str2Num(s).chk and (s<>'') then EquProcess:=Str2Num(s).val
-        else if IsVar(copy(s,2,length(s)-1)) then EquProcess:=Vars[VarPos(copy(s,2,length(s)-1))].val
+    if not(length(s)>0) then errinp(s,1);
+    if err.id<>0 then exit 
+    else begin
+        if Str2Num(s).chk then EquProcess:=Str2Num(s).val
         else if posequ('+',s)>0 then begin
+            // if not Str2Num(s[posequ('+',s)-1]).chk then insert('0',s,posequ('+',s));
             if NumProcess(s,posequ('+',s),n1,n2) then EquProcess:=n1+n2
         end
         else if poslastequ('-',s)>0 then begin
+            // if not Str2Num(s[poslastequ('-',s)-1]).chk then insert('0',s,poslastequ('-',s));
             if NumProcess(s,poslastequ('-',s),n1,n2) then EquProcess:=n1-n2
         end
-        else if (posequ('*',s)>0) and (s<>'') then begin
+        else if (posequ('*',s)>1) then begin
             if NumProcess(s,posequ('*',s),n1,n2) then EquProcess:=n1*n2
         end	
-        else if (poslastequ('/',s)>0) and (s<>'') then begin
+        else if (poslastequ('/',s)>1) then begin
             if (NumProcess(s,poslastequ('/',s),n1,n2)) then begin
                 if (n2=0) then errinp(s,2) else EquProcess:=n1/n2;
             end
         end
-        else if (pos('^',s)>0) and (s<>'') then begin
+        else if (pos('^',s)>1) then begin
             if NumProcess(s,posequ('^',s),n1,n2) then EquProcess:=Power(n1,n2)
         end 
         else if UPCASE(copy(s,1,4))='COS(' then begin
@@ -125,13 +136,22 @@ begin
             delete(s,1,3);
             EquProcess:=Abs(EquProcess(s));
         end
-        else if UPCASE(copy(s,1,4))='LOG10(' then begin
+        else if UPCASE(copy(s,1,6))='LOG10(' then begin
             delete(s,1,5);
             EquProcess:=Log10(EquProcess(s));
         end
+        else if UPCASE(copy(s,1,6))='TRUNC(' then begin
+            delete(s,1,5);
+            EquProcess:=trunc(EquProcess(s));
+        end
+        else if UPCASE(copy(s,1,4))='INT(' then begin
+            delete(s,1,3);
+            EquProcess:=int(EquProcess(s));
+        end
+        else if IsVar(s) then EquProcess:=Vars[VarPos(Trim(copy(s,2,length(s)-1)))].val
         else errinp(s,1);
     end;
-    if err.id<>0 then exit;
+    if err.id>0 then exit;
 end;
 // Loop back EquProcess function if there is a complex Equation
 
@@ -164,14 +184,9 @@ begin
 end;
 
 function VarPos(s:string):word;
-var i:word;
 begin
     VarPos:=0;
-    i:=0;
-    while (i<=VarNum) and (s=Vars[i].vname) do begin
-        inc(i);	
-        if s=Vars[i].vname then VarPos:=i;
-    end;
+    while (VarPos<VarNum) and (s<>Vars[VarPos].vname) do inc(VarPos);
 end;
 
 function AssignVar(s:string;k:extended):extended;
@@ -181,7 +196,7 @@ begin
             inc(VarNum);
             Vars[VarNum].vname:=s;
         end;
-        Vars[VarPos(s)].val:=k;
+    Vars[VarPos(s)].val:=k;
     AssignVar:=k;
 end;
 
@@ -197,7 +212,7 @@ begin
     k:=0;
     c:=str+' = ';
     s:=Trim(s);
-    if IsVar(str) and EquChk(s) then begin
+    if IsName(str) and EquChk(s) then begin
         AssignVar(str,EquProcess(s));
         c:=c+Num2Str(EquProcess(s));
     end else errinp(str,1);

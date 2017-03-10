@@ -27,6 +27,7 @@ function ClrSpace (s:string):string;
 function CleanSpace(s:string):string;
 function Num2Str (v:extended):String;
 function Num2Str (v:int64):String;
+function Num2Str (v:Qword):String;
 function Str2Num (s:string):TStr2Num;
 function Str2Int (s:string):TStr2Int;
 function Str2Bool (s:string):TStr2Bool;
@@ -50,7 +51,11 @@ function PosEqu(ch,s:string):word;
 function PosLastEqu(ch,s:string):word;
 function PosC(ch,s:string):word;
 function IsWord(s:string):boolean;
+function IsName(s:string):boolean;
 function IsVar(s:string):boolean;
+function IsMuDiv(c:char):boolean;
+function IsPlsMi(c:char):boolean;
+function IsEquSym(c:char):boolean;
 
 implementation
 
@@ -79,6 +84,11 @@ begin
 end;
 
 function Num2Str(v:int64):String;
+begin
+	Str(v,Num2Str);
+end;
+
+function Num2Str(v:QWord):String;
 begin
 	Str(v,Num2Str);
 end;
@@ -153,7 +163,7 @@ end;
 
 procedure Msg(s:string);
 begin
-	write(s);readln;
+	write(s);readkey;
 end;
 
 procedure ErrInp(str:string;id:byte);
@@ -196,28 +206,18 @@ begin
 end;
 
 procedure Print(s:string);
-var i:byte=0;
-	st:string='';
+var p:byte;	// pos of Variable
+	st:string;
 begin
 	delete(s,1,pos(' ',s));
-	s:=trimleft(s);
-	if s<>'.' then begin
-		while i<length(s) do begin
-			inc(i);
-			if s[i]='_' then
-				while (s[i]<>' ') and (i<length(s)) do begin
-					inc(i);
-					st:=st+s[i];
-				end;
-			if (st<>'') and IsVar(st) then begin
-				i:=i-length(st);
-				delete(s,i,length(st)+1);
-				insert(Num2Str(Vars[VarPos(st)].val),s,i);
-				st:='';
-			end;
-		end;
-		write(s);
-	end else writeln;
+	st:=trim(s);
+	if IsVar(st) then begin
+		p:=pos(st,s);
+		delete(s,p,length(st));
+		delete(st,1,1);
+		insert(Num2Str(Vars[VarPos(st)].val),s,p);
+	end;
+	write(s);
 end;
 
 function IsInt(n:extended):boolean;
@@ -291,11 +291,31 @@ begin
 		IsWord:=IsWord and (Upcase(s[i]) in ['A'..'Z']);
 end;
 
-function IsVar(s:string):boolean;
+function IsName(s:string):boolean;
 var i:byte;
 begin
-	IsVar:=True;
-	for i:=1 to length(s) do IsVar:=IsVar and (IsWord(s[i]) or (Str2Int(s[i]).chk));
+	IsName:=True;
+	for i:=1 to length(s) do IsName:=IsName and (s[i]<>' ') and (IsWord(s[i]) or (Str2Int(s[i]).chk));
+end;
+
+function IsVar(s:string):boolean;
+begin
+	IsVar:=(s[1]='_') and (VarPos(copy(s,2,length(s)-1))<>0);
+end;
+
+function IsMuDiv(c:char):boolean;
+begin
+	IsMuDiv:=(c='/') or (c='*');
+end;
+
+function IsPlsMi(c:char):boolean;
+begin
+	IsPlsMi:=(c='-') or (c='+');
+end;
+
+function IsEquSym(c:char):boolean;
+begin
+	IsEquSym:=IsMuDiv(c) or IsPlsMi(c);
 end;
 
 end.
