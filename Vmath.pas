@@ -8,9 +8,9 @@ uses sysutils,crt,io,lang,programStr,basic,equ,f,exec;
 // vmathui;
 var
 	tmpstr:String = '';
-	i,c:longint;
+	i:longint;
 
-procedure console(lang:String);
+procedure console();
 begin
 	Window(1,1,WindMaxX,WindMaxY);
 	clrscr;
@@ -31,20 +31,15 @@ end;
 
 begin
 	writeln(Info);
-	if (paramstr(1)='-e') and (paramstr(2)<>'') then begin
-		c:=2;
-		if (paramstr(2)='-d') and (Str2Num(paramstr(3)).chk=True) then
-		begin
-			decn:=Str2Int(paramstr(3)).val;
-			c:=4;
-		end;
-		for i:=c to ParamCount do tmpstr:=tmpstr+paramstr(i);
-		Equation(tmpstr,tmpstr);
-		write('[VMath] >> ',tmpstr);
+	if (paramstr(1)='-c') then begin
+		for i:=2 to ParamCount do begin
+			tmpstr:=tmpstr+paramstr(i);
+			writeln(#13#10,CmdProcess(tmpstr));
+		end
 	end else
 	if (Paramstr(1)<>'') and (FileIO(paramstr(1))=0) then begin
 		writeln('[VMath] >> Processing . . .');
 		RunFile(paramstr(1));
 	end
-	else console('');
+	else console();
 end.
