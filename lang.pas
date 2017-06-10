@@ -33,7 +33,7 @@ begin
     write('Đang Tải Gói Ngôn Ngữ . . .');
 
     DoneMsg:='Xong!';
-    WelcomeMsg:='Chào mừng bạn đến với VMath Xplorer';
+    WelcomeMsg:='Chào mừng bạn đến với VMath';
 
     LoadText:='Đang Tải...';
     ExitText:='Thoát chương trình ?';
@@ -92,7 +92,7 @@ begin
     write('Loading Language Pack . . .');
 
     DoneMsg:='Done!';    
-    WelcomeMsg:='Welcome you to VMath Xplorer';
+    WelcomeMsg:='Welcome you to VMath';
 
     LoadText:='Loading...';
     ExitText:='Exit program ?';

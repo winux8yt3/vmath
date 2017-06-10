@@ -56,6 +56,8 @@ function IsVar(s:string):boolean;
 function IsMuDiv(c:char):boolean;
 function IsPlsMi(c:char):boolean;
 function IsEquSym(c:char):boolean;
+function Dec2Bin(k:int64):string;
+function Dec2Hex(k:int64):string;
 
 implementation
 
@@ -163,7 +165,7 @@ end;
 
 procedure Msg(s:string);
 begin
-	write(s);readkey;
+	write(s);readkey;writeln;
 end;
 
 procedure ErrInp(str:string;id:byte);
@@ -316,6 +318,34 @@ end;
 function IsEquSym(c:char):boolean;
 begin
 	IsEquSym:=IsMuDiv(c) or IsPlsMi(c);
+end;
+
+function Dec2Bin(k:int64):string;
+begin
+	Dec2Bin:='';
+	while k<>0 do begin
+		Dec2Bin:=Num2Str(k mod 2)+Dec2Bin;
+		k:=k div 2;
+	end;
+end;
+
+function Dec2Hex(k:int64):string;
+var c:string;
+begin
+	Dec2Hex:='';
+	while k<>0 do begin
+		c:=Num2Str(k mod 16);
+		case c of
+			'10'	:	c:='A';
+			'11'	:	c:='B';
+			'12'	:	c:='C';
+			'13'	:	c:='D';
+			'14'	:	c:='E';
+			'15'	:	c:='F';
+		end;
+		Dec2Hex:=c+Dec2Hex;
+		k:=k div 16;
+	end;
 end;
 
 end.

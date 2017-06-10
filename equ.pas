@@ -9,10 +9,6 @@ interface
 uses 
     basic,math,lang,programStr,plot;
 
-var
-    Vars:TVar;
-    VarNum:word;
-
 function Variable(s:string;var c:string):boolean;
 function Equation(s:string;var c:string):boolean;
 function TrueFalse(s:string;var c:string):boolean;
@@ -78,7 +74,7 @@ end;
 
 function BoolProcess(s:string;k:byte; var n1,n2:boolean):boolean;
 begin
-    BoolProcess:=(k>1) and (k<length(s));
+    BoolProcess:=(k>0) and (k<length(s));
     if BoolProcess then begin
         n1:=Bool(Trim(copy(s,1,k-1)));
         delete(s,1,k);
@@ -97,12 +93,10 @@ begin
     if err.id<>0 then exit 
     else begin
         if Str2Num(s).chk then EquProcess:=Str2Num(s).val
-        else if posequ('+',s)>0 then begin
-            // if not Str2Num(s[posequ('+',s)-1]).chk then insert('0',s,posequ('+',s));
+        else if posequ('+',s)>1 then begin
             if NumProcess(s,posequ('+',s),n1,n2) then EquProcess:=n1+n2
         end
-        else if poslastequ('-',s)>0 then begin
-            // if not Str2Num(s[poslastequ('-',s)-1]).chk then insert('0',s,poslastequ('-',s));
+        else if poslastequ('-',s)>1 then begin
             if NumProcess(s,poslastequ('-',s),n1,n2) then EquProcess:=n1-n2
         end
         else if (posequ('*',s)>1) then begin
@@ -213,8 +207,8 @@ begin
     c:=str+' = ';
     s:=Trim(s);
     if IsName(str) and EquChk(s) then begin
-        AssignVar(str,EquProcess(s));
         c:=c+Num2Str(EquProcess(s));
+        AssignVar(str,EquProcess(s));
     end else errinp(str,1);
 end;
 

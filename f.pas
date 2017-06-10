@@ -24,6 +24,7 @@ begin
         Reset(f);
     {$I+}
     FileIO:=IOResult;
+    if FileIO=0 then close(f);
 end;
 
 function FileIO(var f:text):byte;
@@ -32,6 +33,7 @@ begin
         Reset(f);
     {$I+}
     FileIO:=IOResult;
+    if FileIO=0 then close(f);
 end;
 
 function FileExist(FName:string):boolean;
@@ -42,6 +44,7 @@ begin
         Reset(f);
     {$I+}
     FileExist:=(IOResult=0) and (FName<>'');
+    if IOResult=0 then close(f);
 end;
 
 procedure VarCut(var s,val:string);

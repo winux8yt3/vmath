@@ -20,11 +20,11 @@ type
     end;
 
 const
-    CopyrightInfo: string = 'Copyright (c) 2016 Nguyen Tuan Dung (Winux8yt3).';
+    CopyrightInfo: string = 'Copyright (c) 2016-2017 Nguyen Tuan Dung (Winux8yt3).';
     ProgramName: string = 'VMath';
     Version: string = '0.9.5';
     BuildTime: string = {$I %DATE%}+'-'+{$I %TIME%};
-    VersionInfo: string = 'Closed Beta';
+    VersionInfo: string = 'Beta';
     FPCInfo = 'Free Pascal '+{$I %FPCVERSION%}+' For '+{$I %FPCTARGETOS%}+'-'+{$I %FPCTARGETCPU%};
 var 
     ErrHide:boolean=False;
@@ -32,6 +32,9 @@ var
     decn:0..20 = 2;
     Err:TErr;
     Info:string;
+    
+    Vars:TVar;
+    VarNum:word;
 
 function BuildNum():string;
 

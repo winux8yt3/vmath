@@ -6,23 +6,26 @@ unit exec;
     
 interface
 
-procedure RunFile(FName:string);
+function RunFile(FName:string):boolean;
 function VmathCheck(var f:text):boolean;
-procedure VmathExec(var f:text);
-    
+
 implementation
 
 uses
-    f,io,basic,programstr,crt;
+    f,io,basic,programstr,crt,equ;
 
-procedure RunFile(FName:string);
+function RunFile(FName:string):boolean;
 var 
     f:text;
 begin
     if pos('.',FName)=0 then FName:=FName+'.vmath';
     assign(f,FName);
-    if FileExist(FName) and (FileIO(f)=0) and VmathCheck(f) then VmathExec(f)
-        else errinp(FName,3);
+    RunFile:=FileExist(FName) and VmathCheck(f);
+    if RunFile then begin
+        reset(f);
+        while not eof(f) do FCmdProcess('',f);
+        close(f);
+    end else errinp(FName,3);
 end;
 
 function VmathCheck(var f:text):boolean;
@@ -49,22 +52,6 @@ begin
         end;
         if k>0 then b:=False;
         VmathCheck:=VmathCheck and b;
-    end;
-end;
-
-procedure VmathExec(var f:text);
-var str:string;
-begin
-    reset(f);
-    while not eof(f) do begin
-        readln(f,str);
-        CmdSyntax(str);
-        case upcase(syntax[0]) of
-            'IN.'       :   writeln;
-            'DELAY'		:	Delay(Str2Int(syntax[1]).val);
-            'PAUSE'     :   msg('Press any key to continue.');
-        else CmdProcess(str);
-        end; 
     end;
     close(f);
 end;

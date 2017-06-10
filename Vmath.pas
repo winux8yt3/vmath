@@ -22,7 +22,6 @@ begin
 	write(LoadText);
 	clrscr;
 	write(Info,#13#10,WelcomeMsg);
-	RunFile('start.vmath');
 	repeat
 		write(#13#10#13#10,'[Vmath] >> ');readln(tmpstr);
 		if Trim(tmpStr)<>'' then write(CmdProcess(tmpstr));

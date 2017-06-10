@@ -1,4 +1,5 @@
-_b:3
-_b+3
-In _b
-pause
+_a:3
+_a:_a+2
+If _a=3
+In _a
+end

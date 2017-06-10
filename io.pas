@@ -17,6 +17,7 @@ var
 
 procedure CmdSyntax(s:string);
 function CmdProcess(s:string):string;
+procedure FCmdProcess(s:string;var f:text);
 
 implementation
 
@@ -112,9 +113,9 @@ begin
         case Upcase(syntax[0]) of
             'FPC'		    :	CmdProcess:='Compiled With '+FPCInfo;
         // syntaxNum=1
-            'PRINT','IN'    :	begin
-                                    Print(s);
+            'IN','PRINT'    :   begin
                                     NoOut;
+                                    Print(s);
                                 end;
             'INFO','TT'		:	cmdProcess:=Info+#13#10+'Build Time: '+BuildTime;
             'VER','PB'		:	CmdProcess:=ProgramName+' '+Version+' Build '+BuildNum;
@@ -124,9 +125,10 @@ begin
             'EXIT','THOAT'	:	ExitProc;
             'HELP','GIUP'   :   HelpCmd;
         // syntaxNum=2
+            'DEC2BIN'       :   if (Str2Int(syntax[1]).chk) then CmdProcess:=Dec2Bin(Str2Int(syntax[1]).val);
+            'DEC2HEX'       :   if (Str2Int(syntax[1]).chk) then CmdProcess:=Dec2Hex(Str2Int(syntax[1]).val);
             'RUN','CHAY'    :   begin
-                                    NoOut;
-                                    RunFile(syntax[1]);
+                                    if RunFile(syntax[1]) then NoOut;
                                 end;
             'GRAPH','DH'    :	begin
                                     NoOut;
@@ -160,7 +162,6 @@ begin
                                 and (Str2Num(syntax[3]).chk) and (syntaxNum=3) then
                                     CmdProcess:=(eqn2(syntax[1],syntax[2],syntax[3])) else err.id:=4;
             'PLOT','VE'     :   if syntaxNum<7 then PlotProc;
-        // else if (syntax[0][1]='.') and (syntax[0][2]='\') and FileExist(copy(syntax[0],3,length(syntax[0])-3)) then RunFile();
         else if not Variable(s,CmdProcess) then
                 if not TrueFalse(s,CmdProcess) then
                     if not Equation(s,CmdProcess) then errinp(syntax[0],1);
@@ -169,6 +170,46 @@ begin
     if Str2Int(CmdProcess).chk then CmdProcess:=Num2Str(Trunc(Str2Int(CmdProcess).val));
     if err.id>0 then CmdProcess:=EReport
     else if Out then CmdProcess:=#13#10+'[Ans] >> '+CmdProcess;
+end;
+
+procedure FCmdProcess(s:string;var f:text);
+var str:string;
+    procedure Doc(v:string);
+    var s:string;
+    begin
+        if IsVar('_'+v) then begin
+            readln(s);
+            readln;
+            if Str2Num(s).chk then AssignVar(v,Str2Num(s).val) else errinp(v,1);
+        end;
+    end;
+    procedure ifState(s:string);
+    var 
+        st:string;
+    begin
+        delete(s,1,2);
+        if bool(s) then
+            repeat
+                readln(f,st);
+                if Upcase(st)<>'END' then FCmdProcess(st,f);
+            until Upcase(st)='END';
+    end;
+begin
+    if Upcase(s)='' then readln(f,str) else str:=s;
+    if (Upcase(str)<>'END') or not (copy(str,1,2)='//') then begin
+        CmdSyntax(str);
+        case upcase(syntax[0]) of
+            'IN.'       :   writeln;
+            'DOC'       :   Doc(syntax[1]);
+            'DOCB'      :   begin
+                                write(syntax[1],':');Doc(syntax[1]);
+                            end;
+            'DELAY'		:	Delay(Str2Int(syntax[1]).val);
+            'PAUSE'     :   msg('Press any key to continue.');
+            'IF'        :   IfState(str);
+        else CmdProcess(str);
+        end;
+    end;
 end;
 
 end.
