@@ -1,6 +1,9 @@
 ![VMath](/logo.ico) VMath Beta
 ==============================
 
+## WARNING 
+**The project is on development reset stage. Everything here is unstable. Consider before clone this project** 
+
 #### VIETNAMESE
 **VMath** là phần mềm toán học miễn phí cho mọi người.
 Chỉ được phép sao lưu, tái phân phối lại phần mềm hay mã nguồn của phần mềm này cho mục đích phi thương mại.
