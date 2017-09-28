@@ -12,7 +12,9 @@ var
 
 procedure console();
 begin
-	Window(1,1,WindMaxX,WindMaxY);
+	if (WindMaxX >= 80) and (WindMaxY >= 25) then
+		Window(1,1,WindMaxX,WindMaxY)
+	else Window(1,1,80,25);
 	clrscr;
 	writeln('Choose Your Language [Default is English]');
 	writeln('Chon ngon ngu [Mac dinh la Tieng Anh]');

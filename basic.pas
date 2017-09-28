@@ -144,7 +144,15 @@ function Time():string;
 		Hr,Min,Sec,Milisec : word;
 	begin
 		GetTime(Hr,Min,Sec,Milisec);
-        Time:=Num2Str(Hr)+':'+Num2Str(Min)+':'+Num2Str(Sec)+'.'+Num2Str(Milisec);
+		Time:='';
+		if Hr < 10 then Time:='0';
+        Time:=Time+Num2Str(Hr)+':';
+		if Min < 10 then Time:=Time + '0';
+		Time:=Time+Num2Str(Min)+':';
+		if Sec < 10 then Time:=Time + '0';
+		Time:=Time + Num2Str(Sec)+'.';
+		if Milisec < 10 then Time:=Time + '0';
+		Time:=Time + Num2Str(Milisec);
 	end;
 
 procedure TxColor(TColor:byte);
